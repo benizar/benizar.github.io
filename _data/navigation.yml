@@ -1,0 +1,44 @@
+# main links links
+main:
+  - title: "Blog"
+    url: /year-archive/
+  - title: "CV"
+    url: /cv/
+  - title: "Profiles"
+    url: /profiles/
+  - title: "Publications"
+    url: /publications/
+#  - title: "Research"
+#    url: /research/
+#  - title: "Teaching"
+#    url: /docs/quick-start-guide/
+  - title: "Contact"
+    url: /contact/
+  - title: "About me"
+    url: /about/
+
+# documentation links
+#docs:
+#  - title: Getting Started
+#    children:
+#      - title: "Quick-Start Guide"
+#        url: /docs/quick-start-guide/
+#      - title: "Structure"
+#        url: /docs/structure/
+#      - title: "Installation"
+#        url: /docs/installation/
+#      - title: "Upgrading"
+#        url: /docs/upgrading/
+
+#  - title: Customization
+#    children:
+#      - title: "Configuration"
+#        url: /docs/configuration/
+#      - title: "Navigation"
+#        url: /docs/navigation/
+#      - title: "UI Text"
+#        url: /docs/ui-text/
+#      - title: "Authors"
+#        url: /docs/authors/
+#      - title: "Layouts"
+#        url: /docs/layouts/

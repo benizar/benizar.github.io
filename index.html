@@ -1,0 +1,20 @@
+---
+layout: archive
+author_profile: true
+header:
+  overlay_image: watercube.jpg
+  caption: "Beijing National Aquatics Center, the Water Cube"
+#  cta_label: "More Info"
+#  cta_url: "https://unsplash.com"
+---
+
+
+{% include base_path %}
+
+<h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].recent_posts }}</h3>
+
+{% for post in paginator.posts %}
+  {% include archive-single.html %}
+{% endfor %}
+
+{% include paginator.html %}
