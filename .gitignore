@@ -2,6 +2,8 @@
 *.sublime-workspace
 .DS_Store
 .jekyll-metadata
+Gemfile.lock
+
 .sass-cache
 _asset_bundler_cache
 _site

@@ -125,7 +125,7 @@ exclude:
   - package.json
   - docker-compose*
   - Dockerfile
-  - Makefile
+  - gh-deploy.sh
   - README
   - tmp
   - bin

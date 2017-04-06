@@ -1,0 +1,18 @@
+#
+# Jekyll serve with --drafts for developing
+#
+version: '2'
+services:
+
+  jekyll:
+    build: # comment on build if want to use the dockerhub build
+      context: .
+      dockerfile: Dockerfile
+    image: benizar/jekyll
+    container_name: benizar_jekyll
+    ports:
+      - 4000:4000
+    volumes:
+      - .:/home # Your sources will be in the container's home
+
+    command: bundle exec jekyll serve --watch --incremental --drafts
