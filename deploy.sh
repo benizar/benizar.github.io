@@ -28,6 +28,9 @@ else
   exit 1
 fi
 
+# Avoid privilegev problems
+chmod -R 777 _site
+
 # Copy _site to a temporary folder
 cp -r _site/ ~/$tmp_dir/ > /dev/null 2>&1
 if [ $? = 0 ]; then
