@@ -22,6 +22,7 @@ docker-compose -f build.yml up > /dev/null 2>&1
 if [ $? = 0 ]; then
   # Avoid privilege problems
   sudo chmod -R 777 _site
+  rm Gemfile.lock
   docker-compose -f build.yml down
   echo "Build successful"
 else

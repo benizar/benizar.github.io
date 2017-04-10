@@ -5,10 +5,7 @@ version: '2'
 services:
 
   jekyll:
-    build: # comment on build if want to use the dockerhub build
-      context: .
-      dockerfile: Dockerfile
-    image: benizar/jekyll
+    image: benizar/jekyll #Image from Dockerhub
     container_name: benizar_jekyll
     ports:
       - 4000:4000
