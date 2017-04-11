@@ -23,8 +23,7 @@ if [ $? = 0 ]; then
 
   # Avoid privilege problems
   sudo chmod -R 777 _site
-  chmod -R 777 Gemfile.lock
-  rm Gemfile.lock
+  sudo rm Gemfile.lock
 
   docker-compose -f build.yml down
   echo "Build successful"
