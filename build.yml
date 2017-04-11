@@ -1,13 +1,10 @@
 #
-# Jekyll serve with --drafts for developing
+# Jekyll build for deploying to gh-pages (called from deploy.sh)
 #
 version: '2'
 services:
 
   jekyll:
-    build: # comment on build if want to use the dockerhub build
-      context: .
-      dockerfile: Dockerfile
     image: benizar/jekyll
     container_name: benizar_jekyll
     ports:

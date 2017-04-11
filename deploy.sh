@@ -20,9 +20,12 @@ git checkout $SOURCE > /dev/null 2>&1
 # Jekyll build to create _site, then down docker-compose
 docker-compose -f build.yml up > /dev/null 2>&1
 if [ $? = 0 ]; then
+
   # Avoid privilege problems
   sudo chmod -R 777 _site
+  chmod -R 777 Gemfile.lock
   rm Gemfile.lock
+
   docker-compose -f build.yml down
   echo "Build successful"
 else
