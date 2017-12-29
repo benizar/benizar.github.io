@@ -7,7 +7,7 @@ permalink: /profiles/
 **Note:** These are some interesting platforms where I publish my professional records. Every site has good and bad things, so pick your favorite.
 {: .notice--info}
 
-[![ORCID](https://b4935e718bfba86f9c2e-bf4a3ae5257b42d59da864e54de0bd19.ssl.cf1.rackcdn.com/img/orcid-logo.png)](https://orcid.org/0000-0003-2501-484X)
+[![ORCID](https://orcid.org/sites/all/themes/orcidResponsiveNoto/img/orcid-logo.png)](https://orcid.org/0000-0003-2501-484X)
 
 [![Google Scholar](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Google_Scholar_logo_2015.PNG/250px-Google_Scholar_logo_2015.PNG)](https://scholar.google.es/citations?user=sO9xAc8AAAAJ&hl=es)
 

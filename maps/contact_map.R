@@ -15,10 +15,14 @@ geomatica_popup <- paste(sep = "<br><center>",
                          "<b><a href='https://www.sigua.ua.es/index.html?id=0037P1015'>Find me in SIGUA</a></b>")
 
 
-leaflet() %>% 
-  addTiles() %>%
-  setView(geomatica$lon, geomatica$lat, zoom = 15) %>% 
-  addPolygons(data = geomatica) %>%
-  addMarkers(lng = geomatica$lon, lat = geomatica$lat, popup = geomatica_popup)
+# leaflet() %>% 
+#   addTiles() %>%
+#   setView(geomatica$lon, geomatica$lat, zoom = 15) %>% 
+#   addPolygons(data = geomatica) %>%
+#   addMarkers(lng = geomatica$lon, lat = geomatica$lat, popup = geomatica_popup)
              
              
+leaflet() %>%
+  addProviderTiles(providers$HERE.hybridDay) %>% 
+  setView(1.148095428943634, 41.10293179620965, zoom = 15) %>%
+  addMarkers(lng = 1.148095428943634, lat = 41.10293179620965)
