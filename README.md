@@ -21,21 +21,21 @@ This approach is very convenient for using Jekyll plugins and deploy the website
 
 ## Edit the Jekyll project
 
-Use [docker-compose.yml](docker-compose.yml) as:
+Use [jekyll-serve.yml](jekyll-serve.yml) as:
 
-1. `docker-compose up` runs Jekyll with drafts and defaults.
+1. `docker-compose -f jekyll-serve.yml up` runs Jekyll with drafts and defaults.
 2. Edit your website contents (pages, posts, etc) and see your edits in the browser.
-3. Remember to `docker-compose down` when finished.
+3. Remember to `docker-compose -f jekyll-serve.yml down` when finished.
 4. `git commit` and `git push` your edits. **Watch out!** *It is very IMPORTANT to git commit and git push your edits to the source branch before deploying your website*
 
 ## Publish the website to GitHub
 
 **Watch out!** *It is very IMPORTANT to git commit and git push your edits to the source branch before deploying your website*
 
-For deploying your website to GitHub you can do it by hand or using the [deploy.sh](deploy.sh) script as follows:
+For deploying your website to GitHub you can do it by hand or using the [jekyll-deploy.sh](jekyll-deploy.sh) script as follows:
 
 ```bash
-bash deploy.sh
+bash jekyll-deploy.sh
 ```
 
 This script is going to:
