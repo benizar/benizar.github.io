@@ -10,9 +10,8 @@ if [ -f $FILENAME ]; then
   echo "Editing \"" $TITLE "\""
 else
   echo "---" > $FILENAME
-  echo "layout: post" >> $FILENAME
   echo "title:" $TITLE >> $FILENAME
-  echo "categories:[cat1, cat2]" >> $FILENAME
-  echo "tags:[tag1, tag1]" >> $FILENAME
+  echo "categories: [cat1, cat2]" >> $FILENAME
+  echo "tags: [tag1, tag2]" >> $FILENAME
   echo "---" >> $FILENAME
 fi
