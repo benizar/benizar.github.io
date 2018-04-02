@@ -46,7 +46,7 @@ This script is going to:
 5. Create a new MASTER branch
 6. Copy the temporary folder contents to this branch (MASTER)
 7. Push your site to GitHub (MASTER)
-8. Switch bach to the SOURCE branch
+8. Switch back to the SOURCE branch
 
 
 
