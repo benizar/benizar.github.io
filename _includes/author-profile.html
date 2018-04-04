@@ -97,6 +97,26 @@
       {% if author.vine %}
         <li><a href="https://vine.co/u/{{ author.vine }}"><i class="fa fa-fw fa-vine" aria-hidden="true"></i> Vine</a></li>
       {% endif %}
+
+
+      {% if author.orcid %}
+        <li><a href="https://orcid.org/{{ author.orcid }}"><i class="ai ai-fw ai-orcid" aria-hidden="true" style="color:#a6ce39ff;"></i>ORCID</a></li>
+      {% endif %}
+      {% if author.google_scholar %}
+        <li><a href="https://scholar.google.es/citations?user={{ author.google_scholar }}"><i class="ai ai-fw ai-google-scholar" aria-hidden="true"  style="color:black;"></i>Google Scholar</a></li>
+      {% endif %}
+      {% if author.research_gate %}
+        <li><a href="https://www.researchgate.net/profile/{{ author.researchgate }}"><i class="ai ai-fw ai-researchgate-square" aria-hidden="true" style="color:#00e3abff;"></i>ResearchGate</a></li>
+      {% endif %}
+      {% if author.mendeley %}
+        <li><a href="https://www.mendeley.com/profiles/{{ author.mendeley }}"><i class="ai ai-fw ai-mendeley-square" aria-hidden="true" style="color:#a51925ff;"></i>Mendeley</a></li>
+      {% endif %}
+
+
+
+
+
     </ul>
   </div>
 </div>
+

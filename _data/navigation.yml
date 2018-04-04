@@ -4,8 +4,8 @@ main:
     url: /year-archive/
   - title: "CV"
     url: /cv/
-  - title: "Profiles"
-    url: /profiles/
+#  - title: "Profiles"
+#    url: /profiles/
   - title: "Publications"
     url: /publications/
 #  - title: "Research"
