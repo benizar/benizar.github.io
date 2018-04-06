@@ -127,13 +127,10 @@ exclude:
   - log
   - node_modules
   - package.json
-  - docker-compose*
-  - build.yml
-  - deploy.sh
   - README
   - tmp
-  - bin
-  - builds
+  - contrib
+
 keep_files:
   - .git
   - .svn
@@ -171,7 +168,7 @@ timezone: Europe/Madrid # http://en.wikipedia.org/wiki/List_of_tz_database_time_
 
 
 # Plugins
-gems:
+plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist

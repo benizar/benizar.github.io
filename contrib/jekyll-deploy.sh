@@ -18,7 +18,7 @@ tmp_dir="temp_$last_SHA"
 git checkout $SOURCE > /dev/null 2>&1
 
 # Jekyll build to create _site, then down docker-compose
-docker-compose -f jekyll-build.yml up > /dev/null 2>&1
+docker-compose -f jekyll-build.yml up -d > /dev/null 2>&1
 if [ $? = 0 ]; then
 
   # Avoid privilege problems
