@@ -15,3 +15,7 @@ else
   echo "tags: [tag1, tag2]" >> $FILENAME
   echo "---" >> $FILENAME
 fi
+
+#sensible-editor $FILENAME
+
+gedit $FILENAME
