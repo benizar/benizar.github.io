@@ -66,7 +66,7 @@ except:
 In the above mentioned link, [mEon](https://launchpad.net/~me.on.line) shared all the modified scripts in a dropbox public link. That link is still active, but I want to collaborate to the diffusion of these scripts by sharing an additional link:
 
 - [mEon link](https://dl.dropboxusercontent.com/u/1383938/usr-share-pyshared-openshot-blender-scripts.tar.gz)
-- [My link]({{ site.url }}/download/usr-share-pyshared-openshot-blender-scripts.tar.gz)
+- [My link]({{ site.url }}/downloads/usr-share-pyshared-openshot-blender-scripts.tar.gz)
 
 
 ## Opportunities
@@ -74,3 +74,5 @@ In the above mentioned link, [mEon](https://launchpad.net/~me.on.line) shared al
 All those animated titles are very nice, but I wonder how can I create more customized animations with a little python scripting. Take a look at the [Blender Wiki example on using python scripts](https://wiki.blender.org/index.php/Doc:2.4/Manual/Extensions/Python/Example). 
 
 I'm sure that I can found many other scripts somewhere in the Internet. I will keep you informed ;)
+
+

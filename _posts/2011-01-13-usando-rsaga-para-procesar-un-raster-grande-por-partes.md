@@ -26,7 +26,7 @@ En algunas ocasiones la solución a estos problemas sería “trocear” el rast
 En este post propongo realizar una prueba con RSAGA, que es un modulo de R que permite acceder a las funciones disponibles en la consola de SAGA GIS. Para este post he trabajado en Windows, con R 2.10.1 y SAGA 2.0.4, aunque supongo que no habrá problemas con usar otras versiones más recientes. Además, deberéis instalar en R el paquete RSAGA.
 
 
-Para esta práctica podéis [descargar ficheros de prueba]({{ site.url }}/download/rsaga_tests.rar) (imágenes 1 y 2), uno raster y otro vectorial (polígonos). A efectos didácticos se utilizan ficheros pequeños, pero esto resultaría más útil en caso de necesitar fragmentar más el raster. Por ejemplo, en artículos anteriores he presentado código para trabajar imágenes a nivel de parcelas agrícolas. En aquellos artículos trabajábamos las imágenes de una en una y ya estaban recortadas, pero las parcelas podrían ser miles y no queremos hacer eso a mano.
+Para esta práctica podéis [descargar ficheros de prueba]({{ site.url }}/downloads/rsaga_tests.rar) (imágenes 1 y 2), uno raster y otro vectorial (polígonos). A efectos didácticos se utilizan ficheros pequeños, pero esto resultaría más útil en caso de necesitar fragmentar más el raster. Por ejemplo, en artículos anteriores he presentado código para trabajar imágenes a nivel de parcelas agrícolas. En aquellos artículos trabajábamos las imágenes de una en una y ya estaban recortadas, pero las parcelas podrían ser miles y no queremos hacer eso a mano.
 
 ## Conociendo SAGA GIS
 

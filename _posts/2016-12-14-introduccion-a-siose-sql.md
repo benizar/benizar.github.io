@@ -40,8 +40,8 @@ Los datos del SIOSE utilizados en estas presentaciones están disponibles en var
 
 No obstante, los alumnos que asistieron a dichas sesiones pueden encontrar interesante trabajar directamente con los `backups` creados y restaurados varias veces en clase:
 
-- [siose_terrasit.backup]({{ site.url }}/download/siose_terrasit.backup)
-- [siose_cnig.backup]({{ site.url }}/download/siose_cnig.backup)
+- [siose_terrasit.backup]({{ site.url }}/downloads/siose_terrasit.backup)
+- [siose_cnig.backup]({{ site.url }}/downloads/siose_cnig.backup)
 
 Las versiones del software son las que vienen con el [OSGeo Live GIS Disc 9.5](https://live.osgeo.org/es/download.html). Salvo alguna modificación, esta version de OSGeo es la instalada en el Aula de Geomática del Instituto Interuniversitario de Geografía, 
 
