@@ -1,11 +1,13 @@
 # My first personal website
 
-Powered by Jekyll & Minimal Mistakes.
+Powered by Jekyll & Minimal Mistakes (and some other nice tools :).
+
 
 ## Requirements
 
 In order to reproduce this workflow it is necessary to have this software correctly installed:
 
+- [make](https://www.gnu.org/software/make/)
 - [git](https://git-scm.com/)
 - [docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/)
 - My [benizar/jekyll](https://hub.docker.com/r/benizar/jekyll/) image from Docker Hub.
@@ -19,23 +21,25 @@ This project has two git branches:
 
 This approach is very convenient for using Jekyll plugins and deploy the website only when necessary.
 
-## Edit the Jekyll project
 
-Use [jekyll-serve.yml](jekyll-serve.yml) as:
+## Using the Makefile
 
-1. `docker-compose -f jekyll-serve.yml up` runs Jekyll with drafts and defaults.
-2. Edit your website contents (pages, posts, etc) and see your edits in the browser.
-3. Remember to `docker-compose -f jekyll-serve.yml down` when finished.
-4. `git commit` and `git push` your edits. **Watch out!** *It is very IMPORTANT to git commit and git push your edits to the source branch before deploying your website*
+Use [Makefile](Makefile) as usual but, when you execute `make`, it shows info about the most common tasks of my workflow:
+
+1. `make 1-new-draft`: Helps to create a new draft (and opens it in gedit).
+2. `make 2-start-server`: Starts the jekyll server using dockers (and opens it in a web browser).
+3. `make 3-stop-server`: Stops the docker and removes everything.
+4. `make 4-push-source`: Pushes all edits to the source branch.
+5. `make 5-deploy-website`: Pushes the updated .
 
 ## Publish the website to GitHub
 
-**Watch out!** *It is very IMPORTANT to git commit and git push your edits to the source branch before deploying your website*
+**Watch out!** *It is very IMPORTANT to git commit and git push your edits to the source branch before deploying your website* (or you can do `make 4-push-source`)
 
-For deploying your website to GitHub you can do it by hand or using the [jekyll-deploy.sh](jekyll-deploy.sh) script as follows:
+For deploying your website to GitHub you can do it by hand or using the [deploy-website.sh](deploy-website.sh) script as follows:
 
 ```bash
-bash jekyll-deploy.sh
+bash deploy-website.sh
 ```
 
 This script is going to:
