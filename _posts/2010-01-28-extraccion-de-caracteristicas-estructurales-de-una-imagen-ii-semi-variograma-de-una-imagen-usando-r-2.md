@@ -113,7 +113,7 @@ El plot que obtenemos es el siguiente, o similar si es que hemos preferido cambi
 
 
 <figure class="half">
-	<a href="{{ site.url }}/images/variogram-3-plots-polyfit.jpg"><img src="{{ site.url }}/images/variogram-3-plots--polyfit.jpg"></a>
+	<a href="{{ site.url }}/images/variogram-3-plots-polyfit.jpg"><img src="{{ site.url }}/images/variogram-3-plots-polyfit.jpg"></a>
 	<figcaption>Figura 4: Panel donde mostramos los resultados</figcaption>
 </figure>
 
