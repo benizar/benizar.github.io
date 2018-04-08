@@ -16,8 +16,8 @@ Hola a todos, os presento un artículo de investigación que algunos miembros de
 
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/PosterDIY_jul_2010.jpg"><img src="{{ site.url }}/images/gisandchips/PosterDIY_jul_2010.jpg"></a>
-    <a href="{{ site.url }}/images/gisandchips/DIY_sharpdev.jpg"><img src="{{ site.url }}/images/gisandchips/DIY_sharpdev.jpg"></a>
+    <a href="{{ site.url }}/images/landmetrics-diy-poster.jpg"><img src="{{ site.url }}/images/landmetrics-diy-poster.jpg"></a>
+    <a href="{{ site.url }}/images/landmetrics-diy-sharpdevelop.jpg"><img src="{{ site.url }}/images/landmetrics-diy-sharpdevelop.jpg"></a>
 
     <figcaption>Figura 1. Librería 'landmetrics_diy'. Se puede ver un póster (izquierda) y una captura de la pantalla del código en SharpDevelop (derecha).</figcaption>
 </figure>

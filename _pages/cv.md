@@ -13,6 +13,6 @@ permalink: /cv/
 Not so many years ago, I wrote my first CV using the [ModernCV LaTeX template](https://www.ctan.org/tex-archive/macros/latex/contrib/moderncv/). I really like the output quality of LaTeX, but it is quite verbose and difficult to adapt for different purposes. Later, I learnt a little about the excellent [Pandoc project](http://pandoc.org/). Pandoc allows keeping my CV in Markdown and that is very practical for future needs. For the moment, I have made some minor changes to the barraq's [Pandoc-ModernCV](https://github.com/barraq/pandoc-moderncv) and I'm using it.
 
 You can download a PDF version of this CV in 
-[English]({{ site.url }}/downloads/cv_en.pdf) or [Spanish]({{ site.url }}/downloads/cv_es.pdf).
+[English]({{ site.url }}/downloads/benito-zaragozi-cv-en.pdf) or [Spanish]({{ site.url }}/downloads/benito-zaragozi-cv-es.pdf).
 
-![cv_en]({{ site.url }}/images/cv_en.png){: .align-center}
+![cv_en]({{ site.url }}/images/benito-zaragozi-cv-en.png){: .align-center}

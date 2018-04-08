@@ -16,7 +16,7 @@ tags:
 En este artículo usaremos una librería de R (“fields”), que contiene métodos para calcular el semi-variograma empírico de una imagen, lo cual quiere decir que calcularemos el semi-variograma de una gran cantidad de puntos. Y a partir de ahí, analizaremos la existencia de patrones espaciales en tres parcelas agrícolas arbóreas.
 
 <figure class="half">
-	<a href="{{ site.url }}/images/gisandchips/parcelas.jpg"><img src="{{ site.url }}/images/gisandchips/parcelas.jpg"></a>
+	<a href="{{ site.url }}/images/plots.jpg"><img src="{{ site.url }}/images/plots.jpg"></a>
 	<figcaption>Figura 1. Parcelas analizadas</figcaption>
 </figure>
 
@@ -32,7 +32,7 @@ Los variogramas se utilizan para caracterizar la posible estructura espacial de 
 Matemáticamente el semi-variograma, o variograma/2, se puede definir como la mitad del promedio de las diferencias al cuadrado.
 
 <figure class="third">
-	<a href="{{ site.url }}/images/gisandchips/formula_vario.jpg"><img src="{{ site.url }}/images/gisandchips/formula_vario.jpg"></a>
+	<a href="{{ site.url }}/images/variogram-formula.jpg"><img src="{{ site.url }}/images/variogram-formula.jpg"></a>
 	<figcaption>Figura 2: Fórmula para calcular el semi-variograma</figcaption>
 </figure>
 
@@ -51,7 +51,7 @@ Aplicado a imágenes, el semi-variograma (o variograma/2), mide el grado de corr
 
 
 <figure class="half">
-	<a href="{{ site.url }}/images/gisandchips/variogram.jpg"><img src="{{ site.url }}/images/gisandchips/variogram.jpg"></a>
+	<a href="{{ site.url }}/images/variogram.jpg"><img src="{{ site.url }}/images/variogram.jpg"></a>
 	<figcaption>Figura 3: Interpretación del semivariograma</figcaption>
 </figure>
 
@@ -113,7 +113,7 @@ El plot que obtenemos es el siguiente, o similar si es que hemos preferido cambi
 
 
 <figure class="half">
-	<a href="{{ site.url }}/images/gisandchips/variograma_3parcelas_polyfit.jpg"><img src="{{ site.url }}/images/gisandchips/variograma_3parcelas_polyfit.jpg"></a>
+	<a href="{{ site.url }}/images/variogram-3-plots-polyfit.jpg"><img src="{{ site.url }}/images/variogram-3-plots--polyfit.jpg"></a>
 	<figcaption>Figura 4: Panel donde mostramos los resultados</figcaption>
 </figure>
 

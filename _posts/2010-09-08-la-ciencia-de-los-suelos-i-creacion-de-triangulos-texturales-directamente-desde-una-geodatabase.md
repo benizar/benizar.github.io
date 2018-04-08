@@ -20,7 +20,7 @@ En este artículo os muestro la demo nº2 que consiste en la creación de trián
 
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/clasificacion_textural.png"><img src="{{ site.url }}/images/gisandchips/clasificacion_textural.png"></a>
+    <a href="{{ site.url }}/images/texture-classification.png"><img src="{{ site.url }}/images/texture-classification.png"></a>
     <figcaption>Figura 1. Triángulo textural.</figcaption>
 </figure>
 
@@ -37,7 +37,7 @@ Considero que las demos 2 y 3 son más interesantes, puesto que la primera es so
 
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/tritex_1.jpg"><img src="{{ site.url }}/images/gisandchips/tritex_1.jpg"></a>
+    <a href="{{ site.url }}/images/tritex-webapp.jpg"><img src="{{ site.url }}/images/tritex-webapp.jpg"></a>
     <figcaption>Figura 2. Página de la Demo.</figcaption>
 </figure>
 
@@ -54,7 +54,7 @@ Pese a que existe cierta variedad de programas pensados para la elaboración de 
 
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/tritex_results.jpg"><img src="{{ site.url }}/images/gisandchips/tritex_results.jpg"></a>
+    <a href="{{ site.url }}/images/tritex-results.jpg"><img src="{{ site.url }}/images/tritex-results.jpg"></a>
     <figcaption>Figura 3. Página de resultados de la demo.</figcaption>
 </figure>
 

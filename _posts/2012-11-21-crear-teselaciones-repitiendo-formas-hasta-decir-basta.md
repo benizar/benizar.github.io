@@ -19,7 +19,7 @@ Según la [Wikipedia](http://es.wikipedia.org/wiki/Teselado), un teselado o tese
 En este post quiero hablaros un poco más de las teselaciones, comentar algunas aplicaciones y proponeros algo de código de ejemplo. Utilizando software libre, por supuesto...
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/image02.png"><img src="{{ site.url }}/images/gisandchips/image02.png"></a>
+    <a href="{{ site.url }}/images/image02.png"><img src="{{ site.url }}/images/image02.png"></a>
 </figure>
 
 
@@ -34,8 +34,8 @@ Las aplicaciones de las teselaciones en Geografía y SIG son muchas. Por mencion
 
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/image12.jpg"><img src="{{ site.url }}/images/gisandchips/image12.jpg"></a>
-    <a href="{{ site.url }}/images/gisandchips/image01.jpg"><img src="{{ site.url }}/images/gisandchips/image01.jpg"></a>
+    <a href="{{ site.url }}/images/tesselation-hexagon-big.jpg"><img src="{{ site.url }}/images/tesselation-hexagon-big.jpg"></a>
+    <a href="{{ site.url }}/images/tesselation-hexagon-small.jpg"><img src="{{ site.url }}/images/tesselation-hexagon-small.jpg"></a>
 </figure>
 
 
@@ -44,7 +44,7 @@ Las aplicaciones de las teselaciones en Geografía y SIG son muchas. Por mencion
 - **Muestreos de la zona de estudio.** Son muy utilizados en estudios biogeográficos donde se determina la presencia-ausencia de una determinada especie. Por ejemplo, el código que presento en este post fue desarrollado para un estudio de fototrampeo .
 
 <figure class="third">
-    <a href="{{ site.url }}/images/gisandchips/image04.png"><img src="{{ site.url }}/images/gisandchips/image04.png"></a>
+    <a href="{{ site.url }}/images/tesselation-biodiversity.png"><img src="{{ site.url }}/images/tesselation-biodiversity.png"></a>
 </figure>
 
 
@@ -52,15 +52,15 @@ Las aplicaciones de las teselaciones en Geografía y SIG son muchas. Por mencion
 
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/image06.jpg"><img src="{{ site.url }}/images/gisandchips/image06.jpg"></a>
-    <a href="{{ site.url }}/images/gisandchips/image05.gif"><img src="{{ site.url }}/images/gisandchips/image05.gif"></a>
+    <a href="{{ site.url }}/images/tesselation-map-collection.jpg"><img src="{{ site.url }}/images/tesselation-map-collection.jpg"></a>
+    <a href="{{ site.url }}/images/tesselation-reference-map.gif"><img src="{{ site.url }}/images/tesselation-reference-map.gif"></a>
 </figure>
 
 
 - **Interpolación espacial.** En este caso predomina el uso de teselaciones no regulares. Por ejemplo, las triangulaciones de Delaunay son una alternativa muy utilizada para la creación de modelos digitales de elevaciones detallados. Igualmente, los polígonos de Voronoi se han utilizado en múltiples contextos, por ejemplo, para determinar la necesidad de instalar nuevos observatorios meteorológicos.
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/image09.jpg"><img src="{{ site.url }}/images/gisandchips/image09.jpg"></a>
+    <a href="{{ site.url }}/images/tesselation-tin.jpg"><img src="{{ site.url }}/images/tesselation-tin.jpg"></a>
 </figure>
 
 
@@ -75,7 +75,7 @@ Si tuviese que mencionar un software interesante para realizar teselaciones os r
 He decidido ordenar un poco mis ideas y he creado un software que calcula teselaciones simples (rectángulos, triángulos y hexágonos). Se trata de una aplicación de consola que solicita una serie de parámetros para calcular la teselación. Esta aplicación utiliza la NetTopologySuite v1.11 y funciona bien sobre la versión 4.0 de la plataforma Mono.
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/image13.png"><img src="{{ site.url }}/images/gisandchips/image13.png"></a>
+    <a href="{{ site.url }}/images/mb-tessellation-cmd.png"><img src="{{ site.url }}/images/mb-tessellation-cmd.png"></a>
 </figure>
 
 
@@ -96,7 +96,7 @@ El código se divide en dos clases (más la del interfaz de usuario, claro). Exi
 En la siguiente figura se puede ver como se calcula la zona que debe cubrir el grid mayor. Por supuesto, habrá otros métodos de definir el área mayor, pero esta es bastante sencilla de entender y programar con NTS.
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/image07.png"><img src="{{ site.url }}/images/gisandchips/image07.png"></a>
+    <a href="{{ site.url }}/images/mb-tesselation-methodology.png"><img src="{{ site.url }}/images/mb-tesselation-methodology.png"></a>
 </figure>
 
 
@@ -107,7 +107,7 @@ Para que os hagáis una idea de lo que permite el software he preparado algunos 
 - Ancho de celda: 5000 m, Alto de celda: 5000 m, Forma: rectangle, Ángulo: 0 y Radio: 0 (**Completo**).
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/image00.png"><img src="{{ site.url }}/images/gisandchips/image00.png"></a>
+    <a href="{{ site.url }}/images/mb-tesselation-squares-big.png"><img src="{{ site.url }}/images/mb-tesselation-squares-big.png"></a>
 </figure>
 
 
@@ -115,34 +115,34 @@ Para que os hagáis una idea de lo que permite el software he preparado algunos 
 - Ancho de celda: 2500 m, Alto de celda: 2500 m, Forma: rectangle, Ángulo: 0 y Radio: 0 (**Ajustado**).
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/image11.png"><img src="{{ site.url }}/images/gisandchips/image11.png"></a>
+    <a href="{{ site.url }}/images/tesselation-squares-small.png"><img src="{{ site.url }}/images/tesselation-squares-small.png"></a>
 </figure>
 
 
 - Ancho de celda: 5000 m, Alto de celda: 1000 m, Forma: rectangle, Ángulo: 0 y Radio: 0 (**Ajustado**).
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/Captura de pantalla de 2012-11-20 13_55_05.png"><img src="{{ site.url }}/images/gisandchips/Captura de pantalla de 2012-11-20 13_55_05.png"></a>
+    <a href="{{ site.url }}/images/Captura de pantalla de 2012-11-20 13_55_05.png"><img src="{{ site.url }}/images/Captura de pantalla de 2012-11-20 13_55_05.png"></a>
 </figure>
 
 
 - Ancho de celda: 5000 m, Alto de celda: 2500 m, Forma: triangle, Ángulo: 45 y Radio: 0 (**Ajustado**).
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/image03.png"><img src="{{ site.url }}/images/gisandchips/image03.png"></a>
+    <a href="{{ site.url }}/images/mb-tesselation-rectangles.png"><img src="{{ site.url }}/images/mb-tesselation-rectangles.png"></a>
 </figure>
 
 - Ancho de celda: 5000 m, Alto de celda: 5000 m, Forma: hexagon, Ángulo: 45 y Radio: 1000 m (**Ajustado**).
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/image08.png"><img src="{{ site.url }}/images/gisandchips/image08.png"></a>
+    <a href="{{ site.url }}/images/mb-tesselation-hexagons.png"><img src="{{ site.url }}/images/mb-tesselation-hexagons.png"></a>
 </figure>
 
 
 - Ancho de celda: 5000 m, Alto de celda: 5000 m, Forma: hexagon, Ángulo: 0 y Radio: 2000 m (**Ajustado**).
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/image10.png"><img src="{{ site.url }}/images/gisandchips/image10.png"></a>
+    <a href="{{ site.url }}/images/mb-tesselation-hexagons-stretched.png"><img src="{{ site.url }}/images/mb-tesselation-hexagons-stretched.png"></a>
 </figure>
 
 

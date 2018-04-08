@@ -17,7 +17,7 @@ After some tests in Ubuntu 15.10 and the recommended software versions. I must a
 [OpenShot](http://www.openshot.org/) is a free, simple-to-use, feature-rich video editor for Linux, Windows and Mac. Of course, it has many good things, but I'm very impressed with the amazing **Animated Title Editor**. You can [read this post](http://www.openshotvideo.com/2010/06/new-feature-3d-animated-titles.html) about it.
 
 <figure class="half">
-    <a href="{{ site.url }}/images/Overlay_3D_Title.png"><img src="{{ site.url }}/images/Overlay_3D_Title.png"></a>
+    <a href="{{ site.url }}/images/openshot-overlay-3d-title.png"><img src="{{ site.url }}/images/openshot-overlay-3d-title.png"></a>
 </figure>
 
 This feature is presented as easy-to-use templates that execute python scripts in Blender, so there is no need to learn Blender to include some nice animations in your educational videos.

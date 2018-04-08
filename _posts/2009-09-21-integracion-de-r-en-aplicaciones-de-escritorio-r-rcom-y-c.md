@@ -89,7 +89,7 @@ Podemos simular una sesión de trabajo con este visor siguiendo estos pasos (tam
     `hist(objeto$campo)` / nos ahorra hacer un `attatch()` en R
 4. Editar una celda del campo "incendio" del objeto usos. Cambiar algún 0 por 100, y creamos de nuevo el histograma. Vemos como ha cambiado el objeto de R sin necesidad de conocer la posición del dato dentro del dataframe. (para   saber que estamos editando en el row del datagridview deberá verse un lapiz sobre el "row head")
     
-![Vista de la aplicación en funcionamiento]({{ site.url }}/images/gisandchips/rcom_histoviewer.jpg){: .align-center}
+![Vista de la aplicación en funcionamiento]({{ site.url }}/images/rcom-histoviewer.jpg){: .align-center}
     
 Evidentemente, sin que el usuario lo sepa se están realizando varios `list()`, se aplican filtros, se obtienen los `rownames()` y `colnames()`, y otras operaciones habituales en R que aquí no se necesitará teclear y cuyos resultados estarán siempre visibles. Lo cual hace que nuestro interfaz sea más amigable solo por esto.
     

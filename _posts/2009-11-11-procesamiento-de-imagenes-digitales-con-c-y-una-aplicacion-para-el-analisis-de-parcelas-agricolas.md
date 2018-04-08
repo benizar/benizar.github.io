@@ -20,8 +20,8 @@ tags:
 En este artículo voy a exponer una aplicación de ejemplo que he realizado con C# utilizando Aforge.NET. Dicha aplicación trata (y a veces lo consigue) de distinguir si una parcela dada puede ser una plantación  agrícola arbórea mediante el análisis de la Transformada de Hough, y luego se posibilita el conteo automático de los árboles. Al tratarse de un programa con finalidad didáctica los análisis se realizan para una sola parcela y por pasos muy definidos. No obstante, cabe pensar que su mayor utilidad vendría de un análisis masivo de parcelas.
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/hough_direcciones.jpg"><img src="{{ site.url }}/images/gisandchips/hough_direcciones.jpg"></a>
-    <a href="{{ site.url }}/images/gisandchips/hough_direcciones2.jpg"><img src="{{ site.url }}/images/gisandchips/hough_direcciones2.jpg"></a>
+    <a href="{{ site.url }}/images/hough-directions-1.jpg"><img src="{{ site.url }}/images/hough-directions-1.jpg"></a>
+    <a href="{{ site.url }}/images/hough-directions-2.jpg"><img src="{{ site.url }}/images/hough-directions-2.jpg"></a>
     <figcaption>Direcciones principales según la transformada de Hough. A la Izquierda se podría realizar un recuento de árboles, a la derecha no sería posible.</figcaption>
 </figure>
 
@@ -88,7 +88,7 @@ RAPID es el nombre que le hemos dado a nuestra aplicación de ejemplo. Es un ide
 
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/RAPID.jpg"><img src="{{ site.url }}/images/gisandchips/RAPID.jpg"></a>
+    <a href="{{ site.url }}/images/rapid.jpg"><img src="{{ site.url }}/images/rapid.jpg"></a>
     <figcaption>Vista de la aplicación en funcionamiento.</figcaption>
 </figure>
 
@@ -110,8 +110,8 @@ En el caso de la parcela 8 de los ejemplos, vemos que RAPID hace un recuento bas
 
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/parcela8_sigpac.jpg"><img src="{{ site.url }}/images/gisandchips/parcela8_sigpac.jpg"></a>
-    <a href="{{ site.url }}/images/gisandchips/parcela8_rapid.jpg"><img src="{{ site.url }}/images/gisandchips/parcela8_rapid.jpg"></a>
+    <a href="{{ site.url }}/images/plot-8-sigpac.jpg"><img src="{{ site.url }}/images/plot-8-sigpac.jpg"></a>
+    <a href="{{ site.url }}/images/plot-8-rapid.jpg"><img src="{{ site.url }}/images/plot-8-rapid.jpg"></a>
     <figcaption>Ejemplo de conteo de árboles.</figcaption>
 </figure>
 

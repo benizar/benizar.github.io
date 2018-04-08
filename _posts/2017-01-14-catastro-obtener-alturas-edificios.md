@@ -33,9 +33,9 @@ En [este enlace](http://www.catastro.minhap.gob.es/ayuda/manual_descriptivo_shap
 
 
 <figure class="half">
-    <a href="{{ site.url }}/images/catastro_building_heights/catastro_pnoa_wms.png"><img src="{{ site.url }}/images/catastro_building_heights/catastro_pnoa_wms.png"></a>
+    <a href="{{ site.url }}/images/catastro-pnoa-wms.png"><img src="{{ site.url }}/images/catastro-pnoa-wms.png"></a>
 
-    <a href="{{ site.url }}/images/catastro_building_heights/catastro_shp.png"><img src="{{ site.url }}/images/catastro_building_heights/catastro_shp.png"></a>
+    <a href="{{ site.url }}/images/catastro-shp.png"><img src="{{ site.url }}/images/catastro-shp.png"></a>
 
 <figcaption>En estas imágenes vemos la capa WMS de catastro a la izquierda y el shapefile descargado a la derecha.</figcaption>
 
@@ -59,7 +59,7 @@ No lo he buscado a fondo, pero los ejemplos que he visto de momento eran para ex
 Mis primeros proyectos de programación GIS también fueron VBScript para la calculadora de campos de ArcGIS, después probé con Python, pero desde entonces no había vuelto a trabajar con la calculadora de campos de un SIG de escritorio. Particularmente, me gusta la productividad de este tipo de scripts para tareas sencillas.
 
 <figure>
-    <a href="{{ site.url }}/images/catastro_building_heights/field_calculator_qgis.png"><img src="{{ site.url }}/images/catastro_building_heights/field_calculator_qgis.png"></a>
+    <a href="{{ site.url }}/images/catastro-qgis-field-calculator.png"><img src="{{ site.url }}/images/catastro-qgis-field-calculator.png"></a>
 <figcaption>Una vez insertada la función desde el editor de funciones, queda guardada y ya la podemos utilizar.</figcaption>
 </figure>
 
@@ -114,7 +114,7 @@ En esta tabla se muestran los resultados para los 10 edificios (partes de edific
 
 
 <figure>
-    <a href="{{ site.url }}/images/catastro_building_heights/gran_bali.png"><img src="{{ site.url }}/images/catastro_building_heights/gran_bali.png"></a>
+    <a href="{{ site.url }}/images/catastro-gran-bali.png"><img src="{{ site.url }}/images/catastro-gran-bali.png"></a>
 <figcaption>El Gran Hotel Bali de Benidorm. Ortofoto del WMS del PNOA y, en superposición, la capa SHP de catastro con las alturas calculadas.</figcaption>
 </figure>
 

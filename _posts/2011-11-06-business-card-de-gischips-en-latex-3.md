@@ -14,8 +14,8 @@ En estos eventos es habitual el intercambio de tarjetas de presentación y como 
 
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/GC_businessCard_front.jpg"><img src="{{ site.url }}/images/gisandchips/GC_businessCard_front.jpg"></a>
-    <a href="{{ site.url }}/images/gisandchips/GC_businessCard_back.jpg"><img src="{{ site.url }}/images/gisandchips/GC_businessCard_back.jpg"></a>
+    <a href="{{ site.url }}/images/gc-business-card-front.jpg"><img src="{{ site.url }}/images/gc-business-card-front.jpg"></a>
+    <a href="{{ site.url }}/images/gc-business-card-back.jpg"><img src="{{ site.url }}/images/gc-business-card-back.jpg"></a>
 
     <figcaption>Cara tarjeta G&C, generado con los ficheros "G&C_businessCard_front.tex" y "G&C_businessCard_back.tex".</figcaption>
 </figure>
@@ -60,8 +60,8 @@ La plantilla se compone de tres ficheros TeX, uno para cada cara de la tarjeta y
 
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/GC_businessCard_x12_Página_1.jpg"><img src="{{ site.url }}/images/gisandchips/GC_businessCard_x12_Página_1.jpg"></a>
-    <a href="{{ site.url }}/images/gisandchips/GC_businessCard_x12_Página_2.jpg"><img src="{{ site.url }}/images/gisandchips/GC_businessCard_x12_Página_2.jpg"></a>
+    <a href="{{ site.url }}/images/gc-business-card-x12-a.jpg"><img src="{{ site.url }}/images/gc-business-card-x12-a.jpg"></a>
+    <a href="{{ site.url }}/images/gc-business-card-x12-b.jpg"><img src="{{ site.url }}/images/gc-business-card-x12-b.jpg"></a>
 
     <figcaption>Impresiones múltiples de las tarjetas.</figcaption>
 </figure>

@@ -17,8 +17,8 @@ Hola a todos, hoy propongo una de las posibles soluciones a un problema que suel
 En algunas ocasiones la solución a estos problemas sería “trocear” el raster y procesarlo por partes. Esto lo podríamos hacer con varios software y en todos ellos sería interesante poder automatizar la tarea al máximo.
 
 <figure class="half">
-	<a href="{{ site.url }}/images/gisandchips/mdt.jpg"><img src="{{ site.url }}/images/gisandchips/mdt.jpg"></a>
-	<a href="{{ site.url }}/images/gisandchips/municipios.jpg"><img src="{{ site.url }}/images/gisandchips/municipios.jpg"></a>
+	<a href="{{ site.url }}/images/mb-mdt.jpg"><img src="{{ site.url }}/images/mb-mdt.jpg"></a>
+	<a href="{{ site.url }}/images/mb-municipalities.jpg"><img src="{{ site.url }}/images/mb-municipalities.jpg"></a>
 	<figcaption>(1) Modelo digital raster y (2) Shapefile de polígonos con que trocearemos el raster.</figcaption>
 </figure>
 
@@ -33,7 +33,7 @@ Para esta práctica podéis [descargar ficheros de prueba]({{ site.url }}/downlo
 Lo principal, como en tantos otros casos, sería conocer como se trocea un fichero raster con SAGA GIS. Para ello abrimos la GUI de SAGA y vamos a la pestaña “modules” que tiene forma de TOC, generalmente se encuentra a la izquierda de la ventana principal. En esta pestaña podemos encontrar las distintas librerías que agrupan módulos que se relacionan por algún motivo. Explorar estas librerías y practicar con ellas es el mejor modo de estar seguro de lo que se quiere hacer.
 
 <figure class="third">
-	<a href="{{ site.url }}/images/gisandchips/toc.jpg"><img src="{{ site.url }}/images/gisandchips/toc.jpg"></a>
+	<a href="{{ site.url }}/images/saga-gis-toc.jpg"><img src="{{ site.url }}/images/saga-gis-toc.jpg"></a>
 	<figcaption>Figura 3. TOC de SAGA GIS donde podemos explorar las librerías y los módulos disponibles.</figcaption>
 </figure>
 
@@ -80,7 +80,7 @@ En nuestro fichero de prácticas había 18 polígonos por lo que nuestro resulta
 
 
 <figure class="half">
-	<a href="{{ site.url }}/images/gisandchips/recorte.jpg"><img src="{{ site.url }}/images/gisandchips/recorte.jpg"></a>
+	<a href="{{ site.url }}/images/mb-mdt-clip.jpg"><img src="{{ site.url }}/images/mb-mdt-clip.jpg"></a>
 	<figcaption>Figura 4. Uno de los 18 raster resultantes de los recortes y al fondo el shapefile original.</figcaption>
 </figure>
 

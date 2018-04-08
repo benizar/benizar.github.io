@@ -46,7 +46,7 @@ Básicamente, la capa del SIOSE es una base de datos relacional que contiene tre
   3. Un último campo `xml_2009` asociado, que contiene una estructura XML (eXtensible Markup Language) donde se almacenan las coberturas y porcentajes. Esto tiene muy poco que ver con un ESRI Shapefile y creo que ningún SIG de escritorio permite interpretar un XML dentro de una tabla... Sí, para manejar esta base de datos es necesario saber de bases de datos, saber programar o tener muchas ganas de trabajar.
 
 <figure>
-    <a href="{{ site.url }}/images/gisandchips/siose_campos.png"><img src="{{ site.url }}/images/gisandchips/siose_campos.png"></a>
+    <a href="{{ site.url }}/images/siose-columns.png"><img src="{{ site.url }}/images/siose-columns.png"></a>
     <figcaption>Figura 1. Campos disponibles en la base de datos relacional del SIOSE.</figcaption>
 </figure>
 
@@ -55,7 +55,7 @@ Evidentemente, para consultar una base de datos y procesar un XML, podríamos ut
 
 
 <figure class="half">
-    <a href="{{ site.url }}/images/gisandchips/programming_languages.png"><img src="{{ site.url }}/images/gisandchips/programming_languages.png"></a>
+    <a href="{{ site.url }}/images/programming-languages.png"><img src="{{ site.url }}/images/programming-languages.png"></a>
     <figcaption>Figura 2. Clasificación práctica de varios lenguajes de programación.</figcaption>
 </figure>
   
@@ -113,7 +113,7 @@ Al descargar los datos del [Terrasit](<http://terrasit.gva.es/es/descargas>), la
 En la presentación veréis que realizamos varias tareas de preprocesado de la capa del SIOSE-Terrasit. Importamos los datos con el comando shp2pgsql, los unimos en una misma capa, detectamos y eliminamos los polígonos repetidos, recortamos los polígonos según la zona de estudio y finalmente hicimos una clasificación de aquellos polígonos recortados en el borde de la zona de estudio. Esta clasificación sirve para asegurarnos de que la clasificación sea ajustada en los bordes de la zona, ya que al recortar los polígonos la clasificación del SIOSE pierde su representatividad. Podéis ver el resultado en la siguiente figura:
 
 <figure>
-    <a href="{{ site.url }}/images/gisandchips/siose2postgis1.png"><img src="{{ site.url }}/images/gisandchips/siose2postgis1.png"></a>
+    <a href="{{ site.url }}/images/siose2postgis-methodology.png"><img src="{{ site.url }}/images/siose2postgis-methodology.png"></a>
     <figcaption>Figura 3. Fases de procesado de la base de datos del SIOSE.</figcaption>
 </figure>
 
@@ -138,7 +138,7 @@ El resultado final de la reclasificación se puede apreciar en la siguiente ampl
 
 
 <figure>
-    <a href="{{ site.url }}/images/gisandchips/siose2postgis.png"><img src="{{ site.url }}/images/gisandchips/siose2postgis.png"></a>
+    <a href="{{ site.url }}/images/siose2postgis-reclass.png"><img src="{{ site.url }}/images/siose2postgis-reclass.png"></a>
     <figcaption>Figura 4. Captura del resultado de la consulta.</figcaption>
 </figure>
 

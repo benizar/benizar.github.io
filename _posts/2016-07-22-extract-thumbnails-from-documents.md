@@ -28,12 +28,12 @@ convert -density 300 -resize %10 \
         download/curriculum_eng.pdf[0] images/curriculum_eng.png
 ```
 
-The following image is the result of processing [PDF]({{ site.url }}/download/cvn_english.pdf)
+The following image is the result of processing [PDF]({{ site.url }}/downloads/benito-zaragozi-cv-en.pdf)
 
-![cvn_english]({{ site.url }}/images/cvn_english.png){: .align-left}
+![cvn_english]({{ site.url }}/images/benito-zaragozi-cv-en.png){: .align-left}
 
 The `convert` command can be used to *convert* between image formats as well as resize an image, blur, crop, despeckle, dither, draw on, flip, join, re-sample, and much more. See the [Command Line Processing](http://www.imagemagick.org/script/command-line-processing.php) documentation for learning more about its possibilities.
 
-Sometimes, I need to process image files for accomplishing different tasks (watermarks, resizing, crop, convert to grayscale, etc). In the future, I will commit such new scripts [here]({{ site.url }}/images/convert_commands.md).
+Sometimes, I need to process image files for accomplishing different tasks (watermarks, resizing, crop, convert to grayscale, etc). In the future, I will commit such new scripts [here]({{ site.url }}/contrib/convert-commands.md).
 
 I hope you enjoyed this post ;)

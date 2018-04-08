@@ -33,3 +33,6 @@ include contrib/*.mk
 	@bash contrib/deploy-website.sh
 
 
+standarize-images:
+	@rename 'y/A-Z/a-z/' images/*
+	@rename 'y/\_/-/' images/*
