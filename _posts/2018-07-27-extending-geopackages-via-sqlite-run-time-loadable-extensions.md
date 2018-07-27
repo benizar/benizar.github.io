@@ -6,15 +6,11 @@ tags: [sqlite,spatialite,geopackage,extension,user-defined-function,stored proce
 ---
 
 # Introduction
-SQLite is expected to be very important for GIS users. **Two of the most promising GIS formats are based on SQLite: [Spatialite](https://www.gaia-gis.it/gaia-sins/) and [Geopackage](https://www.geopackage.org/)**. This way, understanding the basics of SQLite can be very useful for making the most of these data formats.
+SQLite is expected to be very important for GIS users. It's non-trivial that two of the most promising GIS formats are based on SQLite: [Spatialite](https://www.gaia-gis.it/gaia-sins/) and [Geopackage](https://www.geopackage.org/). This way, understanding the basics of SQLite can be very useful for making the most of these data formats.
 
-> Spatialite and Geopackage [...] understanding the basics of SQLite can be very useful for making the most of these data formats.
-
-Geopackages are good for many different reasons and one can expect to find all of our favorite features in this GIS data format. In this sense, I'm a huge fan of Postgres *extensibility*. There are many options for extending Postgres. You can create new operators, aggregates, functions, types, etc... and pack everything in a custom extension. PostGIS is probably the most interesting example of Postgres extensibility. In Postgres, every-time we need to create a complex parametrized query, we can use `CREATE FUNCTION` and encapsulate it. This makes it easier to read/write complex queries (or Postgis geoprocesses) and improves code (re)usability. I would like to have such useful features in other databases and it would be amazing to have this features when working with Geopackages.
+Particularly, geopackages are good for many different reasons and one can expect to find all of our favorite features in this modern GIS data format. In this sense, I'm a huge fan of Postgres *extensibility*. When using Postgres, you can create new operators, aggregates, functions, types, etc... and pack everything in a custom extension. PostGIS itself is a Postgres extension. Every-time we need to create a complex parametrized query, we can use Postgres `CREATE FUNCTION` and encapsulate it. This makes it easier to read/write complex queries (or Postgis geoprocesses) and improves code (re)usability. I would like to have such useful features in other databases and it would be amazing to have this features when working with Geopackages.
 
 After my very first searches, I have learnt that **SQLite is not intended to have stored functions, so `CREATE FUNCTION` does not work**. However, in SQLite we can map functions from several programming languages (C, PHP, Python, Perl, .NET, among others) to SQL functions, namely **user-defined functions** and pack them in **Run-Time Loadable extensions**. It would be amazing if this approach could work also for Spatialite and Geopackages.
-
-> SQLite is not intended to hold stored functions, so `CREATE FUNCTION` does not work [...] Run-Time Loadable Extensions. It would be amazing if this approach could work also for Spatialite and Geopackages.
 
 There are various ways for extending SQLite, but using its **C API** seems more straightforward and portable. I guess that everything done this way should work in the most used GIS (QGIS, ArcGIS, etc). Let's do some tests...
 
@@ -140,7 +136,7 @@ We can do this test in QGIS 2.8 and it will work correctly for Spatialite. Howev
 
 We have revised how to use the SQLite C API and it seems a very powerful approach for distributing data with some useful logic. For example, imagine that you want to distribute some data to GIS users, avoiding to describe complex parametrized queries. This could be achieved through Run-Time Loadable extensions...
 
-I think that the most recent Python distributions are blocking this mechanism for some security reasons and this is directly incorporated into QGIS. However, this functionality seems very useful and I hope that there has to be a way of loading extensions without compiling QGIS from sources.
+I have discovered that the most recent Python distributions are blocking this mechanism for some security reasons and this is directly incorporated into QGIS. However, this functionality seems very useful and I think that there are other ways for loading extensions without compiling QGIS from sources.
 
 
 
