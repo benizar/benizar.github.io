@@ -35,6 +35,9 @@
       {% if author.orcid %}
         <li><a href="https://orcid.org/{{ author.orcid }}"><i class="ai ai-fw ai-orcid" aria-hidden="true" style="color:#a6ce39ff;"></i>ORCID</a></li>
       {% endif %}
+      {% if author.researcherid %}
+        <li><a href="http://www.researcherid.com/rid/{{ author.researcherid }}"><i class="ai ai-fw ai-researcherid" aria-hidden="true" style="color:#ffa500;"></i>ResearcherID</a></li>
+      {% endif %}
       {% if author.google_scholar %}
         <li><a href="https://scholar.google.es/citations?user={{ author.google_scholar }}"><i class="ai ai-fw ai-google-scholar-square" aria-hidden="true"  style="color:#508ef3ff;"></i>Google Scholar</a></li>
       {% endif %}
