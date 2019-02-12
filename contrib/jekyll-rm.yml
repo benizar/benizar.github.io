@@ -1,5 +1,5 @@
 #
-# Jekyll build for deploying to gh-pages (called from deploy.sh)
+# Jekyll container for removing root files without sudo
 #
 version: '2'
 services:
@@ -12,4 +12,4 @@ services:
     volumes:
       - ..:/source # Your sources will be here
     entrypoint: /bin/ash
-    command: -c 'rm -rf _site'
+    command: -c 'rm -rf _site Gemfile.lock'
