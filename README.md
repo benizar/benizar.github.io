@@ -53,4 +53,8 @@ This script is going to:
 8. Switch back to the SOURCE branch
 
 
+## TODO
+
+- Try to map users dynamically from Make and compose [Docker compose as non root user](https://medium.com/redbubble/running-a-docker-container-as-a-non-root-user-7d2e00f8ee15)
+
 
