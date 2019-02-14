@@ -56,5 +56,6 @@ This script is going to:
 ## TODO
 
 - Try to map users dynamically from Make and compose [Docker compose as non root user](https://medium.com/redbubble/running-a-docker-container-as-a-non-root-user-7d2e00f8ee15)
+- Create a fast-git-undo script using [get commit id](https://stackoverflow.com/questions/1967967/git-command-to-display-head-commit-id) and [previous git state](https://stackoverflow.com/a/1146981). Manage commited and not commited changes.
 
 
