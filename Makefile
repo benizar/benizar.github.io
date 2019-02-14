@@ -1,6 +1,5 @@
 include contrib/*.mk
 
-
 .PHONY: 1-new-draft
 ## Create a new draft in the _drafts folder
 1-new-draft:
@@ -19,8 +18,7 @@ include contrib/*.mk
 ## Close the jekyll server
 3-stop-server:
 	@docker-compose -f contrib/jekyll-serve.yml down
-	@docker-compose -f contrib/jekyll-rm.yml up -d
-	@docker-compose -f contrib/jekyll-rm.yml down
+	@rm -rf _site Gemfile.lock
 
 .PHONY: 4-push-source
 ## Push to source branch
