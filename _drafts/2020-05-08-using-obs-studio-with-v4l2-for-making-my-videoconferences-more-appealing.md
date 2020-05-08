@@ -33,26 +33,16 @@ This excelent [post](https://srcco.de/posts/using-obs-studio-with-v4l2-for-googl
 I'm still using Ubuntu Xenial (16.04) but 
 sing [liboobs-1-dev](https://packages.ubuntu.com/xenial/liboobs-1-dev) as an alternative to
 
-
-
-1. Install QT
-
 ```bash
+# APT install basics
 sudo apt install obs-studio
 sudo apt install v4l2loopback-dkms
 sudo apt install qtbase5-dev
 
-```
-    
-2. Get obs-studio source code
-
-```bash
+# Get obs-studio source code
 git clone --recursive https://github.com/obsproject/obs-studio.git
-```
 
-3. Build plugins
-
-```bash
+# Build plugins
 git clone https://github.com/CatxFish/obs-v4l2sink.git
 cd obs-v4l2sink
 mkdir build && cd build
@@ -60,6 +50,30 @@ cmake -DLIBOBS_INCLUDE_DIR="../../obs-studio/libobs" -DCMAKE_INSTALL_PREFIX=/usr
 make -j4
 sudo make install
 ```
+
+
+## Starting a session with a virtual camera
+
+```bash
+# Removing previous devices
+sudo modprobe -r v4l2loopback
+
+# Creating a new device with #10 id
+sudo modprobe v4l2loopback video_nr=10 card_label="OBS Video Source" exclusive_caps=1
+```
+
+Now, I'm ready to start OBS and connect the webcam
+
+And sometimes it will be necessary to check the `obs-v4l2sink` plugin. Go to tools>
+
+
+I let the autostart off because... This is necessary when changing videoconferencing platform, because each platform may accept different video input formats. For example, I have tested these in my computer:
+
+YUV420:
+Hangout, Zoom
+
+YUV2:
+Skype, Yitsi
 
 
 
