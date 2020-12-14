@@ -9,7 +9,7 @@ include contrib/*.mk
 .PHONY: 2-start-server
 ## Start a Jekyll server at port 4000
 2-start-server:
-	@docker-compose -f contrib/jekyll-serve.yml up -d
+	@docker-compose -f contrib/jekyll-serve.yml up
 	@sleep 15s
 	@sensible-browser http://0.0.0.0:4000/
 

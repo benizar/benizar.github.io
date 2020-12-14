@@ -4,7 +4,7 @@ excerpt: Contact information, mailing address, maps, etc
 permalink: /contact/
 ---
 
-**Note:** I'm very punctilious in how I use social networks, so I encorage you to use them reasonably. For everything else, you can use my contact details at the Universitat Rovira i Virgili. :eyes:
+**Note:** I'm very punctilious in how I use social networks, so I encorage you to use them reasonably. For everything else, you can use my contact details at the Universitat Rovira i Virgili.
 {: .notice--info}
 
 
@@ -20,7 +20,7 @@ Mailing address
 : [Universitat Rovira i Virgili](http://www.urv.cat/)
 : C/Joanot Martorell, 15
 : 43480 Vila-seca (Tarragona)
-: España :es:
+: España
 
 
 

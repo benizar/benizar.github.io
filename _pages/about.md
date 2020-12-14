@@ -4,7 +4,7 @@ excerpt: "A brief summary of my academic life"
 permalink: /about/
 ---
 
-**Note:** Please, feel free to use the following parragraphs if you need to introduce me at any event. I wrote this for a project proposal and it is almost updated. :eyes:
+**Note:** Please, feel free to use the following parragraphs if you need to introduce me at any event. I wrote this for a project proposal and it is almost updated.
 {: .notice--info}
 
 ## Un breve resumen (ESP)
