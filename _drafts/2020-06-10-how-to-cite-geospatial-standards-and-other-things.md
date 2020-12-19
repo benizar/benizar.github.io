@@ -5,12 +5,12 @@ tags: [bibliography,bibtex,standards,iso/iec,ogc,gis,geospatial]
 ---
 
 # Reference management
-Google scholar
+Google scholar 
 
 # Document management
 Mendeley for papers and procedings (doi)
 
-Calibre for digital books
+Calibre for digital books 
 
 
 # Not found in the previous options?
@@ -27,7 +27,7 @@ BibTeX:
   address = {Geneva, CH},
   type = {Standard},
   title = {Systems and software engineering -- {Lifecycle} profiles for {Very} {Small} {Entities} ({VSEs}) -- {Part} 1: {Overview}},
-  shorttitle = {{ISO}/{IEC} {TR} 29110-1:2016},
+  shorttitle = ISO/IEC TR 29110-1:2016,
   url = {https://www.iso.org/standard/62711.html},
   language = {en},
   number = {ISO/IEC TR 29110-1:2016},
@@ -42,10 +42,10 @@ BibTeX:
   address = {Geneva, CH},
   type = {Standard},
   title = {Information technology -- {Database} languages -- SQL -- {Part} 1: {Framework}},
-  shorttitle = {{ISO}/{IEC} 9075-1:2016},
+  shorttitle = ISO/IEC 9075-1:2016,
   url = {https://www.iso.org/standard/63555.html},
   language = {en},
-  number = {ISO/IEC TR 9075-1:2016},
+  number = ISO/IEC TR 9075-1:2016,
   institution = {International Organization for Standardization},
   author = {ISO Central Secretary},
   year = {2016}
