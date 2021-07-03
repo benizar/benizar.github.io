@@ -63,6 +63,15 @@ ardesia -g south -d -t 50
 
 # Gromit-MPX
 
+F9
+: toggle painting 
+SHIFT-F9
+: clear screen 
+CTRL-F9
+: toggle visibility 
+ALT-F9
+: quit Gromit-MPX 
+
 <script src="https://gist.github.com/benizar/5d5e08b9b1f82619a747cea547ba236a.js"></script>
 
 # Conclusions
