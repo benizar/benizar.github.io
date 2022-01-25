@@ -18,6 +18,15 @@ Cl@ve
 
 
 
+```bash
+sudo apt install pcscd pcsc-tools pinentry-gtk2 libccid
+
+#https://www.dnielectronico.es/PortalDNIe/PRF1_Cons02.action?pag=REF_3000
+wget https://www.dnielectronico.es/descargas/distribuciones_linux/Ubuntu_libpkcs11-dnie_1.5.3_amd64.deb
+sudo dpkg -i libpkcs11-dnie_x.x.x_i386.deb
+```
+
+
 ## Autofirma
 
 Instalar la versión de Java necesaria, librerias y después ya se puede instalar AutoFirma:
@@ -27,7 +36,8 @@ sudo apt install openjdk-8-jre
 sudo apt install libnss3-tools
 mkdir temporal_autofirma
 cd temporal_autofirma
-wget http://estaticos.redsara.es/comunes/AutoFirma_Linux.zip
+# Ir a https://firmaelectronica.gob.es/Home/Descargas.html a comprobar si `1.6.5` es la última versión
+wget https://estaticos.redsara.es/comunes/autofirma/1/6/5/AutoFirma_Linux.zip
 unzip AutoFirma_Linux.zip
 sudo dpkg -i *.deb
 cd ..
