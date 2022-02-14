@@ -1,0 +1,674 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Choosing a desktop marker app for Ubuntu 18.04 LTS - Benito Zaragozí</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Benito Zaragozí">
+<meta property="og:title" content="Choosing a desktop marker app for Ubuntu 18.04 LTS">
+
+
+
+
+  <meta property="og:description" content="In this post I explain the main features of two desktop bookmarking apps in Ubuntu 18.04: Pylote and Gromit-MPX. Both tools come in handy when making presentations, pointing to something during a video recording, or can even improve the way I’ve been taking screenshots for my documentation.">
+
+
+
+  <meta name="twitter:site" content="@benizar81">
+  <meta name="twitter:title" content="Choosing a desktop marker app for Ubuntu 18.04 LTS">
+  <meta name="twitter:description" content="In this post I explain the main features of two desktop bookmarking apps in Ubuntu 18.04: Pylote and Gromit-MPX. Both tools come in handy when making presentations, pointing to something during a video recording, or can even improve the way I’ve been taking screenshots for my documentation.">
+  <meta name="twitter:url" content="">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2020-05-15T00:00:00+00:00">
+  
+    <link rel="next" href="/analysis/how-to-cite-geospatial-standards-and-other-things/" title="How to cite geospatial standards and other GIS things">
+  
+  
+    <link rel="prev" href="/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing/" title="Using OBS Studio with V4L2 for making my videoconferences more appealing">
+  
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Benito Zaragozí",
+      "url" : null,
+      "sameAs" : ["https://twitter.com/benizar81","https://facebook.com/benizar81","https://www.linkedin.com/in/benizar","https://www.researchgate.net/profile/Benito_Zaragozi","http://orcid.org/0000-0003-2501-484X"]
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Benito Zaragozí Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/academicons.min.css"/>
+
+<meta http-equiv="cleartype" content="on">
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="/">Benito Zaragozí</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/year-archive/">Blog</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/cv/">CV</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/contact/">Contact</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/about/">About me</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="/images/benizar-photo.jpg" class="author__avatar" alt="Benito Zaragozí">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Benito Zaragozí</h3>
+    <p class="author__bio">Geographer and GIScientist</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Vila-Seca, Spain</li>
+      
+      
+      
+        <li><a href="mailto:benizar@gmail.com"><i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+      
+
+      
+        <li><a href="https://orcid.org/0000-0003-2501-484X"><i class="ai ai-fw ai-orcid" aria-hidden="true" style="color:#a6ce39ff;"></i>ORCID</a></li>
+      
+      
+        <li><a href="http://www.researcherid.com/rid/B-5270-2019"><i class="ai ai-fw ai-researcherid" aria-hidden="true" style="color:#ffa500;"></i>ResearcherID</a></li>
+      
+      
+        <li><a href="https://scholar.google.es/citations?user=sO9xAc8AAAAJ"><i class="ai ai-fw ai-google-scholar-square" aria-hidden="true"  style="color:#508ef3ff;"></i>Google Scholar</a></li>
+      
+      
+        <li><a href="https://www.researchgate.net/profile/Benito_Zaragozi"><i class="ai ai-fw ai-researchgate-square" aria-hidden="true" style="color:#00e3abff;"></i>ResearchGate</a></li>
+      
+      
+        <li><a href="https://www.mendeley.com/profiles/benito-zaragozi"><i class="ai ai-fw ai-mendeley-square" aria-hidden="true" style="color:#a51925ff;"></i>Mendeley</a></li>
+      
+
+      
+        <li><a href="https://bitbucket.org/benizar"><i class="fa fa-fw fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
+      
+      
+        <li><a href="https://github.com/benizar"><i class="fa fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+
+
+      
+        <li><a href="https://www.linkedin.com/in/benizar"><i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn</a></li>
+      
+
+      
+        <li><a href="https://twitter.com/benizar81"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+        <li><a href="https://www.facebook.com/benizar81"><i class="fa fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+      
+
+
+      
+      
+      
+
+
+      
+      
+      
+      
+
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </ul>
+  </div>
+</div>
+
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Choosing a desktop marker app for Ubuntu 18.04 LTS">
+    <meta itemprop="description" content="In this post I explain the main features of two desktop bookmarking apps in Ubuntu 18.04: Pylote and Gromit-MPX. Both tools come in handy when making presentations, pointing to something during a video recording, or can even improve the way I’ve been taking screenshots for my documentation.">
+    <meta itemprop="datePublished" content="May 15, 2020">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Choosing a desktop marker app for Ubuntu 18.04 LTS
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <h2 id="introduction">Introduction</h2>
+
+<p>In the last few months many professionals have stopped leaving home to go to work and, among these, there are a good number of people who, like me, are trying to find the best way to work from home.</p>
+
+<p>In my office I have to work with different operating systems but at home there is only Ubuntu. This is why in the last few weeks I have had to go back to review a good number of apps that I haven’t used on a daily basis for a long time.</p>
+
+<p>In this post I am going to talk about those applications that we use when we are making a presentation with the computer and we want to point, write or draw something in a spontaneous way. This is about the desktop annotation tools.</p>
+
+<h3 id="my-needs">My needs</h3>
+
+<p>First or second thing I made two months ago, when the coronavirus changed our lives, was to setup my working environment. I’m still on it but I feel that I’m very close to solve all the minor problems I experienced in the begining. I had to upgrade my personal computers from Ubuntu 16.04 to Ubuntu 18.04. Many new programs have dependencies that make them very awful to install.</p>
+
+<p>In a streaming web conference, I saw one presentation where the researcher was using <a href="https://epic-pen.com/">epicpen</a> for pointing out things on his slides and figures. That was much more better than using the mouse pointer. Epicpen is still in development but it’s pretty cool and has many features. The main problem with this app right now is that it’s not designed to be multiplatform and it’s not FOSS. I’m not a designer, I just want to sketch a couple of <em>messy</em> lines and arrows, so I’m not even considering a comercial software.</p>
+
+<p>Actually, I have a wish list of the desirable characteristics these programs should have. This apps should be capable of:</p>
+
+<ul>
+  <li>Drawing points, lines and polygons of at least 4 or 5 colours.</li>
+  <li>Writing text using any of both options, using the keyboard or writing with a digitizing tablet.</li>
+  <li>Draw on top of my documents and figures without being too anoying for the people watching (e.g. too many buttons and controls arround).</li>
+  <li>Speeding up my presentation (e.g. shortcuts for switching pens, colours, etc)</li>
+  <li>Working in a two monitor configuration (e.g. when recording video I don’t want the app occuping my space).</li>
+  <li>When preparing software tutorials, it would be awesome to draw over expanded app menus, but I think I’m asking for too much :)</li>
+</ul>
+
+<h2 id="ardesia">Ardesia</h2>
+<p>A few years ago, I used to use <a href="https://code.google.com/archive/p/ardesia/">Ardesia</a> for sketching over the screen. A GPL licensed software that was able to do almost all I needed. However, this project is no longer maintained by its creator. It was working with difficulties in Ubuntu 16.04 but it was still distributed from official packages. It’s a pitty because it was very useful.</p>
+
+<p>In case you want to try it (under your own responsibility), Ardesia’s code is available from different repositories and it still works in Ubuntu 18.04. I have installed it following the project README with a few small changes:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># Install Ardesia on Ubuntu 18.04</span>
+<span class="c"># Use code from non trusted repositories at your on risk!</span>
+<span class="c"># libpng12-dev is no longer available, use libpng-dev</span>
+sudo apt-get install gcc make automake autoconf intltool libtool libtool-bin libxml2-dev libgsf-1-dev libgtk-3-dev libatk1.0-dev libx11-dev libpng-dev libglib2.0-dev libgconf2-dev libfontconfig1-dev libfreetype6-dev libgsl0-dev libc6-dev xdg-utils librsvg2-dev
+
+<span class="c"># Download sources from github. I just made a fork.</span>
+git clone https://github.com/benizar/ardesia.git
+<span class="nb">cd </span>ardesia/
+
+<span class="c"># Compile as a *.deb package</span>
+sudo apt-get install devscripts
+./autogen.sh
+make deb
+sudo dpkg -i ardesia_1.2-1_amd64.deb
+</code></pre>
+</div>
+
+<p>Now, run it with parameters so you can control its behaviour</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>ardesia --help
+ardesia -g south -d -t 50
+</code></pre>
+</div>
+
+<h2 id="pylote">Pylote</h2>
+<p>There is a nice Python based tool called <a href="http://pascal.peter.free.fr/pylote-en.html#features">Pylote</a>, just download and double click on the launcher (or <code class="highlighter-rouge">python3 pylote.pyw</code>). Pylote is actively mantained and has lots of options.</p>
+
+<p>Pylote is the perfect tool if I wanted to create detailed presentations but I think it lacks the interactivity I want. Once you start Pylote you will no longer be able to modify anything on the desktop. Also, during a videoconference, when you need to explain something, you can’t spend time recreating the screan. I would need a program more independent from what’s happening in the screen and <strong>I was unable to find any keyboard shortcuts</strong> that could facilitate the work.</p>
+
+<h2 id="gromit-mpx">Gromit-MPX</h2>
+
+<p>This is a pretty nice app and it’s easy to install from APT. The thing I most liked about Gromit is its simplicity. Once Gromit is started it can be used through keyboard shortcuts:</p>
+
+<dl>
+  <dt>F9</dt>
+  <dd>toggle painting</dd>
+  <dt>SHIFT-F9</dt>
+  <dd>clear screen</dd>
+  <dt>CTRL-F9</dt>
+  <dd>toggle visibility</dd>
+  <dt>ALT-F9</dt>
+  <dd>quit Gromit-MPX</dd>
+</dl>
+
+<p>An it can be configured to switch colours and shapes using different mouse+keyboard combinations. This is the configuration I prefer:
+<script src="https://gist.github.com/benizar/5d5e08b9b1f82619a747cea547ba236a.js"></script></p>
+
+<p>As you can see, I only need 4 colours (3 mouse buttons+left click while pressing ALT), [Shift] switches from pen to highlighter, control is for drawing arrows… I think that you got the idea.</p>
+
+<p>I proved myself that the productivity when creating a slideshow of desktop captures is much higher than using other methods. However, I only liked to use the yellow highlighter for everything :)</p>
+
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/EXPwV8UgmoQ14J" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen=""> </iframe>
+<div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/BeniZaragoz/introducci-a-git-251170618" title="Introducció a Git" target="_blank">Introducció a Git</a> </strong> de <strong><a href="//www.slideshare.net/BeniZaragoz" target="_blank">Benito Zaragozí</a></strong> </div>
+
+<h2 id="conclusions">Conclusions</h2>
+<p>There are many software programs for highlighting things on the screen. The three I’ve tested had nice options and they are really helpful in my tasks but, for simplicity, I can only use one of them. Let’s see:</p>
+
+<ol>
+  <li>Ardesia feels too old and is no longer mantained. It’s a pitty!!</li>
+  <li>Pylote has a lot of tools and configuration is not easy (for what I need). The tool I need should be used through shortcuts and in combination with screen captures.</li>
+  <li>Gromit covers all my requirements and it’s very simple. All the configuration can be automated.</li>
+</ol>
+
+<p>I think <strong>I will stay with Gromit for a while</strong>. Only, if I had to ask for an additional feature, I just would like to be able to draw over unfolded and context menus (e.g. right button). When that’s the case you must draw over the screen capture and do it the old way.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#ardesia" class="page__taxonomy-item" rel="tag">ardesia</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#desktop-marker" class="page__taxonomy-item" rel="tag">desktop marker</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#epic-pen" class="page__taxonomy-item" rel="tag">epic pen</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#gromit" class="page__taxonomy-item" rel="tag">gromit</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pylote" class="page__taxonomy-item" rel="tag">pylote</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#screen-capture" class="page__taxonomy-item" rel="tag">screen capture</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ubuntu" class="page__taxonomy-item" rel="tag">ubuntu</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#multimedia" class="page__taxonomy-item" rel="tag">Multimedia</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-05-15T00:00:00+00:00">May 15, 2020</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing/" class="pagination--pager" title="Using OBS Studio with V4L2 for making my videoconferences more appealing
+">Previous</a>
+    
+    
+      <a href="/analysis/how-to-cite-geospatial-standards-and-other-things/" class="pagination--pager" title="How to cite geospatial standards and other GIS things
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/management/ubuntu20-dni-electronico-y-autofirma/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">DNI electrónico y autofirma en 2020: cómo NO perder 2 horas para firmar una solicitud
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">Cómo usar el DNIe desde Ubuntu para firmar electrónicamente trámites en línea. En este caso se firmaron las solicitudes para optar a las certificaciones de l...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/analysis/how-to-cite-geospatial-standards-and-other-things/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">How to cite geospatial standards and other GIS things
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  1 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">I found a template for manging ISO and OGC standards as Bibtex entries. This may be useful for citing documents that are not indexed by Google Scholar or if ...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">Using OBS Studio with V4L2 for making my videoconferences more appealing
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  3 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">In this post, I share the software configuration in Ubuntu to make video-conferences using a green chroma screen and your favorite video-conferencing software.
+</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/analysis/extending-geopackages-via-sqlite-run-time-loadable-extensions/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">Extending Geopackages via SQLite’s Run-Time Loadable extensions
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">Testing if Geopackages functionality can be extended via SQLite extensions. Can this work in QGIS?
+</p>
+    </article>
+  </a>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/benizar81"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+      <li><a href="https://facebook.com/benizar81"><i class="fa fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+    
+    
+      <li><a href="http://github.com/benizar"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+      <li><a href="http://bitbucket.org/benizar"><i class="fa fa-fw fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
+    
+    <li><a href="/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Benito Zaragozí. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="/assets/js/main.min.js"></script>
+
+
+
+
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-81625023-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

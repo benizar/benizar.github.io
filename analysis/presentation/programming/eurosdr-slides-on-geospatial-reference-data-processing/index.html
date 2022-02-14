@@ -19,7 +19,7 @@
 
 
 
-<title>Benito Zaragozí</title>
+<title>Geospatial Reference Information processing - Benito Zaragozí</title>
 
 
 
@@ -29,16 +29,18 @@
 
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="Benito Zaragozí">
-<meta property="og:title" content="Benito Zaragozí">
+<meta property="og:title" content="Geospatial Reference Information processing">
 
 
 
+
+  <meta property="og:description" content="Improving the usability of the Information system of land cover in Spain (SIOSE)">
 
 
 
   <meta name="twitter:site" content="@benizar81">
-  <meta name="twitter:title" content="Benito Zaragozí">
-  <meta name="twitter:description" content="This is the hub for my multiple digital profiles">
+  <meta name="twitter:title" content="Geospatial Reference Information processing">
+  <meta name="twitter:description" content="Improving the usability of the Information system of land cover in Spain (SIOSE)">
   <meta name="twitter:url" content="">
 
   
@@ -56,9 +58,16 @@
 
 
 
-  <meta property="og:image" content="/images/header-dragon-kahn.jpg">
 
 
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2016-10-19T00:00:00+00:00">
+  
+    <link rel="next" href="/analysis/presentation/programming/introduccion-a-siose-sql/" title="Introducción a la geodatabase del SIOSE">
+  
+  
+    <link rel="prev" href="/multimedia/teaching/how-to-customize-openshot-animated-titles/" title="Customize animated titles in OpenShot">
+  
 
 
 
@@ -144,36 +153,7 @@
 </div>
 
     
-  
 
-
-
-
-
-
-
-
-
-<div class="page__hero--overlay"
-  style=" background-image: url('/images/header-dragon-kahn.jpg');"
->
-  
-    <div class="wrapper">
-      <h1 class="page__title" itemprop="headline">
-        
-          Benito Zaragozí
-        
-      </h1>
-      
-      
-      
-    </div>
-  
-  
-    <span class="page__hero-caption">Dragon Khan roller coaster (PortAventura)
-</span>
-  
-</div>
 
 
 
@@ -278,18 +258,185 @@
   </div>
 
 
-  <div class="archive">
-    
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Geospatial Reference Information processing">
+    <meta itemprop="description" content="Improving the usability of the Information system of land cover in Spain (SIOSE)">
+    <meta itemprop="datePublished" content="October 19, 2016">
     
 
-<h3 class="archive__subtitle">Recent Posts</h3>
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Geospatial Reference Information processing
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  1 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>This week I was invited to the 129th EuroSDR Board Members committee for presenting our latest research work on geospatial databases. It was a technical presentation focused on the usability gap of the Geospatial Reference Information compiled and published by the SDIs.</p>
+
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/a41uGtC3FkeM83" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen=""> </iframe>
+<div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/BeniZaragoz/improving-the-usability-of-the-information-system-of-land-cover-in-spain-siose" title="Improving the usability of the Information system of land cover in Spain (SIOSE)" target="_blank">Improving the usability of the Information system of land cover in Spain (SIOSE)</a> </strong> de <strong><a target="_blank" href="//www.slideshare.net/BeniZaragoz">University of Alicante</a></strong> </div>
+
+<h2 id="contents">Contents</h2>
+<p>In the slides we present a case study on Land Occupation databases which use an object-oriented data model following the INSPIRE technical specifications. In this case the usability gap consists on the object-relational impedance mismatch. This happens when an object-oriented data model has to be stored in a relational database.</p>
+
+<p>In the second section of this presentation we describe a computational experiment for testing if there are any benefits in storing land use (LU) and land cover (LC) data in a document store database. In this experiment we used the LU/LC database of Spain (SIOSE).</p>
+
+<p>The results showed that there are some benefits in terms of throughput capacity and response times for certain thematic queries. Based on these results we propose some additional improvements that could provide even better results.</p>
+
+<p>This experiment was performed using the dockers containerization technology, so the experiment is completely reproducible in less than eight hours (it took weeks to prepare the experiment) by executing a few lines of code. As a suggestion, the dockers technology could be used as a way for sharing Geospatial Reference Information databases with companies or advanced users willing to use this data for research or business.</p>
+
+<p>This research is going to be continued in a research project starting in 2017 and funded by the Spanish Ministry of Economy and Competitiveness.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
 
 
   
 
 
 
-<div class="list__item">
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#geodatabases" class="page__taxonomy-item" rel="tag">geodatabases</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#landuse" class="page__taxonomy-item" rel="tag">landuse</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#nosql" class="page__taxonomy-item" rel="tag">nosql</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#postgis" class="page__taxonomy-item" rel="tag">postgis</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#postgresql" class="page__taxonomy-item" rel="tag">postgresql</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#programming" class="page__taxonomy-item" rel="tag">programming</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#siose" class="page__taxonomy-item" rel="tag">SIOSE</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#analysis" class="page__taxonomy-item" rel="tag">Analysis</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#presentation" class="page__taxonomy-item" rel="tag">Presentation</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#programming" class="page__taxonomy-item" rel="tag">Programming</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-10-19T00:00:00+00:00">October 19, 2016</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=/analysis/presentation/programming/eurosdr-slides-on-geospatial-reference-data-processing/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=/analysis/presentation/programming/eurosdr-slides-on-geospatial-reference-data-processing/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=/analysis/presentation/programming/eurosdr-slides-on-geospatial-reference-data-processing/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=/analysis/presentation/programming/eurosdr-slides-on-geospatial-reference-data-processing/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="/multimedia/teaching/how-to-customize-openshot-animated-titles/" class="pagination--pager" title="Customize animated titles in OpenShot
+">Previous</a>
+    
+    
+      <a href="/analysis/presentation/programming/introduccion-a-siose-sql/" class="pagination--pager" title="Introducción a la geodatabase del SIOSE
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
   
     <a href="/management/ubuntu20-dni-electronico-y-autofirma/">
   
@@ -310,12 +457,12 @@
     </article>
   </a>
 </div>
+        
+          
 
-  
 
 
-
-<div class="list__item">
+<div class="grid__item">
   
     <a href="/analysis/how-to-cite-geospatial-standards-and-other-things/">
   
@@ -336,12 +483,12 @@
     </article>
   </a>
 </div>
+        
+          
 
-  
 
 
-
-<div class="list__item">
+<div class="grid__item">
   
     <a href="/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/">
   
@@ -362,12 +509,12 @@
     </article>
   </a>
 </div>
+        
+          
 
-  
 
 
-
-<div class="list__item">
+<div class="grid__item">
   
     <a href="/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing/">
   
@@ -380,7 +527,7 @@
 
 
   
-	  3 minute read
+	  4 minute read
 	
 </p>
       
@@ -389,91 +536,10 @@
     </article>
   </a>
 </div>
-
+        
+      </div>
+    </div>
   
-
-
-
-<div class="list__item">
-  
-    <a href="/analysis/extending-geopackages-via-sqlite-run-time-loadable-extensions/">
-  
-    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
-      
-      <h2 class="archive__item-title" itemprop="headline">Extending Geopackages via SQLite’s Run-Time Loadable extensions
-</h2>
-      
-        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
-
-
-  
-	  4 minute read
-	
-</p>
-      
-      <p class="archive__item-excerpt" itemprop="description">Testing if Geopackages functionality can be extended via SQLite extensions. Can this work in QGIS?
-</p>
-    </article>
-  </a>
-</div>
-
-
-
-
-
-<nav class="pagination">
-  <ul>
-    
-    
-      <li><a href="#" class="disabled"><span aria-hidden="true">Previous</span></a></li>
-    
-
-    
-    
-      <li><a href="#" class="disabled current">1</a></li>
-    
-
-    
-    
-
-    
-    
-    
-
-    
-      
-        
-        
-        
-        <li><a href="/page2/">2</a></li>
-      
-    
-      
-        
-        
-        
-        <li><a href="/page3/">3</a></li>
-      
-    
-
-    
-    
-      <li><a href="#" class="disabled">&hellip;</a></li>
-    
-
-    
-      <li><a href="/page6/">6</a></li>
-    
-
-    
-    
-      <li><a href="/page2/">Next</a></li>
-    
-  </ul>
-</nav>
-
-
-  </div>
 </div>
 
 

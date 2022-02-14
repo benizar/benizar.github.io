@@ -1,0 +1,644 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Customize animated titles in OpenShot - Benito Zaragozí</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Benito Zaragozí">
+<meta property="og:title" content="Customize animated titles in OpenShot">
+
+
+
+
+  <meta property="og:description" content="How to create animated titles in OpenShot with transparent background. Solving a bug and discovering python scripting in Blender.">
+
+
+
+  <meta name="twitter:site" content="@benizar81">
+  <meta name="twitter:title" content="Customize animated titles in OpenShot">
+  <meta name="twitter:description" content="How to create animated titles in OpenShot with transparent background. Solving a bug and discovering python scripting in Blender.">
+  <meta name="twitter:url" content="">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2016-09-22T00:00:00+00:00">
+  
+    <link rel="next" href="/analysis/presentation/programming/eurosdr-slides-on-geospatial-reference-data-processing/" title="Geospatial Reference Information processing">
+  
+  
+    <link rel="prev" href="/snippets/extract-thumbnails-from-documents/" title="Extracting thumbnails from a PDF page">
+  
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Benito Zaragozí",
+      "url" : null,
+      "sameAs" : ["https://twitter.com/benizar81","https://facebook.com/benizar81","https://www.linkedin.com/in/benizar","https://www.researchgate.net/profile/Benito_Zaragozi","http://orcid.org/0000-0003-2501-484X"]
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Benito Zaragozí Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/academicons.min.css"/>
+
+<meta http-equiv="cleartype" content="on">
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="/">Benito Zaragozí</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/year-archive/">Blog</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/cv/">CV</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/contact/">Contact</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/about/">About me</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="/images/benizar-photo.jpg" class="author__avatar" alt="Benito Zaragozí">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Benito Zaragozí</h3>
+    <p class="author__bio">Geographer and GIScientist</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Vila-Seca, Spain</li>
+      
+      
+      
+        <li><a href="mailto:benizar@gmail.com"><i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+      
+
+      
+        <li><a href="https://orcid.org/0000-0003-2501-484X"><i class="ai ai-fw ai-orcid" aria-hidden="true" style="color:#a6ce39ff;"></i>ORCID</a></li>
+      
+      
+        <li><a href="http://www.researcherid.com/rid/B-5270-2019"><i class="ai ai-fw ai-researcherid" aria-hidden="true" style="color:#ffa500;"></i>ResearcherID</a></li>
+      
+      
+        <li><a href="https://scholar.google.es/citations?user=sO9xAc8AAAAJ"><i class="ai ai-fw ai-google-scholar-square" aria-hidden="true"  style="color:#508ef3ff;"></i>Google Scholar</a></li>
+      
+      
+        <li><a href="https://www.researchgate.net/profile/Benito_Zaragozi"><i class="ai ai-fw ai-researchgate-square" aria-hidden="true" style="color:#00e3abff;"></i>ResearchGate</a></li>
+      
+      
+        <li><a href="https://www.mendeley.com/profiles/benito-zaragozi"><i class="ai ai-fw ai-mendeley-square" aria-hidden="true" style="color:#a51925ff;"></i>Mendeley</a></li>
+      
+
+      
+        <li><a href="https://bitbucket.org/benizar"><i class="fa fa-fw fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
+      
+      
+        <li><a href="https://github.com/benizar"><i class="fa fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+
+
+      
+        <li><a href="https://www.linkedin.com/in/benizar"><i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn</a></li>
+      
+
+      
+        <li><a href="https://twitter.com/benizar81"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+        <li><a href="https://www.facebook.com/benizar81"><i class="fa fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+      
+
+
+      
+      
+      
+
+
+      
+      
+      
+      
+
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </ul>
+  </div>
+</div>
+
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Customize animated titles in OpenShot">
+    <meta itemprop="description" content="How to create animated titles in OpenShot with transparent background. Solving a bug and discovering python scripting in Blender.">
+    <meta itemprop="datePublished" content="September 22, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Customize animated titles in OpenShot
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  2 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>Educational videos are a great teaching tool, so I have been learning how to create them by using FOSS. Unfortunately, I have not found a free software that has everything you need to create a quality educational video. Probably, even commercial programs have their own limitations and several programs are always needed.</p>
+
+<h2 id="nice-features-in-openshot">Nice features in OpenShot</h2>
+
+<p>In this post I want to comment why I think that OpenShot is a very interesting software that you should try for preparing your educational videos.</p>
+
+<p>After some tests in Ubuntu 15.10 and the recommended software versions. I must admit that OpenShot seems to lack stability and crashes too often when performing quite simple tasks. For plain video editing I prefer the Kdenlive stability. However, I think that OpenShot is much more intuitive and has some interesting features related to effects and animations.</p>
+
+<p><a href="http://www.openshot.org/">OpenShot</a> is a free, simple-to-use, feature-rich video editor for Linux, Windows and Mac. Of course, it has many good things, but I’m very impressed with the amazing <strong>Animated Title Editor</strong>. You can <a href="http://www.openshotvideo.com/2010/06/new-feature-3d-animated-titles.html">read this post</a> about it.</p>
+
+<figure class="half">
+    <a href="/images/openshot-overlay-3d-title.png"><img src="/images/openshot-overlay-3d-title.png" /></a>
+</figure>
+
+<p>This feature is presented as easy-to-use templates that execute python scripts in Blender, so there is no need to learn Blender to include some nice animations in your educational videos.</p>
+
+<h2 id="a-problem-with-customization">A problem with customization</h2>
+
+<p>In the above mentioned post, it seems that in these animated titles have <em>full alpha (i.e. transparency), and can be composited on top of any other video, such as the screenshot above of the chimpanzee</em>. However, it appears to be a problem with this, and I was not able to do so.</p>
+
+<p>I have found info on this bug <a href="https://bugs.launchpad.net/openshot/+bug/1365851">here</a> and <a href="https://www.mp-development.de/blog/18-openshot-blender-titelanimation-transparenz-fehler">here</a>. There is a workaround for achieving transparent background on your animated titles. It implies that you have to edit those python scripts that execute Blender.</p>
+
+<p>As explained in those links, you have to edit the phython-script files in /usr/share/pyshared/openshot/blender/scripts/</p>
+
+<p>In each script search for</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="s">'color'</span> <span class="p">:</span> <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.8</span><span class="p">],</span>
+<span class="s">'alpha'</span> <span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+</code></pre>
+</div>
+
+<p>and add this line</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="s">'alpha_mode'</span> <span class="p">:</span> <span class="s">'TRANSPARENT'</span><span class="p">,</span>
+</code></pre>
+</div>
+
+<p>Then search for</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">except</span><span class="p">:</span>
+    <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">image_settings</span><span class="o">.</span><span class="n">file_format</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s">"file_format"</span><span class="p">]</span>
+    <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">image_settings</span><span class="o">.</span><span class="n">color_mode</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s">"color_mode"</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<p>and add these lines</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">alpha_mode</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s">"alpha_mode"</span><span class="p">]</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">pass</span>
+</code></pre>
+</div>
+
+<h2 id="already-edited-scripts">Already edited scripts</h2>
+
+<p>In the above mentioned link, <a href="https://launchpad.net/~me.on.line">mEon</a> shared all the modified scripts in a dropbox public link. That link is still active, but I want to collaborate to the diffusion of these scripts by sharing an additional link:</p>
+
+<ul>
+  <li><a href="https://dl.dropboxusercontent.com/u/1383938/usr-share-pyshared-openshot-blender-scripts.tar.gz">mEon link</a></li>
+  <li><a href="/downloads/usr-share-pyshared-openshot-blender-scripts.tar.gz">My link</a></li>
+</ul>
+
+<h2 id="opportunities">Opportunities</h2>
+
+<p>All those animated titles are very nice, but I wonder how can I create more customized animations with a little python scripting. Take a look at the <a href="https://wiki.blender.org/index.php/Doc:2.4/Manual/Extensions/Python/Example">Blender Wiki example on using python scripts</a>.</p>
+
+<p>I’m sure that I can found many other scripts somewhere in the Internet. I will keep you informed ;)</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#animations" class="page__taxonomy-item" rel="tag">animations</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#blender" class="page__taxonomy-item" rel="tag">Blender</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#openshot" class="page__taxonomy-item" rel="tag">OpenShot</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#video-editing" class="page__taxonomy-item" rel="tag">video editing</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#multimedia" class="page__taxonomy-item" rel="tag">Multimedia</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#teaching" class="page__taxonomy-item" rel="tag">Teaching</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-09-22T00:00:00+00:00">September 22, 2016</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=/multimedia/teaching/how-to-customize-openshot-animated-titles/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=/multimedia/teaching/how-to-customize-openshot-animated-titles/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=/multimedia/teaching/how-to-customize-openshot-animated-titles/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=/multimedia/teaching/how-to-customize-openshot-animated-titles/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="/snippets/extract-thumbnails-from-documents/" class="pagination--pager" title="Extracting thumbnails from a PDF page
+">Previous</a>
+    
+    
+      <a href="/analysis/presentation/programming/eurosdr-slides-on-geospatial-reference-data-processing/" class="pagination--pager" title="Geospatial Reference Information processing
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/management/ubuntu20-dni-electronico-y-autofirma/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">DNI electrónico y autofirma en 2020: cómo NO perder 2 horas para firmar una solicitud
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">Cómo usar el DNIe desde Ubuntu para firmar electrónicamente trámites en línea. En este caso se firmaron las solicitudes para optar a las certificaciones de l...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/analysis/how-to-cite-geospatial-standards-and-other-things/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">How to cite geospatial standards and other GIS things
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  1 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">I found a template for manging ISO and OGC standards as Bibtex entries. This may be useful for citing documents that are not indexed by Google Scholar or if ...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">Choosing a desktop marker app for Ubuntu 18.04 LTS
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">In this post I explain the main features of two desktop bookmarking apps in Ubuntu 18.04: Pylote and Gromit-MPX. Both tools come in handy when making present...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">Using OBS Studio with V4L2 for making my videoconferences more appealing
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">In this post, I share the software configuration in Ubuntu to make video-conferences using a green chroma screen and your favorite video-conferencing software.
+</p>
+    </article>
+  </a>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/benizar81"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+      <li><a href="https://facebook.com/benizar81"><i class="fa fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+    
+    
+      <li><a href="http://github.com/benizar"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+      <li><a href="http://bitbucket.org/benizar"><i class="fa fa-fw fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
+    
+    <li><a href="/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Benito Zaragozí. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="/assets/js/main.min.js"></script>
+
+
+
+
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-81625023-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+
