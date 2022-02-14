@@ -1,0 +1,720 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>¡¡De SIOSE a PostGIS en 4 sesiones!! - Benito Zaragozí</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Benito Zaragozí">
+<meta property="og:title" content="¡¡De SIOSE a PostGIS en 4 sesiones!!">
+
+
+
+
+  <meta property="og:description" content="En este no tan viejo post de GIS&amp;Chips empecé a trabajar con bases de datos no relacionales. En este caso utilicé Xpath para analizar campos de datos XML, lo cual estaba muy bien. Sin embargo, ahora estoy trabajando con JSONB por disponer de mejor indexación, operadores, etc">
+
+
+
+  <meta name="twitter:site" content="@benizar81">
+  <meta name="twitter:title" content="¡¡De SIOSE a PostGIS en 4 sesiones!!">
+  <meta name="twitter:description" content="En este no tan viejo post de GIS&amp;Chips empecé a trabajar con bases de datos no relacionales. En este caso utilicé Xpath para analizar campos de datos XML, lo cual estaba muy bien. Sin embargo, ahora estoy trabajando con JSONB por disponer de mejor indexación, operadores, etc">
+  <meta name="twitter:url" content="">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2014-03-25T00:00:00+00:00">
+  
+    <link rel="next" href="/analysis/education/presentation/small-data-para-educacion-mas-de-un-millon-de-piramides-de-poblacion-de-espanya/" title="Small Data para Educación. Más de un millón de pirámides de población de España">
+  
+  
+    <link rel="prev" href="/analysis/presentation/diapositivas-del-ultimo-meetup-sobre-simbologia-cartografica-estandares-y-sig/" title="Diapositivas del último meetup sobre simbología cartográfica, estándares y SIG">
+  
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Benito Zaragozí",
+      "url" : null,
+      "sameAs" : ["https://twitter.com/benizar81","https://facebook.com/benizar81","https://www.linkedin.com/in/benizar","https://www.researchgate.net/profile/Benito_Zaragozi","http://orcid.org/0000-0003-2501-484X"]
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Benito Zaragozí Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/academicons.min.css"/>
+
+<meta http-equiv="cleartype" content="on">
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="/">Benito Zaragozí</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/year-archive/">Blog</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/cv/">CV</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/contact/">Contact</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/about/">About me</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="/images/benizar-photo.jpg" class="author__avatar" alt="Benito Zaragozí">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Benito Zaragozí</h3>
+    <p class="author__bio">Geographer and GIScientist</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Vila-Seca, Spain</li>
+      
+      
+      
+        <li><a href="mailto:benizar@gmail.com"><i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+      
+
+      
+        <li><a href="https://orcid.org/0000-0003-2501-484X"><i class="ai ai-fw ai-orcid" aria-hidden="true" style="color:#a6ce39ff;"></i>ORCID</a></li>
+      
+      
+        <li><a href="http://www.researcherid.com/rid/B-5270-2019"><i class="ai ai-fw ai-researcherid" aria-hidden="true" style="color:#ffa500;"></i>ResearcherID</a></li>
+      
+      
+        <li><a href="https://scholar.google.es/citations?user=sO9xAc8AAAAJ"><i class="ai ai-fw ai-google-scholar-square" aria-hidden="true"  style="color:#508ef3ff;"></i>Google Scholar</a></li>
+      
+      
+        <li><a href="https://www.researchgate.net/profile/Benito_Zaragozi"><i class="ai ai-fw ai-researchgate-square" aria-hidden="true" style="color:#00e3abff;"></i>ResearchGate</a></li>
+      
+      
+        <li><a href="https://www.mendeley.com/profiles/benito-zaragozi"><i class="ai ai-fw ai-mendeley-square" aria-hidden="true" style="color:#a51925ff;"></i>Mendeley</a></li>
+      
+
+      
+        <li><a href="https://bitbucket.org/benizar"><i class="fa fa-fw fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
+      
+      
+        <li><a href="https://github.com/benizar"><i class="fa fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+
+
+      
+        <li><a href="https://www.linkedin.com/in/benizar"><i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn</a></li>
+      
+
+      
+        <li><a href="https://twitter.com/benizar81"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+        <li><a href="https://www.facebook.com/benizar81"><i class="fa fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+      
+
+
+      
+      
+      
+
+
+      
+      
+      
+      
+
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </ul>
+  </div>
+</div>
+
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="¡¡De SIOSE a PostGIS en 4 sesiones!!">
+    <meta itemprop="description" content="En este no tan viejo post de GIS&amp;Chips empecé a trabajar con bases de datos no relacionales. En este caso utilicé Xpath para analizar campos de datos XML, lo cual estaba muy bien. Sin embargo, ahora estoy trabajando con JSONB por disponer de mejor indexación, operadores, etc">
+    <meta itemprop="datePublished" content="March 25, 2014">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">¡¡De SIOSE a PostGIS en 4 sesiones!!
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  11 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p class="notice--info"><strong>Nota:</strong> Este es un <em>no tan viejo</em> post que he recuperado del blog de GIS&amp;Chips. Actualmente estoy trabajando con bases de datos de este tipo (document stores), pero utilizando la potencia del tipo de dato JSONB.</p>
+
+<p>Hola a todos, en este post quiero compartir la presentación de un seminario temático que impartí dentro de la asignatura “SIG aplicado a la Ordenación del Territorio” en el Grado de Geografía de la Universidad de Alicante.</p>
+
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/khIYoy0rWxNnlW" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen=""> </iframe>
+<div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/BeniZaragoz/de-siose-a-postgis-en-cuatro-sesiones" title="De SIOSE a PostGIS en cuatro sesiones" target="_blank">De SIOSE a PostGIS en cuatro sesiones</a> </strong> from <strong><a target="_blank" href="//www.slideshare.net/BeniZaragoz">Benito M Zaragozí</a></strong> </div>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>El curso tuvo lugar hace un par de meses, durante 4 sesiones de 2 horas:</p>
+
+<ol>
+  <li>En la primera sesión hice una introducción en la que me refería a las ventajas de saber utilizar SQL y tener un conocimiento de ciertos estándares para explotar la información geográfica.</li>
+  <li>En una segunda sesión expliqué la utilidad de la base de datos del SIOSE (Sistema de información sobre Ocupación del Suelo de España), ya que ésta nos puede ahorrar mucho trabajo en proyectos SIG que desarrollemos por toda España.</li>
+  <li>En la tercera sesión exploramos una solución en la que se combinan SQL y Xpath para generar reclasificaciones personalizadas del SIOSE desde PostgreSQL/PostGIS.</li>
+  <li>Finalmente los alumnos tuvieron algo de tiempo para practicar y generar una reclasificación del SIOSE para separar aquellos usos del suelo susceptibles de albergar un vertedero de residuos de todos los usos del suelo que no lo admitirían. Todo esto como parte de una asignatura práctica.</li>
+</ol>
+
+<p>Los que hayáis trabajado con la capa del SIOSE probablemente revisaréis la presentación y este post con interés, ya que las alternativas son generalmente muy trabajosas. Espero que a los demás también os resulte interesante.</p>
+
+<h2 id="información-geográfica-y-lenguajes-de-programación">Información Geográfica y lenguajes de programación</h2>
+
+<p>Hace muy poco que tuvimos en las redes sociales un debate muy interesante sobre la necesidad de que los Geógrafos dominemos algún lenguaje de programación. Un compañero de GIS&amp;Chips hizo algunos comentarios sobre esta cuestión en un post anterior. No hace falta decir que estos razonamientos se pueden aplicar a cualquier otra disciplina que analice la información geográfica.</p>
+
+<p>En Twitter, yo voté que los geógrafos deberíamos adquirir unos conocimientos básicos de programación con SQL y un lenguaje interpretado, como Python o R. Lamentablemente, un tweet se queda corto y la mejor manera de apoyar mi punto de vista es con casos de uso como éste del SIOSE. Se trataba de obtener una clasificación de usos del suelo a partir de la capa del SIOSE y con el menor trabajo posible.</p>
+
+<p>Básicamente, la capa del SIOSE es una base de datos relacional que contiene tres elementos fundamentales:</p>
+
+<ol>
+  <li>Un campo, nombrado por defecto <code class="highlighter-rouge">the_geom</code>, de tipo Geometry que describe los polígonos de usos del suelo.</li>
+  <li>Un campo <code class="highlighter-rouge">code_2009</code> que contiene un código alfanumérico que describe los usos del suelo de cada polígono en menos de 256 caracteres.</li>
+  <li>Un último campo <code class="highlighter-rouge">xml_2009</code> asociado, que contiene una estructura XML (eXtensible Markup Language) donde se almacenan las coberturas y porcentajes. Esto tiene muy poco que ver con un ESRI Shapefile y creo que ningún SIG de escritorio permite interpretar un XML dentro de una tabla… Sí, para manejar esta base de datos es necesario saber de bases de datos, saber programar o tener muchas ganas de trabajar.</li>
+</ol>
+
+<figure>
+    <a href="/images/siose-columns.png"><img src="/images/siose-columns.png" /></a>
+    <figcaption>Figura 1. Campos disponibles en la base de datos relacional del SIOSE.</figcaption>
+</figure>
+
+<p>Evidentemente, para consultar una base de datos y procesar un XML, podríamos utilizar casi cualquier lenguaje de programación. Para la mayoría habrá APIs que trabajen con geometrías OGC y estructuras XML. Sin embargo, en la siguiente figura se puede ver una clasificación de lenguajes de programación según productividad (resultados por tiempo invertido) y versatilidad (cosas que podemos hacer con un mismo lenguaje).</p>
+
+<figure class="half">
+    <a href="/images/programming-languages.png"><img src="/images/programming-languages.png" /></a>
+    <figcaption>Figura 2. Clasificación práctica de varios lenguajes de programación.</figcaption>
+</figure>
+
+<p>Como se puede ver, he situado al SQL como el primer lenguaje justo por debajo de los <em>Query Builder</em>, que son los entornos de consulta típicos de los SIG de escritorio. Estos entornos de consulta permiten explorar los datos con una versión reducida del SQL, por lo que este lenguaje debería ser bastante accesible para usuarios habituales de SIG. Además, utilizando SQL podemos explotar casi toda la potencia de PostgreSQL y PostGIS. Esto nos dará mucho juego a la hora de hacer todo tipo de consultas y operaciones espaciales (y no espaciales). Con SQL podemos utilizar todas las funciones espaciales de PostGIS, alrededor de un millar de funciones de análisis con geometrías vectoriales, ráster, 3D, LiDAR, etc… todo eso son muchos botones.</p>
+
+<h2 id="sistema-de-información-sobre-la-ocupación-del-suelo-de-españa-siose">Sistema de Información sobre la Ocupación del Suelo de España (SIOSE)</h2>
+
+<p>No pretendo repetir una descripción detallada del SIOSE, que se puede encontrar en su <a href="http://www.siose.es/documentacion">documentación</a>, sino que quiero relatar la sensación que me produjo mi primer contacto con el SIOSE. La sensación de que trabajar con estos datos no es tan fácil como algunos dicen.</p>
+
+<p>Os recomiendo leer <a href="http://www.sigte.udg.edu/jornadassiglibre2012/uploads/articulos_12/art17.pdf">esta comunicación</a> presentada a las Jornadas de SIG Libre de 2012. Entre otras cuestiones, trata de los problemas de memoria y ancho de banda a la hora de compartir la capa del SIOSE mediante protocolos estándar. Sin embargo lo más interesante es todo lo relacionado con el modelo de datos, del cual admiten que es más complejo de lo habitual en SIG. En esta comunicación también se reconoce que los servicios de visualización y explotación del SIOSE tienen que mejorar con ayuda de la comunidad de usuarios. Creo que estaremos todos de acuerdo en que el objetivo de una IDE es solamente proporcionar acceso a los datos y que deben ser los usuarios los que los exploten.</p>
+
+<h3 id="clasificación-orientada-a-objetos">Clasificación Orientada a Objetos</h3>
+
+<p>La primera cuestión interesante es la buena publicidad de la que goza el SIOSE. Se trata de una clasificación de usos del suelo Orientada a Objetos (OO). Esto significa que es una clasificación muy flexible, que permite que reclasifiquemos el SIOSE de acuerdo a nuestras necesidades. Por ejemplo, no es lo mismo decir que un lugar/polígono tiene un uso <em>Forestal, Matorral Denso y Viviendas Aisladas</em>, que <em>Forestal 50%, Matorral Denso 48% y Viviendas Aisladas 2%</em>. En algunos proyectos podríamos querer reclasificar todo el polígono como Monte Alto o cualquier otro adjetivo/categoría que nos interese. En cambio, si fuese un 20% de cobertura de Viviendas Aisladas, la cosa cambia mucho.</p>
+
+<p>Todo esto de la clasificación OO está muy bien. Sin embargo, estamos hablando de dos paradigmas diferentes, los SIG más utilizados funcionan con un paradigma <strong>Relacional</strong>, mientras que la clasificación es <strong>Orientada a Objetos</strong>.</p>
+
+<h3 id="cómo-se-come-esto">¿Cómo se come esto?</h3>
+
+<p>Los SIG habituales tratarán de desplegarnos la información geográfica en una tabla-relacional y pintarán las geometrías en otra ventana, pero los datos OO no se prestan a esto, sino que se parecen más bien a un árbol jerárquico. Entonces, ¿cómo gestionar una clasificación Orientada a Objetos dentro de una base de datos Relacional? La respuesta es que no lo haces, guardas la clasificación del polígono en una celda y después utilizas alguna herramienta distinta para leer la estructura OO. En este caso, alguna herramienta que permita gestionar ficheros o estructuras XML.</p>
+
+<p>A continuación podemos ver un ejemplo de clasificación OO de los usos del suelo (<code class="highlighter-rouge">xml_2009</code>) de una parcela al azar:</p>
+
+<script src="https://gist.github.com/benizar/9739541.js"></script>
+
+<p>La otra opción es utilizar el código alfanumérico de usos del suelo, almacenado en el campo <code class="highlighter-rouge">code_2009</code>, pero esto da mucho trabajo ya que hay centenares de combinaciones de todo tipo. Aún siendo un gran usuario de SQL, habría que esforzarse por hacer clasificaciones que tuvieran en cuenta los porcentajes y todos los niveles de agregación. Además, habría que consultar la documentación para encontrar la descripción de cada etiqueta (ver <a href="http://www.siose.es/SIOSEtheme-theme/documentos/pdf/Desc_Mod_Datos_Rotulo_SIOSE_v1.1.pdf">este documento</a>. Aquí va un ejemplo de código alfanumérico <em>sencillito</em>:</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="n">R</span><span class="p">(</span><span class="mi">50</span><span class="n">LFNfzrr_40CNFpl_10SDNfc</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Cobertura compuesta en “Mosaico regular” formado por tres clases simples:</p>
+
+<ul>
+  <li>50% Frutales. No cítricos; atributos <em>forzado</em> y <em>regadío regado</em></li>
+  <li>40% Coníferas; atributo <em>plantación</em></li>
+  <li>10% Suelo desnudo; atributo <em>función cortafuegos</em></li>
+</ul>
+
+<h3 id="puedo-reclasificar-el-siose-con-las-herramientas-que-conozco">¿Puedo reclasificar el SIOSE con las herramientas que conozco?</h3>
+
+<p>Bueno, dependerá de las herramientas que conozcas…</p>
+
+<p>En la web de documentación del SIOSE vemos que hay herramientas y extensiones SIG (ArcGIS y Geomedia) que se utilizan en la creación y mantenimiento del SIOSE, pero éstas no parecen estar disponibles para descarga y, lo más importante, no son FOSS.</p>
+
+<p>Si esta pregunta se la hace un experto en SIG con conocimientos de programación, estoy seguro de que encontrará una manera de que esta tarea no se convierta en un suplicio. En cambio, si esta pregunta se la hace un analista SIG que no conoce ningún lenguaje de programación y que solamente utiliza las opciones de un <em>Query Builder</em>, lo más probable es que trate de reclasificar los usos del suelo casi manualmente, ya que no hay herramientas en los SIG que procesen un XML, ni otras funciones que trabajen con strings y distingan los textos de los porcentajes numéricos.</p>
+
+<h2 id="reclasificar-el-siose-con-postgresqlpostgis">Reclasificar el SIOSE con PostgreSQL+PostGIS</h2>
+
+<p>Al descargar los datos del <a href="http://terrasit.gva.es/es/descargas">Terrasit</a>, la descarga se hace por municipios, es más actualizada pero requiere un mayor preprocesado. En cambio, si descargamos los datos del <a href="http://centrodedescargas.cnig.es/CentroDescargas/catalogo.do">CNIG</a> podemos descargar toda una provincia de golpe y ahorrarnos el paso de unir los municipios.</p>
+
+<p>En la presentación veréis que realizamos varias tareas de preprocesado de la capa del SIOSE-Terrasit. Importamos los datos con el comando shp2pgsql, los unimos en una misma capa, detectamos y eliminamos los polígonos repetidos, recortamos los polígonos según la zona de estudio y finalmente hicimos una clasificación de aquellos polígonos recortados en el borde de la zona de estudio. Esta clasificación sirve para asegurarnos de que la clasificación sea ajustada en los bordes de la zona, ya que al recortar los polígonos la clasificación del SIOSE pierde su representatividad. Podéis ver el resultado en la siguiente figura:</p>
+
+<figure>
+    <a href="/images/siose2postgis-methodology.png"><img src="/images/siose2postgis-methodology.png" /></a>
+    <figcaption>Figura 3. Fases de procesado de la base de datos del SIOSE.</figcaption>
+</figure>
+
+<p>Todas estas tareas de preprocesado resultan muy sencillas con SQL y se pueden automatizar fácilmente para trabajar otras zonas de estudio. En este punto, llegamos a la tarea verdaderamente importante: reclasificar el SIOSE con el mínimo trabajo posible.</p>
+
+<p>Al final de la diapositiva nº33 de la presentación se muestra un ejemplo de cómo sería utilizar expresiones regulares para trocear el campo <code class="highlighter-rouge">code_2009</code> reclasificar los datos. ¡¡Menudo dolor de cabeza!! Menos mal que PostgreSQL es tremendamente potente y, entre muchas otras herramientas (recordad pl/R o PostGIS, sin ir más lejos), permite evaluar expresiones de Xpath para procesar estructuras XML, todo esto desde una consola de SQL. Viendo las alternativas, ¡¡esto es alucinante!!</p>
+
+<p>Según la Wikipedia, XPath (XML Path Language) es un lenguaje que permite construir expresiones que recorren y procesan un documento XML. La idea es parecida a las expresiones regulares para seleccionar partes de un texto sin atributos (plain text). XPath permite buscar y seleccionar teniendo en cuenta la estructura jerárquica del XML. XPath fue creado para su uso en el estándar XSLT, en el que se usa para seleccionar y examinar la estructura del documento de entrada de la transformación. A continuación, en este GIST os muestro un ejemplo básico para reclasificar la capa de usos del SIOSE a partir del campo <code class="highlighter-rouge">xml_2009</code>, que como veis es de tipo xml y no string:</p>
+
+<p>Aunque me cuesta explicarlo brevemente, la función <code class="highlighter-rouge">xpath(expresión, campo xml)</code>, requiere un campo de tipo xml, como el campo <code class="highlighter-rouge">xml_2009</code> del SIOSE, y una expresión como:</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="o">//</span><span class="n">COBERTURA</span><span class="p">[</span><span class="o">@</span><span class="n">ID</span><span class="o">=</span><span class="s1">'EDF'</span> <span class="k">and</span> <span class="o">@</span><span class="n">Sup</span><span class="o">&gt;</span><span class="mi">20</span><span class="p">]</span><span class="o">/@</span><span class="n">ID</span>
+</code></pre>
+</div>
+
+<p>que explora solamente el segundo nivel del XML (Leyéndolo como un árbol jerárquico, “/” es el primer nivel, “//” el segundo y así sucesivamente) y selecciona todos los registros donde el tipo de cobertura es mayor que 20EDF (Edificaciones recubriendo un 20%). Esta función devuelve un array de 0 o 1 elementos según si existe o no existe la cobertura EDF en este nivel jerárquico del XML.</p>
+
+<p>En el ejemplo, se utilizan expresiones similares de Xpath para cada uso que nos interese reclasificar como apto para acoger un vertedero de residuos y, finalmente, aunque no es necesario, se hace lo contrario para no dejar celdas vacías.</p>
+
+<p>El resultado final de la reclasificación se puede apreciar en la siguiente ampliación de la zona de estudio (en rojo las zonas no aptas):</p>
+
+<figure>
+    <a href="/images/siose2postgis-reclass.png"><img src="/images/siose2postgis-reclass.png" /></a>
+    <figcaption>Figura 4. Captura del resultado de la consulta.</figcaption>
+</figure>
+
+<p>Como se puede apreciar, seguramente hemos dejado de considerar usos no aptos, como el cementerio (código ECM), por lo que el objetivo de los alumnos era extender la consulta anterior para completar la reclasificación de modo razonado.</p>
+
+<p>La consulta se puede optimizar mucho, pero esta aproximación resulta más didáctica, ya que parte de otra reclasificación que se hacía en la sesión anterior del curso.</p>
+
+<h2 id="conclusiones-y-trabajo-futuro">Conclusiones y trabajo futuro</h2>
+
+<p>La principal conclusión es que solamente utilizando SQL ya se pueden acceder a herramientas muy potentes propias de los lenguajes de programación más versátiles (operaciones geométricas, expresiones regulares, estadísticas y, en este caso, procesado de XML). Además, el SQL es un lenguaje muy maduro utilizado en todo tipo de disciplinas, lo cual es una ventaja para su aprendizaje.</p>
+
+<p>Por otro lado, el caso del SIOSE viene bien para volver a plantearnos la cuestión del paradigma de Orientación a Objetos. Bases de datos como la del SIOSE podrían servir como impulsoras del uso de las bases de datos OO que fueron planteadas ya a principios de los años ‘90 y que parece que estemos evitando en el mundillo de los GIS. Lo cierto es que sí que hay una necesidad. Cada vez hay más datos disponibles y cada vez son más complejos…</p>
+
+<p>No es menos importante fijarse en la cantidad de trabajo que nos ahorra el SIOSE. A pesar de que su manejo requiera un cierto esfuerzo, fijaos en el detalle de la digitalización de los polígonos y el enorme rango de categorías que diferencia. Los que hemos digitalizado usos del suelo alguna vez, sabremos apreciar este recurso como se merece.</p>
+
+<p>Este breve test con PostGIS y Xpath no debería terminar aquí. Desde hace escasamente una semana, he entrado a participar en un proyecto de investigación sobre Ecología y Paisaje donde los usos del suelo serán, como no, una capa de información imprescindible. Creo que trataré de desarrollar un plugin de QGIS que construya expresiones de Xpath y las ejecute en el servidor de PostgreSQL para generar consultas ágiles del campo XML del SIOSE. Os tendre informados si hago algo parecido.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#landuse" class="page__taxonomy-item" rel="tag">landuse</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#object-oriented-geodatabases" class="page__taxonomy-item" rel="tag">object oriented geodatabases</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#postgis" class="page__taxonomy-item" rel="tag">PostGIS</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#postgresql" class="page__taxonomy-item" rel="tag">PostgreSQL</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#programación" class="page__taxonomy-item" rel="tag">programación</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#siose" class="page__taxonomy-item" rel="tag">SIOSE</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#analysis" class="page__taxonomy-item" rel="tag">Analysis</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#presentation" class="page__taxonomy-item" rel="tag">Presentation</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#programming" class="page__taxonomy-item" rel="tag">Programming</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2014-03-25T00:00:00+00:00">March 25, 2014</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=/analysis/presentation/programming/de-siose-a-postgis-en-4-sesiones/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=/analysis/presentation/programming/de-siose-a-postgis-en-4-sesiones/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=/analysis/presentation/programming/de-siose-a-postgis-en-4-sesiones/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=/analysis/presentation/programming/de-siose-a-postgis-en-4-sesiones/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="/analysis/presentation/diapositivas-del-ultimo-meetup-sobre-simbologia-cartografica-estandares-y-sig/" class="pagination--pager" title="Diapositivas del último meetup sobre simbología cartográfica, estándares y SIG
+">Previous</a>
+    
+    
+      <a href="/analysis/education/presentation/small-data-para-educacion-mas-de-un-millon-de-piramides-de-poblacion-de-espanya/" class="pagination--pager" title="Small Data para Educación. Más de un millón de pirámides de población de España
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/management/ubuntu20-dni-electronico-y-autofirma/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">DNI electrónico y autofirma en 2020: cómo NO perder 2 horas para firmar una solicitud
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">Cómo usar el DNIe desde Ubuntu para firmar electrónicamente trámites en línea. En este caso se firmaron las solicitudes para optar a las certificaciones de l...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/analysis/how-to-cite-geospatial-standards-and-other-things/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">How to cite geospatial standards and other GIS things
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  1 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">I found a template for manging ISO and OGC standards as Bibtex entries. This may be useful for citing documents that are not indexed by Google Scholar or if ...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">Choosing a desktop marker app for Ubuntu 18.04 LTS
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">In this post I explain the main features of two desktop bookmarking apps in Ubuntu 18.04: Pylote and Gromit-MPX. Both tools come in handy when making present...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">Using OBS Studio with V4L2 for making my videoconferences more appealing
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">In this post, I share the software configuration in Ubuntu to make video-conferences using a green chroma screen and your favorite video-conferencing software.
+</p>
+    </article>
+  </a>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/benizar81"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+      <li><a href="https://facebook.com/benizar81"><i class="fa fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+    
+    
+      <li><a href="http://github.com/benizar"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+      <li><a href="http://bitbucket.org/benizar"><i class="fa fa-fw fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
+    
+    <li><a href="/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Benito Zaragozí. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="/assets/js/main.min.js"></script>
+
+
+
+
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-81625023-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

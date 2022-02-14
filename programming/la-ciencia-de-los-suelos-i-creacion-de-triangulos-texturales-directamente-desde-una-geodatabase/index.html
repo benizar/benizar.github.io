@@ -1,0 +1,741 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>La ciencia de los suelos (I). Creación de triángulos texturales directamente desde una Geodatabase. - Benito Zaragozí</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Benito Zaragozí">
+<meta property="og:title" content="La ciencia de los suelos (I). Creación de triángulos texturales directamente desde una Geodatabase.">
+
+
+
+
+  <meta property="og:description" content="En este viejo post de GIS&amp;Chips os muestro una demo sobre la creación de triángulos texturales directamente desde una geodatabase.">
+
+
+
+  <meta name="twitter:site" content="@benizar81">
+  <meta name="twitter:title" content="La ciencia de los suelos (I). Creación de triángulos texturales directamente desde una Geodatabase.">
+  <meta name="twitter:description" content="En este viejo post de GIS&amp;Chips os muestro una demo sobre la creación de triángulos texturales directamente desde una geodatabase.">
+  <meta name="twitter:url" content="">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2010-09-08T00:00:00+00:00">
+  
+    <link rel="next" href="/analysis/usando-rsaga-para-procesar-un-raster-grande-por-partes/" title="Usando RSAGA para procesar un raster *grande* por partes">
+  
+  
+    <link rel="prev" href="/analysis/extraccion-de-caracteristicas-estructurales-de-una-imagen-ii-semi-variograma-de-una-imagen-usando-r-2/" title="Extracción de características estructurales de una imagen ( II ) (Semi-variograma de una imagen usando R).">
+  
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Benito Zaragozí",
+      "url" : null,
+      "sameAs" : ["https://twitter.com/benizar81","https://facebook.com/benizar81","https://www.linkedin.com/in/benizar","https://www.researchgate.net/profile/Benito_Zaragozi","http://orcid.org/0000-0003-2501-484X"]
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Benito Zaragozí Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/academicons.min.css"/>
+
+<meta http-equiv="cleartype" content="on">
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="/">Benito Zaragozí</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/year-archive/">Blog</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/cv/">CV</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/contact/">Contact</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/about/">About me</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="/images/benizar-photo.jpg" class="author__avatar" alt="Benito Zaragozí">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Benito Zaragozí</h3>
+    <p class="author__bio">Geographer and GIScientist</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Vila-Seca, Spain</li>
+      
+      
+      
+        <li><a href="mailto:benizar@gmail.com"><i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+      
+
+      
+        <li><a href="https://orcid.org/0000-0003-2501-484X"><i class="ai ai-fw ai-orcid" aria-hidden="true" style="color:#a6ce39ff;"></i>ORCID</a></li>
+      
+      
+        <li><a href="http://www.researcherid.com/rid/B-5270-2019"><i class="ai ai-fw ai-researcherid" aria-hidden="true" style="color:#ffa500;"></i>ResearcherID</a></li>
+      
+      
+        <li><a href="https://scholar.google.es/citations?user=sO9xAc8AAAAJ"><i class="ai ai-fw ai-google-scholar-square" aria-hidden="true"  style="color:#508ef3ff;"></i>Google Scholar</a></li>
+      
+      
+        <li><a href="https://www.researchgate.net/profile/Benito_Zaragozi"><i class="ai ai-fw ai-researchgate-square" aria-hidden="true" style="color:#00e3abff;"></i>ResearchGate</a></li>
+      
+      
+        <li><a href="https://www.mendeley.com/profiles/benito-zaragozi"><i class="ai ai-fw ai-mendeley-square" aria-hidden="true" style="color:#a51925ff;"></i>Mendeley</a></li>
+      
+
+      
+        <li><a href="https://bitbucket.org/benizar"><i class="fa fa-fw fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
+      
+      
+        <li><a href="https://github.com/benizar"><i class="fa fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+
+
+      
+        <li><a href="https://www.linkedin.com/in/benizar"><i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn</a></li>
+      
+
+      
+        <li><a href="https://twitter.com/benizar81"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+        <li><a href="https://www.facebook.com/benizar81"><i class="fa fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+      
+
+
+      
+      
+      
+
+
+      
+      
+      
+      
+
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </ul>
+  </div>
+</div>
+
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="La ciencia de los suelos (I). Creación de triángulos texturales directamente desde una Geodatabase.">
+    <meta itemprop="description" content="En este viejo post de GIS&amp;Chips os muestro una demo sobre la creación de triángulos texturales directamente desde una geodatabase.">
+    <meta itemprop="datePublished" content="September 08, 2010">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">La ciencia de los suelos (I). Creación de triángulos texturales directamente desde una Geodatabase.
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  7 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p class="notice--info"><strong>Nota:</strong> En este post presento una vieja demo de mi TFM. Actualmente, los enlaces están rotos, pero viene bien haberlo recuperado para ver una de las <em>trabajosas</em> alternativas al servidor de aplicaciones de R de RStudio (Shiny).</p>
+
+<p>Llevo un tiempo ocupado pero ya es hora de enseñar en GIS&amp;Chips algunas de las demos que realicé para mi Trabajo Fin de Master (TFM) sobre SIG.</p>
+
+<p>En este artículo os muestro la demo nº2 que consiste en la creación de triángulos texturales directamente desde una geodatabase que diseño y creo previamente dentro del TFM. Pero más adelante añadiré algunos comentarios de las otras demos.</p>
+
+<figure class="half">
+    <a href="/images/texture-classification.png"><img src="/images/texture-classification.png" /></a>
+    <figcaption>Figura 1. Triángulo textural.</figcaption>
+</figure>
+
+<h2 id="el-trabajo-fin-de-máster-tfm">El Trabajo Fin de Máster (TFM)</h2>
+
+<p>Es interesante comentar que el TFM es una pequeña parte de otra investigación que estoy realizando en el contexto de la comarca de la Marina Baja (Alicante-España) y los datos que se muestra en las distintas demos son parte de un muestreo para entender mejor el potencial nutritivo de los suelos de la comarca.</p>
+
+<p>El título del TFM es “Diseño de una base de datos geográfica orientada al estudio de los suelos”. Evidentemente, en el espacio de un TFM no cabía desarrollar toda la idea, que podría ser muy trabajosa para una sola persona, del mismo modo que aquí no cabe desarrollar todo el TFM ya que hay algunas partes que no tienen que ver con lo que queremos contar en G&amp;C.</p>
+
+<s>Si entráis en la página principal del la Web de demostraciones podéis leer un poco más sobre la intención y contenidos del TFM ( &lt;http://www.gisandchips.org/demos/suelosTFM/&gt; ). Además en esta página se explican los detalles de la tecnología utilizada y del método de trabajo (PostgreSQL, PostGIS, R, pl/R...).</s>
+
+<p>Considero que las demos 2 y 3 son más interesantes, puesto que la primera es solo una función de clasificación que cada uno podría hacer a su gusto, pero si a alguien le interesa la explicaré más adelante.</p>
+
+<figure class="half">
+    <a href="/images/tritex-webapp.jpg"><img src="/images/tritex-webapp.jpg" /></a>
+    <figcaption>Figura 2. Página de la Demo.</figcaption>
+</figure>
+
+<h2 id="los-triángulos-texturales">Los triángulos texturales</h2>
+
+<p>El estudio de los suelos es una disciplina tremendamente amplia, por lo que aquí nos limitaremos a dar, de un modo más breve, las explicaciones necesarias para entender los gráficos resultantes.</p>
+
+<p>Los triángulos texturales son gráficos que facilitan la interpretación de la granulometría del suelo. Así pues, habitualmente la textura del suelo se puede representar en un diagrama ternario. En dicho diagrama ternario se emplean reglas trigonométricas para representar en el plano coordenadas tridimensionales que se refieren a distintas combinaciones de clases granulométricas (clases texturales) cuya suma es constante (100). Por último, las clases texturales son convenientes para representar a la textura del suelo en mapas ya que resulta más sencillo representar una variable que no tres, y su uso es bastante amplio en descripciones y clasificaciones del suelo.</p>
+
+<p>A pesar de todas las ventajas de estos gráficos, aparece la dificultad de que existen gran número de triángulos texturales que permiten la clasificación de los suelos, lo que implica que en caso de querer incluir herramientas relacionadas en una BDGS (Geodatabase de suelos) se deba considerar tal variedad de criterios. En este caso se ha creado un gráfico de texturas según las especificaciones del USDA (1951) en castellano.</p>
+
+<p>Pese a que existe cierta variedad de programas pensados para la elaboración de los triángulos de texturas parece interesante que una BDGS que almacene los datos de textura de suelos sea capaz de generar este tipo de gráficos. Además, los otros software suelen ser difíciles de encontrar y poco flexibles. Aquí podemos modificar nuestro gráfico a placer.</p>
+
+<figure class="half">
+    <a href="/images/tritex-results.jpg"><img src="/images/tritex-results.jpg" /></a>
+    <figcaption>Figura 3. Página de resultados de la demo.</figcaption>
+</figure>
+
+<h2 id="demostración-triángulo-textural">Demostración Triángulo Textural</h2>
+
+<p>En la propia página Web (<s>&lt;http://www.gisandchips.org/demos/suelosTFM/paginas/demo_tritex1.php&gt;</s>) se explica como interactuar con la demo, seleccionando las muestras que se desee, si se desea etiquetar las muestras y con que símbolo se van a representar. Como se puede ver, los datos han sido previamente ordenados según una consulta espacial usando funciones de <strong>PostGIS</strong>, por lo que la gráfica que vamos a generar se ve enriquecida por esta posibilidad. A partir de los datos seleccionados se ejecuta una función escrita en pl/R que usa la librería <em>Plotrix</em> de R para generar un triángulo textural personalizado y guardarlo como un fichero PNG en el servidor. La función que se usa en este ejemplo puede ser personalizada en muchos sentidos para obtener otros triángulos texturales (hay decenas), en otros idiomas, clasificando los símbolos por algún atributo de la base de datos.</p>
+
+<p>El uso de la función resulta muy sencillo,</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="err"> </span><span class="n">_plr_clasif_textural</span> <span class="p">(</span> <span class="s1">'arenas'</span> <span class="p">,</span> <span class="s1">'limos'</span> <span class="p">,</span> <span class="s1">'arcilla'</span> <span class="p">,</span> <span class="s1">'submuestra'</span> <span class="p">,</span> <span class="s1">'simbolo'</span> <span class="p">,</span> <span class="s1">'etiquetas'</span><span class="p">)</span> <span class="p">;</span>
+</code></pre>
+</div>
+
+<p>y a continuación podemos ver el código que hemos usado para crearla, y algunos comentarios. Primero la cabecera de la función:</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">_plr_clasif_textural</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="k">RETURNS</span> <span class="n">text</span> <span class="k">AS</span>
+<span class="err">$</span><span class="n">BODY</span><span class="err">$</span>
+</code></pre>
+</div>
+
+<p>a continuación se escribe el código de R,</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="c1"># Cargamos las librerias necesarias
+</span><span class="n">library</span><span class="p">(</span><span class="n">Cairo</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">plotrix</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Definimos la funcion
+</span><span class="n">clasif.textural</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="p">(</span><span class="n">soiltexture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span><span class="w"> </span><span class="m">0.9</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.1</span><span class="p">),</span><span class="w"> </span><span class="n">axis.labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"% arena (entre 0,05 y 2 mm)"</span><span class="p">,</span><span class="w"> </span><span class="s2">"% limo (entre 0,05 y 0,002 mm)"</span><span class="p">,</span><span class="w"> </span><span class="s2">"% arcilla (menor de 0,002  mm)"</span><span class="p">),</span><span class="w"> </span><span class="n">tick.labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">90</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">),</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">90</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">),</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">90</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">)),</span><span class="w"> </span><span class="n">show.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">show.lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">col.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"black"</span><span class="p">,</span><span class="w"> </span><span class="n">bg.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">par</span><span class="p">(</span><span class="s2">"bg"</span><span class="p">),</span><span class="w"> </span><span class="n">show.grid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">col.axis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"black"</span><span class="p">,</span><span class="w"> </span><span class="n">col.lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"black"</span><span class="p">,</span><span class="w"> </span><span class="n">col.grid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"gray"</span><span class="p">,</span><span class="w"> </span><span class="n">lty.grid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">show.legend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">label.points</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">point.labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">''</span><span class="p">,</span><span class="w"> </span><span class="n">col.symbols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"blue"</span><span class="p">,</span><span class="w"> </span><span class="n">pch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">par</span><span class="p">(</span><span class="s2">"pch"</span><span class="p">),</span><span class="w"> </span><span class="n">...</span><span class="p">)</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+</span><span class="n">par</span><span class="p">(</span><span class="n">xpd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"n"</span><span class="p">,</span><span class="w"> </span><span class="n">axes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">xlim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w">
+</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">)</span><span class="w">
+</span><span class="n">triax.frame</span><span class="p">(</span><span class="n">at</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">at</span><span class="p">,</span><span class="w"> </span><span class="n">axis.labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">axis.labels</span><span class="p">,</span><span class="w">
+</span><span class="n">tick.labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tick.labels</span><span class="p">,</span><span class="w"> </span><span class="n">col.axis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col.axis</span><span class="p">,</span><span class="w"> </span><span class="n">show.grid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">show.grid</span><span class="p">,</span><span class="w">
+</span><span class="n">col.grid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col.grid</span><span class="p">,</span><span class="w"> </span><span class="n">lty.grid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lty.grid</span><span class="p">)</span><span class="w">
+</span><span class="n">arrows</span><span class="p">(</span><span class="m">0.12</span><span class="p">,</span><span class="w"> </span><span class="m">0.41</span><span class="p">,</span><span class="w"> </span><span class="m">0.22</span><span class="p">,</span><span class="w"> </span><span class="m">0.57</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.15</span><span class="p">)</span><span class="w">
+</span><span class="n">arrows</span><span class="p">(</span><span class="m">0.78</span><span class="p">,</span><span class="w"> </span><span class="m">0.57</span><span class="p">,</span><span class="w"> </span><span class="m">0.88</span><span class="p">,</span><span class="w"> </span><span class="m">0.41</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.15</span><span class="p">)</span><span class="w">
+</span><span class="n">arrows</span><span class="p">(</span><span class="m">0.6</span><span class="p">,</span><span class="w"> </span><span class="m">-0.1</span><span class="p">,</span><span class="w"> </span><span class="m">0.38</span><span class="p">,</span><span class="w"> </span><span class="m">-0.1</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.15</span><span class="p">)</span><span class="w">
+</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">show.lines</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="n">triax.segments</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">h</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="n">segments</span><span class="p">(</span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">h</span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">h</span><span class="m">3</span><span class="o">/</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="m">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">sin</span><span class="p">(</span><span class="nb">pi</span><span class="o">/</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="m">3</span><span class="o">/</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="m">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">sin</span><span class="p">(</span><span class="nb">pi</span><span class="o">/</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col</span><span class="p">)}</span><span class="w">
+</span><span class="n">h</span><span class="m">1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">85</span><span class="p">,</span><span class="w"> </span><span class="m">70</span><span class="p">,</span><span class="w"> </span><span class="m">80</span><span class="p">,</span><span class="w"> </span><span class="m">52</span><span class="p">,</span><span class="w"> </span><span class="m">52</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">52</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">65</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">)</span><span class="o">/</span><span class="m">100</span><span class="w">
+</span><span class="n">h</span><span class="m">3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">27</span><span class="p">,</span><span class="w"> </span><span class="m">27</span><span class="p">,</span><span class="w"> </span><span class="m">35</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">,</span><span class="w"> </span><span class="m">27</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">)</span><span class="o">/</span><span class="m">100</span><span class="w">
+</span><span class="n">t</span><span class="m">1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">90</span><span class="p">,</span><span class="w"> </span><span class="m">85</span><span class="p">,</span><span class="w"> </span><span class="m">52</span><span class="p">,</span><span class="w"> </span><span class="m">52</span><span class="p">,</span><span class="w"> </span><span class="m">43</span><span class="p">,</span><span class="w"> </span><span class="m">23</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="o">/</span><span class="m">100</span><span class="w">
+</span><span class="n">t</span><span class="m">3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">27</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">27</span><span class="p">,</span><span class="w"> </span><span class="m">27</span><span class="p">,</span><span class="w"> </span><span class="m">55</span><span class="p">,</span><span class="w"> </span><span class="m">35</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">,</span><span class="w"> </span><span class="m">60</span><span class="p">)</span><span class="o">/</span><span class="m">100</span><span class="w">
+</span><span class="n">triax.segments</span><span class="p">(</span><span class="n">h</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">col.lines</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">show.names</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="n">xpos</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">0.7</span><span class="p">,</span><span class="w"> </span><span class="m">0.7</span><span class="p">,</span><span class="w"> </span><span class="m">0.73</span><span class="p">,</span><span class="w"> </span><span class="m">0.73</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">0.275</span><span class="p">,</span><span class="w"> </span><span class="m">0.275</span><span class="p">,</span><span class="w"> </span><span class="m">0.27</span><span class="p">,</span><span class="w"> </span><span class="m">0.27</span><span class="p">,</span><span class="w"> </span><span class="m">0.25</span><span class="p">,</span><span class="w"> </span><span class="m">0.135</span><span class="p">,</span><span class="w"> </span><span class="m">0.18</span><span class="p">,</span><span class="w"> </span><span class="m">0.07</span><span class="p">,</span><span class="w"> </span><span class="m">0.49</span><span class="p">,</span><span class="w"> </span><span class="m">0.72</span><span class="p">,</span><span class="w"> </span><span class="m">0.9</span><span class="p">)</span><span class="w">
+</span><span class="n">ypos</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0.66</span><span class="p">,</span><span class="w"> </span><span class="m">0.49</span><span class="p">,</span><span class="w"> </span><span class="m">0.44</span><span class="p">,</span><span class="w"> </span><span class="m">0.36</span><span class="p">,</span><span class="w"> </span><span class="m">0.32</span><span class="p">,</span><span class="w"> </span><span class="m">0.35</span><span class="p">,</span><span class="w"> </span><span class="m">0.43</span><span class="p">,</span><span class="w"> </span><span class="m">0.39</span><span class="p">,</span><span class="w"> </span><span class="m">0.3</span><span class="p">,</span><span class="w"> </span><span class="m">0.26</span><span class="p">,</span><span class="w"> </span><span class="m">0.13</span><span class="p">,</span><span class="w"> </span><span class="m">0.072</span><span class="p">,</span><span class="w"> </span><span class="m">0.032</span><span class="p">,</span><span class="w"> </span><span class="m">0.024</span><span class="p">,</span><span class="w"> </span><span class="m">0.18</span><span class="p">,</span><span class="w"> </span><span class="m">0.15</span><span class="p">,</span><span class="w"> </span><span class="m">0.06</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">sin</span><span class="p">(</span><span class="nb">pi</span><span class="o">/</span><span class="m">3</span><span class="p">)</span><span class="w">
+</span><span class="n">snames</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"arcillosa"</span><span class="p">,</span><span class="w"> </span><span class="s2">"arcillosa"</span><span class="p">,</span><span class="w"> </span><span class="s2">"limosa"</span><span class="p">,</span><span class="w"> </span><span class="s2">"franco arcillosa"</span><span class="p">,</span><span class="w"> </span><span class="s2">"limosa"</span><span class="p">,</span><span class="w"> </span><span class="s2">"franco arcillosa"</span><span class="p">,</span><span class="w"> </span><span class="s2">"arcillosa"</span><span class="p">,</span><span class="w"> </span><span class="s2">"arenosa"</span><span class="p">,</span><span class="w"> </span><span class="s2">"franco arcillosa"</span><span class="p">,</span><span class="w"> </span><span class="s2">"arenosa"</span><span class="p">,</span><span class="w"> </span><span class="s2">"franco arenosa"</span><span class="p">,</span><span class="w"> </span><span class="s2">"arenosa"</span><span class="p">,</span><span class="w"> </span><span class="s2">"franca"</span><span class="p">,</span><span class="w"> </span><span class="s2">"arenosa"</span><span class="p">,</span><span class="w"> </span><span class="s2">"franca"</span><span class="p">,</span><span class="w"> </span><span class="s2">"franco limosa"</span><span class="p">,</span><span class="w"> </span><span class="s2">"limosa"</span><span class="p">)</span><span class="w">
+</span><span class="n">boxed.labels</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span><span class="w"> </span><span class="n">ypos</span><span class="p">,</span><span class="w"> </span><span class="n">snames</span><span class="p">,</span><span class="w"> </span><span class="n">border</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col.names</span><span class="p">,</span><span class="w">
+</span><span class="n">cex</span><span class="o">=</span><span class="m">0.8</span><span class="p">,</span><span class="w"> </span><span class="n">xpad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="n">par</span><span class="p">(</span><span class="n">xpd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">is.null</span><span class="p">(</span><span class="n">soiltexture</span><span class="p">))</span><span class="w">
+</span><span class="nf">return</span><span class="p">(</span><span class="kc">NULL</span><span class="p">)</span><span class="w">
+</span><span class="n">soilpoints</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">triax.points</span><span class="p">(</span><span class="n">soiltexture</span><span class="p">,</span><span class="w"> </span><span class="n">show.legend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">show.legend</span><span class="p">,</span><span class="w">
+</span><span class="n">label.points</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">label.points</span><span class="p">,</span><span class="w"> </span><span class="n">point.labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">point.labels</span><span class="p">,</span><span class="w">
+</span><span class="n">col.symbols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col.symbols</span><span class="p">,</span><span class="w"> </span><span class="n">pch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pch</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p">)</span><span class="w">
+</span><span class="nf">invisible</span><span class="p">(</span><span class="n">soilpoints</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="c1"># Definimos la imagen
+</span><span class="n">CairoPNG</span><span class="p">(</span><span class="s2">"…/images/clasificacion_textural.png"</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="o">=</span><span class="m">500</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="o">=</span><span class="m">560</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Construimos las consultas
+</span><span class="n">select</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'select '</span><span class="w">
+</span><span class="n">arena</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span><span class="w"> </span><span class="s1">','</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s1">' '</span><span class="p">);</span><span class="w">
+</span><span class="n">limo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">arg2</span><span class="p">,</span><span class="w"> </span><span class="s1">','</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s1">' '</span><span class="p">);</span><span class="w">
+</span><span class="n">arcilla</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">arg3</span><span class="p">,</span><span class="w"> </span><span class="s1">' '</span><span class="p">);</span><span class="w">
+</span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">' from '</span><span class="w">
+</span><span class="n">tabla</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arg4</span><span class="w">
+</span><span class="n">selection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">select</span><span class="p">,</span><span class="w"> </span><span class="n">arena</span><span class="p">,</span><span class="w"> </span><span class="n">limo</span><span class="p">,</span><span class="w"> </span><span class="n">arcilla</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">,</span><span class="w"> </span><span class="n">tabla</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s1">''</span><span class="p">);</span><span class="w">
+</span><span class="n">selectgids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s1">'select gid'</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">,</span><span class="w"> </span><span class="n">tabla</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s1">''</span><span class="p">);</span><span class="w">
+
+</span><span class="c1"># Ejecutamos las consultas
+</span><span class="n">texturas</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">pg.spi.exec</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span><span class="w">
+</span><span class="n">gids</span><span class="o">&lt;-</span><span class="w"> </span><span class="n">pg.spi.exec</span><span class="p">(</span><span class="n">selectgids</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Ejecutamos la funcion creada mas arriba
+</span><span class="n">soiltex.return</span><span class="o">&lt;-</span><span class="n">clasif.textural</span><span class="p">(</span><span class="n">texturas</span><span class="p">,</span><span class="w">
+</span><span class="n">pch</span><span class="o">=</span><span class="n">arg5</span><span class="p">,</span><span class="w"> </span><span class="n">point.labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gids</span><span class="p">[,],</span><span class="w"> </span><span class="n">label.points</span><span class="o">=</span><span class="n">arg6</span><span class="p">)</span><span class="w">
+</span><span class="n">dev.off</span><span class="p">()</span><span class="w">
+
+</span><span class="c1"># Damos permisos de lectura
+</span><span class="n">system</span><span class="p">(</span><span class="s1">'chmod go+r .../images/clasificacion_textural.png'</span><span class="p">);</span><span class="w">
+
+</span><span class="c1"># Una comprobacion para asegurarnos de que se ha creado la grafica, pero no afecta para nada.
+</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">file.exists</span><span class="p">(</span><span class="s1">'…/images/clasificacion_textural.png'</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="n">print</span><span class="w"> </span><span class="p">(</span><span class="s1">'Grafico realizado. Se llama …/images/clasificacion_textural.png'</span><span class="p">)};</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>y cerramos la función</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="err">$</span><span class="n">BODY</span><span class="err">$</span>
+<span class="k">LANGUAGE</span> <span class="s1">'plr'</span> <span class="k">VOLATILE</span>
+<span class="n">COST</span> <span class="mi">100</span><span class="p">;</span>
+<span class="k">ALTER</span> <span class="k">FUNCTION</span> <span class="n">_plr_clasif_textural</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="k">OWNER</span> <span class="k">TO</span> <span class="n">postgres</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h2 id="algunas-notas-sobre-todo-esto">Algunas notas sobre todo esto:</h2>
+
+<ol>
+  <li>
+    <p>En el TFM se apunta que en breve aparecerá una librería creada por Julien Moeys ( <a href="https://r-forge.r-project.org/projects/soiltexture/">https://r-forge.r-project.org/projects/soiltexture/</a> ) que hará innecesario tener que crear la función por nosotros mismos como hemos hecho en esta demostración. Será interesante comentar con los miembros del proyecto la posibilidad de compartir las funciones de su proyecto en una Web completamente dedicada al cálculo de triángulos texturales, donde los usuarios puedan añadir sus propios datos.</p>
+  </li>
+  <li>
+    <p>Los datos de ejemplo están un poco modificados pero se aproximan a la realidad.</p>
+  </li>
+  <li>
+    <p>La función tiene muchos aspectos mejorables, por lo menos en cuanto a la legibilidad. Otra posibilidad sería la de que no todos los argumentos de entrada fuesen de tipo texto. Esto lo veremos plasmado en el código de la demo 3.</p>
+  </li>
+  <li>
+    <p>Si en la página  inicial de la demo no se ve una lista con las muestras disponibles (como en la segunda imagen) será porqué el servidor de la base de datos ha caído y lo deberemos reiniciar en breve. Solo ha pasado una vez, pero quien sabe…</p>
+  </li>
+  <li>
+    <p>Este artículo destaca la potencia de pl/R a la hora de crear gráficos de lo más complejos.</p>
+  </li>
+</ol>
+
+<h2 id="agradecimientos">Agradecimientos:</h2>
+
+<p>El TFM de que he estado hablando ha sido dirigido por Toni Hernández, en el Máster en Sistemas de Información Geográfica y Teledetección de la Universitat de Girona (UNIGIS), y fue presentado en Mayo de 2010. Les estoy muy agradecido a todos los miembros, tanto alumnos como profesores, por estos últimos años disfrutando y aprendiendo SIG.</p>
+
+<p>Especialmente, quiero agradecer a los compañeros de G&amp;C por la ayuda con instalaciones, creación de la Web y otros dolores de cabeza.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#gráficas" class="page__taxonomy-item" rel="tag">gráficas</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pl-r" class="page__taxonomy-item" rel="tag">pl/R</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#postgis" class="page__taxonomy-item" rel="tag">PostGIS</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#postgresql" class="page__taxonomy-item" rel="tag">PostgreSQL</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#r" class="page__taxonomy-item" rel="tag">R</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#programming" class="page__taxonomy-item" rel="tag">Programming</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2010-09-08T00:00:00+00:00">September 08, 2010</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=/programming/la-ciencia-de-los-suelos-i-creacion-de-triangulos-texturales-directamente-desde-una-geodatabase/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=/programming/la-ciencia-de-los-suelos-i-creacion-de-triangulos-texturales-directamente-desde-una-geodatabase/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=/programming/la-ciencia-de-los-suelos-i-creacion-de-triangulos-texturales-directamente-desde-una-geodatabase/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=/programming/la-ciencia-de-los-suelos-i-creacion-de-triangulos-texturales-directamente-desde-una-geodatabase/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="/analysis/extraccion-de-caracteristicas-estructurales-de-una-imagen-ii-semi-variograma-de-una-imagen-usando-r-2/" class="pagination--pager" title="Extracción de características estructurales de una imagen ( II ) (Semi-variograma de una imagen usando R).
+">Previous</a>
+    
+    
+      <a href="/analysis/usando-rsaga-para-procesar-un-raster-grande-por-partes/" class="pagination--pager" title="Usando RSAGA para procesar un raster grande por partes
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/management/ubuntu20-dni-electronico-y-autofirma/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">DNI electrónico y autofirma en 2020: cómo NO perder 2 horas para firmar una solicitud
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">Cómo usar el DNIe desde Ubuntu para firmar electrónicamente trámites en línea. En este caso se firmaron las solicitudes para optar a las certificaciones de l...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/analysis/how-to-cite-geospatial-standards-and-other-things/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">How to cite geospatial standards and other GIS things
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  1 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">I found a template for manging ISO and OGC standards as Bibtex entries. This may be useful for citing documents that are not indexed by Google Scholar or if ...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">Choosing a desktop marker app for Ubuntu 18.04 LTS
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">In this post I explain the main features of two desktop bookmarking apps in Ubuntu 18.04: Pylote and Gromit-MPX. Both tools come in handy when making present...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">Using OBS Studio with V4L2 for making my videoconferences more appealing
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">In this post, I share the software configuration in Ubuntu to make video-conferences using a green chroma screen and your favorite video-conferencing software.
+</p>
+    </article>
+  </a>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/benizar81"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+      <li><a href="https://facebook.com/benizar81"><i class="fa fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+    
+    
+      <li><a href="http://github.com/benizar"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+      <li><a href="http://bitbucket.org/benizar"><i class="fa fa-fw fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
+    
+    <li><a href="/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Benito Zaragozí. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="/assets/js/main.min.js"></script>
+
+
+
+
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-81625023-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+
