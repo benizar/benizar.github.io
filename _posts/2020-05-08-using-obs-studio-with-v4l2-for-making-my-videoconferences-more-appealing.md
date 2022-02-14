@@ -1,14 +1,13 @@
 ---
 title: Using OBS Studio with V4L2 for making my videoconferences more appealing
+excerpt: "In this post, I share the software configuration in Ubuntu to make video-conferences using a green chroma screen and your favorite video-conferencing software."
 categories: [Multimedia]
 tags: [obs, virtual webcam, chroma key,ubuntu,skype,hangout,zoom]
 ---
 
 # Introduction
 
-I need to work from home
-
-I'm doing more videoconferences, presentations and recording classes for my students using OBS (+ other software). For this classes I'm using a chroma background but for videoconferences I didn't want to keep everytime, so I considered to use the chroma for videoconferences and other online meetings.
+Nowadays, I'm doing more videoconferences, presentations and recording classes for my students using OBS (+ other software). When I find some time, I'm using a chroma background for my videos, so I considered to use the chroma for videoconferences and other online meetings.
 
 There are many apps for doing this dinamically through the use of virtual webcams. In windows, we even could use Snapcam for adding special effects and in Ubuntu we could use [Webcamoid](https://github.com/webcamoid/webcamoid) for this. However, I wanted to do this using OBS because I would like to have more control over the scene, for example, I could show parts of my desktop or some slides without the need of sharing the screen. 
 
@@ -22,7 +21,7 @@ My working environment includes and old laptop with Ubuntu 16.04 LTS, a PC with 
 
 - And for a more professional use:
 
-    - **Teams** for Linux, with paid account from my University. Webcam was not working with the desktop app, so now I'm working from Chrome web browser.
+    - **Teams** for Linux, with a paid account from my University. Webcam was not working with the desktop app, so now I'm working from Chrome web browser.
     - **Zoom** client for Linux version 3.5 (specifically 3.5.361976.0301), with a paid account from a conference I'm attending.
 
 In this post I'm explaining how I'm working with OBS-studio as a virtual webcam. This way I'm able to use the same configurations, scenes and shortcuts I have created for my videotutorials.
@@ -55,7 +54,7 @@ make -j4
 sudo make install
 ```
 
-I'm not sure if we still need the sources for `libobs` after installing the repository from APT. Another problem is that the plugins are not installed in the correct directory. Probably, we could provide a parameter to the make install command but I ended up doing as the rest of the people:
+I'm not sure if we still need the sources for `libobs` after installing the repository from APT. Another problem is that the plugins are not installed in the correct directory. Probably, we could provide a parameter to the make install command but I ended up doing as most of people do things:
 
 ```bash
 cp /usr/lib/obs-plugins/v4l2sink.so /usr/lib/x86_64-linux-gnu/obs-plugins/
@@ -102,6 +101,12 @@ and then we can check that all the virtual devices are gone
 ```bash
 ls -l /dev/video*
 ```
+
+
+# Final thoughts
+This is an old draft I prepared during the first lockdown of the COVID pandemics  (almost 1,5 years old). Problably there are better solutions for this now, because configuring OBS and virtual cameras before every videoconference was quite painful and I ended up showing my *very tidy* office when I work from home.
+
+If I had an oportunity I would like to show you the usage in a short video. Another problem for using this approach is that you need a chroma screen in every location you need to do a videoconference, and that's not very practical.
 
 
 # References

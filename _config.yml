@@ -9,7 +9,7 @@
 locale                   : "en"
 title                    : "Benito Zaragozí"
 title_separator          : "-"
-name                     : "Benito M. Zaragozí"
+name                     : "Benito Zaragozí"
 description              : "This is the hub for my multiple digital profiles"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
@@ -68,7 +68,7 @@ google_ad_slot           :
 
 # Site Author
 author:
-  name             : "Benito M. Zaragozí"
+  name             : "Benito Zaragozí"
   avatar           : "benizar-photo.jpg"
   bio              : "Geographer and GIScientist"
   location         : "Vila-Seca, Spain"

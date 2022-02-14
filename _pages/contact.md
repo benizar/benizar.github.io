@@ -11,11 +11,8 @@ permalink: /contact/
 E-mail
 : [benito.zaragozi@urv.cat](mailto: benito.zaragozi@urv.cat?subject=Hola Benito)
 
-Phone 
-: +34 97 755 8391
-
 Mailing address
-: **Benito M. Zaragozí**
+: **Benito Zaragozí**
 : [Departamento de Geografía](http://www.urv.cat/dgeo/es_index.html)
 : [Universitat Rovira i Virgili](http://www.urv.cat/)
 : C/Joanot Martorell, 15
