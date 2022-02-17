@@ -5,7 +5,6 @@ tags: [dnie,dni electrónico,autofirma,ubuntu 20,java]
 excerpt: "Cómo usar el DNIe desde Ubuntu para firmar electrónicamente trámites en línea. En este caso se firmaron las solicitudes para optar a las certificaciones de la AESA para ser piloto de drones."
 ---
 
-## Inscripción a la formación de pilotos de drones de la AESA
 Estas últimas semanas, junto con otros compañeros y compañeras, hemos empezado a prepararnos para obtener la formación necesaria para pilotar drones para nuestros proyectos. El primer paso es realizar del CURSO DE FORMACIÓN Y EXAMEN DE PILOTO A DISTANCIA EN CATEGORÍA ABIERTA, SUBCATEGORÍAS A1/A3. Para saber más podéis revisar la información sobre la [Formación de pilotos UAS/drones en categoría ‘abierta’](https://www.seguridadaerea.gob.es/es/ambitos/drones/formacion-pilotos-a-distancia-uas-drones/formacion-de-pilotos-uas-drones-en-categoria-rabiertar). Hay mucha gente hablando de estas cosas y no hace falta que me ponga pesado. Recomiendo el canal de YouTube de [Rafa Ocón](https://www.youtube.com/channel/UCZ-5HNenHNT13aTf7KD0ROg) para oir hablar a un profesional sobre la actualidad del mundo de los drones.
 
 Lo primero es registrarse en la página web de la AESA para realizar una [Nueva solicitud](https://sede.seguridadaerea.gob.es/oficina/tramites/acceso.do?id=106). Una vez firmada y enviada la solicitud se tarda un tiempo en recibir acceso al la plataforma Moodle de la AESA en la que se realiza este primer curso (A1/A3) y el examen para obtener el certificado. El trámite resulta sencillo a no ser que no tengas un certificado electrónico actualizado y todo el software necesario para firmar electrónicamente. En fin, esto no será problemático para la mayoría pero desde Linux todo cuesta un poquito más :)
@@ -13,7 +12,7 @@ Lo primero es registrarse en la página web de la AESA para realizar una [Nueva 
 Bueno, también se dice que se puede enviar por correo postal y esperar la respuesta...
 
 
-### Firmar la solicitud
+## Firmar la solicitud
 
 El DNIe va cambiando de versiones y resulta que yo tenía uno (de 3 años de antiguedad) con el que ya no se me permitia actualizar los certificados electrónicos. Una vez con el DNIe actualizado y teniendo un **lector de tarjetas inteligentes compatible con Linux**. El que yo tengo ya no está disponible pero supongo que habrá nuevos modelos ([Lector de tarjetas descatalogado](https://www.amazon.es/dp/B01JS2HSAA?psc=1&ref=ppx_pop_dt_b_product_details)).
 
@@ -28,7 +27,7 @@ wget https://www.dnielectronico.es/descargas/distribuciones_linux/Ubuntu_libpkcs
 sudo dpkg -i libpkcs11-dnie_x.x.x_i386.deb
 ```
 
-### Autofirma
+## Autofirma
 
 A continuación hace falta software para firmar PDFs u otros documentos. Nuevamente, esto és más sencillo en Windows con el Adobe Acrobat PDF Pro. En Ubuntu se puede instalar [Autofirma](https://firmaelectronica.gob.es/Home/Descargas.html).
 
@@ -62,7 +61,7 @@ y seleccionar la versión 8 de java, si és que se había instalado en los pasos
 Al final todo funciona correctamente y pude realizar mi solicitud. Desde entonces he utilizado más amenudo la firma con el DNIe cuando estoy en casa. No obstante, me sigue sorprendiendo que una aplicación de la que tanto dependemos no esté más actualizada con las últimas dependéncias y/o haya un cierto versionado para las configuraciones habituales.
 
 
-# Una reflexión sobre todo esto
+## Una reflexión sobre todo esto
 Estamos ya metidos en pleno siglo veintiuno pero parece que hay cosas que no cambian tan rápido como esperabamos hace unos años. Los trámites con la administración són cada vez más sencillos pero hace falta una reflexión. ¿Cuanto tiempo falta hasta que la administración apueste de verdad por el software libre y abierto?---y nos liberemos de tener que pagar el doble (primero nuestros impuestos y después el software para poder realizar nuestros trámites). Sí, aunque no lo pensemos habitualmente y muchas veces los tengamos ya instalados, Windows y los programas de Adobe son de pago.
 
 Desde que me decidí a utilizar principalmente software libre, puedo clasificar mis dias entre:
@@ -73,7 +72,7 @@ Desde que me decidí a utilizar principalmente software libre, puedo clasificar 
 
  Hoy sería un dia del tercer tipo pero, afortunadamente, mi fe en el software libre es fuerte.
 
-# Referencias
+## Referencias
 
 - [Firma digital en Ubuntu](https://atareao.es/como/firma-digital-en-ubuntu/)
 - [Cómo utilizar el DNIe](https://www.dnielectronico.es/PortalDNIe/PRF1_Cons02.action?pag=REF_300&id_menu=15)
