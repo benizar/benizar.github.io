@@ -19,7 +19,9 @@ This project has two git branches:
 1. The `source` branch contains the Jekyll project.
 2. The `master` branch publishes the website (gh-pages).
 
-This approach is very convenient for using Jekyll plugins and deploy the website only when necessary.
+This approach is very convenient for using Jekyll plugins and deploy the website only when necessary. 
+
+***However, the target branch for GH-pages is reseted every time and it is necessary select it by hand.***
 
 
 ## Using the Makefile
