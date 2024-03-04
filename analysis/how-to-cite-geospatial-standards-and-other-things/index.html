@@ -1,0 +1,596 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>How to cite geospatial standards and other GIS things - Benito Zaragozí</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Benito Zaragozí">
+<meta property="og:title" content="How to cite geospatial standards and other GIS things">
+
+
+
+
+  <meta property="og:description" content="I found a template for manging ISO and OGC standards as Bibtex entries. This may be useful for citing documents that are not indexed by Google Scholar or if Mendeley can’t find a DOI for the PDF document.">
+
+
+
+  <meta name="twitter:site" content="@benizar81">
+  <meta name="twitter:title" content="How to cite geospatial standards and other GIS things">
+  <meta name="twitter:description" content="I found a template for manging ISO and OGC standards as Bibtex entries. This may be useful for citing documents that are not indexed by Google Scholar or if Mendeley can’t find a DOI for the PDF document.">
+  <meta name="twitter:url" content="">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2020-06-10T00:00:00+00:00">
+  
+    <link rel="next" href="/management/ubuntu20-dni-electronico-y-autofirma/" title="DNI electrónico y autofirma en 2020: cómo NO perder 2 horas para firmar una solicitud">
+  
+  
+    <link rel="prev" href="/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/" title="Choosing a desktop marker app for Ubuntu 18.04 LTS">
+  
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Benito Zaragozí",
+      "url" : null,
+      "sameAs" : ["https://twitter.com/benizar81","https://facebook.com/benizar81","https://www.linkedin.com/in/benizar","https://www.researchgate.net/profile/Benito_Zaragozi","http://orcid.org/0000-0003-2501-484X"]
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Benito Zaragozí Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/academicons.min.css"/>
+
+<meta http-equiv="cleartype" content="on">
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="/">Benito Zaragozí</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/year-archive/">Blog</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/cv/">CV</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/contact/">Contact</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/about/">About me</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="/images/benizar-photo.jpg" class="author__avatar" alt="Benito Zaragozí">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Benito Zaragozí</h3>
+    <p class="author__bio">Geographer and GIScientist</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Vila-Seca, Spain</li>
+      
+      
+      
+        <li><a href="mailto:benizar@gmail.com"><i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+      
+
+      
+        <li><a href="https://orcid.org/0000-0003-2501-484X"><i class="ai ai-fw ai-orcid" aria-hidden="true" style="color:#a6ce39ff;"></i>ORCID</a></li>
+      
+      
+        <li><a href="http://www.researcherid.com/rid/B-5270-2019"><i class="ai ai-fw ai-researcherid" aria-hidden="true" style="color:#ffa500;"></i>ResearcherID</a></li>
+      
+      
+        <li><a href="https://scholar.google.es/citations?user=sO9xAc8AAAAJ"><i class="ai ai-fw ai-google-scholar-square" aria-hidden="true"  style="color:#508ef3ff;"></i>Google Scholar</a></li>
+      
+      
+        <li><a href="https://www.researchgate.net/profile/Benito_Zaragozi"><i class="ai ai-fw ai-researchgate-square" aria-hidden="true" style="color:#00e3abff;"></i>ResearchGate</a></li>
+      
+      
+        <li><a href="https://www.mendeley.com/profiles/benito-zaragozi"><i class="ai ai-fw ai-mendeley-square" aria-hidden="true" style="color:#a51925ff;"></i>Mendeley</a></li>
+      
+
+      
+        <li><a href="https://bitbucket.org/benizar"><i class="fa fa-fw fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
+      
+      
+        <li><a href="https://github.com/benizar"><i class="fa fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+
+
+      
+        <li><a href="https://www.linkedin.com/in/benizar"><i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn</a></li>
+      
+
+      
+        <li><a href="https://twitter.com/benizar81"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+        <li><a href="https://www.facebook.com/benizar81"><i class="fa fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+      
+
+
+      
+      
+      
+
+
+      
+      
+      
+      
+
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </ul>
+  </div>
+</div>
+
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="How to cite geospatial standards and other GIS things">
+    <meta itemprop="description" content="I found a template for manging ISO and OGC standards as Bibtex entries. This may be useful for citing documents that are not indexed by Google Scholar or if Mendeley can’t find a DOI for the PDF document.">
+    <meta itemprop="datePublished" content="June 10, 2020">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">How to cite geospatial standards and other GIS things
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  1 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>Nowadays, there are tons of tools for managing and formating your references, some of the most useful options are to use Google Scholar for <strong>reference management</strong> and Mendeley (desktop+web) for <strong>document management</strong> (mostly for PDFs). I use the GS for getting Bibtex or APA7 formated references when I don’t need to reread the document or Mendeley when it’s a document I would like to keep.</p>
+
+<p>These tools were practical enough since this year I started using Zotero and Cablibre for managing my collections of papers and digital books. I will share a few toughts of this in a future post.</p>
+
+<p>Right now, I’m mostly interested in having a complete Bibtex database for my references and this can be done by using any of the previous solutions (FOSS or not). However, there are certain specific ocasions where you can’t find an already formated reference in GS or there is no DOI code that can be used by Mendeley or Zotero to compile the Bibtex entry. In those ocasions you need to do it the old way…</p>
+
+<h2 id="cant-found-a-bibtex-entry-in-the-previous-options">Can’t found a Bibtex entry in the previous options?</h2>
+
+<p>This was the case when I was trying to cite ISO and OGC standards for a paper (these don’t have DOI or ISBN). As usual in life, many people share the same problem you have. Ismael Olea shares a solution in <a href="https://olea.org/diario/2018/10/19/how_to_cite_ISO_standards.html">this post</a>. This is how the SQL standard looks like following his suggestions:</p>
+
+<div class="language-tex highlighter-rouge"><pre class="highlight"><code>@techreport<span class="p">{</span>iso<span class="p">_</span>sql<span class="p">_</span>2016,
+  address = <span class="p">{</span>Geneva, CH<span class="p">}</span>,
+  type = <span class="p">{</span>Standard<span class="p">}</span>,
+  title = <span class="p">{</span>Information technology -- <span class="p">{</span>Database<span class="p">}</span> languages -- SQL -- <span class="p">{</span>Part<span class="p">}</span> 1: <span class="p">{</span>Framework<span class="p">}}</span>,
+  shorttitle = ISO/IEC 9075-1:2016,
+  url = <span class="p">{</span>https://www.iso.org/standard/63555.html<span class="p">}</span>,
+  language = <span class="p">{</span>en<span class="p">}</span>,
+  number = ISO/IEC TR 9075-1:2016,
+  institution = <span class="p">{</span>International Organization for Standardization<span class="p">}</span>,
+  author = <span class="p">{</span>ISO Central Secretary<span class="p">}</span>,
+  year = <span class="p">{</span>2016<span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>I think it would be useful to keep a repository of those documents and items that are not usually cited. I appreciate VERY MUCH the way GS, Mendeley, Calibre and Zotero help us with these arduous tasks.</p>
+
+<p class="notice--info"><strong>A small tip:</strong> Did you know that Calibre helps you in finding metadata for PDF books? It even downloads the covers from Amazon!!! You should try it ;)</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#bibliography" class="page__taxonomy-item" rel="tag">bibliography</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#bibtex" class="page__taxonomy-item" rel="tag">bibtex</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#geospatial" class="page__taxonomy-item" rel="tag">geospatial</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#gis" class="page__taxonomy-item" rel="tag">gis</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#iso-iec" class="page__taxonomy-item" rel="tag">iso/iec</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ogc" class="page__taxonomy-item" rel="tag">ogc</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#standards" class="page__taxonomy-item" rel="tag">standards</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#analysis" class="page__taxonomy-item" rel="tag">Analysis</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-06-10T00:00:00+00:00">June 10, 2020</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=/analysis/how-to-cite-geospatial-standards-and-other-things/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=/analysis/how-to-cite-geospatial-standards-and-other-things/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=/analysis/how-to-cite-geospatial-standards-and-other-things/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=/analysis/how-to-cite-geospatial-standards-and-other-things/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/" class="pagination--pager" title="Choosing a desktop marker app for Ubuntu 18.04 LTS
+">Previous</a>
+    
+    
+      <a href="/management/ubuntu20-dni-electronico-y-autofirma/" class="pagination--pager" title="DNI electrónico y autofirma en 2020: cómo NO perder 2 horas para firmar una solicitud
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/programming/data%20management/group-zipping-gis-files-made-easy/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">Group zipping GIS Files made easy
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  8 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">If you work with Geographic Information System (GIS) data, you’re likely familiar with multi-file formats such as ESRI Shapefiles or SAGA GIS raster files. T...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/management/ubuntu20-dni-electronico-y-autofirma/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">DNI electrónico y autofirma en 2020: cómo NO perder 2 horas para firmar una solicitud
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">Cómo usar el DNIe desde Ubuntu para firmar electrónicamente trámites en línea. En este caso se firmaron las solicitudes para optar a las certificaciones de l...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">Choosing a desktop marker app for Ubuntu 18.04 LTS
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">In this post I explain the main features of two desktop bookmarking apps in Ubuntu 18.04: Pylote and Gromit-MPX. Both tools come in handy when making present...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">Using OBS Studio with V4L2 for making my videoconferences more appealing
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  3 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">In this post, I share the software configuration in Ubuntu to make video-conferences using a green chroma screen and your favorite video-conferencing software.
+</p>
+    </article>
+  </a>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/benizar81"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+      <li><a href="https://facebook.com/benizar81"><i class="fa fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+    
+    
+      <li><a href="http://github.com/benizar"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+      <li><a href="http://bitbucket.org/benizar"><i class="fa fa-fw fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
+    
+    <li><a href="/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2024 Benito Zaragozí. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

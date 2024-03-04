@@ -19,7 +19,7 @@
 
 
 
-<title>Benito Zaragozí</title>
+<title>Extracting thumbnails from a PDF page - Benito Zaragozí</title>
 
 
 
@@ -29,16 +29,18 @@
 
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="Benito Zaragozí">
-<meta property="og:title" content="Benito Zaragozí">
+<meta property="og:title" content="Extracting thumbnails from a PDF page">
 
 
 
+
+  <meta property="og:description" content="Use ImageMagick from command-line for extracting thumbnails from any PDF.">
 
 
 
   <meta name="twitter:site" content="@benizar81">
-  <meta name="twitter:title" content="Benito Zaragozí">
-  <meta name="twitter:description" content="This is the hub for my multiple digital profiles">
+  <meta name="twitter:title" content="Extracting thumbnails from a PDF page">
+  <meta name="twitter:description" content="Use ImageMagick from command-line for extracting thumbnails from any PDF.">
   <meta name="twitter:url" content="">
 
   
@@ -56,9 +58,16 @@
 
 
 
-  <meta property="og:image" content="/images/header-dragon-kahn.jpg">
 
 
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2016-07-22T00:00:00+00:00">
+  
+    <link rel="next" href="/multimedia/teaching/how-to-customize-openshot-animated-titles/" title="Customize animated titles in OpenShot">
+  
+  
+    <link rel="prev" href="/analysis/education/presentation/small-data-para-educacion-mas-de-un-millon-de-piramides-de-poblacion-de-espanya/" title="Small Data para Educación. Más de un millón de pirámides de población de España">
+  
 
 
 
@@ -144,36 +153,7 @@
 </div>
 
     
-  
 
-
-
-
-
-
-
-
-
-<div class="page__hero--overlay"
-  style=" background-image: url('/images/header-dragon-kahn.jpg');"
->
-  
-    <div class="wrapper">
-      <h1 class="page__title" itemprop="headline">
-        
-          Benito Zaragozí
-        
-      </h1>
-      
-      
-      
-    </div>
-  
-  
-    <span class="page__hero-caption">Dragon Khan roller coaster (PortAventura)
-</span>
-  
-</div>
 
 
 
@@ -278,18 +258,185 @@
   </div>
 
 
-  <div class="archive">
-    
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Extracting thumbnails from a PDF page">
+    <meta itemprop="description" content="Use ImageMagick from command-line for extracting thumbnails from any PDF.">
+    <meta itemprop="datePublished" content="July 22, 2016">
     
 
-<h3 class="archive__subtitle">Recent Posts</h3>
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Extracting thumbnails from a PDF page
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  1 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>Yesterday, I wanted to extract several thumbnails for publishing in this website. I usually do this kind of tasks using Gimp. However, I think that I will need to do this too many times in the future. For this reason, I tried to do it using <a href="http://www.imagemagick.org">ImageMagick</a> … Now, I have decided that I really like it. According to its website,</p>
+
+<blockquote>
+  <p>ImageMagic is a software suite to create, edit, compose, or convert bitmap images. It can read and write images in a variety of formats (over 200) including PNG, JPEG, JPEG-2000, GIF, TIFF, DPX, EXR, WebP, Postscript, PDF, and SVG. Use ImageMagick to resize, flip, mirror, rotate, distort, shear and transform images, adjust image colors, apply various special effects, or draw text, lines, polygons, ellipses and Bézier curves.</p>
+</blockquote>
+
+<p>The functionality of ImageMagick is typically utilized from the command-line so, virtually, it can be exploded by programs written in any programming language. I tested the <code class="highlighter-rouge">convert</code> command to automate the following steps:</p>
+
+<ol>
+  <li>Convert the first page of a PDF to PNG.</li>
+  <li>Adjust the image quality.</li>
+  <li>Resize it (my PDFs are A4 format, so resizing to 10% is enough for a miniature).</li>
+  <li>Set the background colour.</li>
+  <li>Add a thin black border.</li>
+  <li>Save the miniature into the images folder.</li>
+  <li>Use a loop for batch processing.</li>
+</ol>
+
+<p>For example, this is the code used to prepare one of the miniatures included in the CV section of this website:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>convert -density 300 -resize %10 <span class="se">\</span>
+        -background white -alpha remove -bordercolor black -border 1 <span class="se">\</span>
+        download/curriculum_eng.pdf[0] images/curriculum_eng.png
+</code></pre>
+</div>
+
+<p>The following image is the result of processing <a href="/downloads/benito-zaragozi-cv-en.pdf">PDF</a></p>
+
+<p><img src="/images/benito-zaragozi-cv-en.png" alt="cvn_english" class="align-left" /></p>
+
+<p>The <code class="highlighter-rouge">convert</code> command can be used to <em>convert</em> between image formats as well as resize an image, blur, crop, despeckle, dither, draw on, flip, join, re-sample, and much more. See the <a href="http://www.imagemagick.org/script/command-line-processing.php">Command Line Processing</a> documentation for learning more about its possibilities.</p>
+
+<p>Sometimes, I need to process image files for accomplishing different tasks (watermarks, resizing, crop, convert to grayscale, etc). In the future, I will commit such new scripts <a href="/contrib/convert-commands.md">here</a>.</p>
+
+<p>I hope you enjoyed this post ;)</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
 
 
   
 
 
 
-<div class="list__item">
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#bash" class="page__taxonomy-item" rel="tag">bash</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#image-processing" class="page__taxonomy-item" rel="tag">image processing</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#imagemagick" class="page__taxonomy-item" rel="tag">ImageMagick</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#thumbnails" class="page__taxonomy-item" rel="tag">thumbnails</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#snippets" class="page__taxonomy-item" rel="tag">Snippets</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-07-22T00:00:00+00:00">July 22, 2016</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=/snippets/extract-thumbnails-from-documents/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=/snippets/extract-thumbnails-from-documents/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=/snippets/extract-thumbnails-from-documents/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=/snippets/extract-thumbnails-from-documents/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="/analysis/education/presentation/small-data-para-educacion-mas-de-un-millon-de-piramides-de-poblacion-de-espanya/" class="pagination--pager" title="Small Data para Educación. Más de un millón de pirámides de población de España
+">Previous</a>
+    
+    
+      <a href="/multimedia/teaching/how-to-customize-openshot-animated-titles/" class="pagination--pager" title="Customize animated titles in OpenShot
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
   
     <a href="/programming/data%20management/group-zipping-gis-files-made-easy/">
   
@@ -302,7 +449,7 @@
 
 
   
-	  7 minute read
+	  8 minute read
 	
 </p>
       
@@ -310,12 +457,12 @@
     </article>
   </a>
 </div>
+        
+          
 
-  
 
 
-
-<div class="list__item">
+<div class="grid__item">
   
     <a href="/management/ubuntu20-dni-electronico-y-autofirma/">
   
@@ -336,12 +483,12 @@
     </article>
   </a>
 </div>
+        
+          
 
-  
 
 
-
-<div class="list__item">
+<div class="grid__item">
   
     <a href="/analysis/how-to-cite-geospatial-standards-and-other-things/">
   
@@ -362,12 +509,12 @@
     </article>
   </a>
 </div>
+        
+          
 
-  
 
 
-
-<div class="list__item">
+<div class="grid__item">
   
     <a href="/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/">
   
@@ -388,91 +535,10 @@
     </article>
   </a>
 </div>
-
+        
+      </div>
+    </div>
   
-
-
-
-<div class="list__item">
-  
-    <a href="/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing/">
-  
-    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
-      
-      <h2 class="archive__item-title" itemprop="headline">Using OBS Studio with V4L2 for making my videoconferences more appealing
-</h2>
-      
-        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
-
-
-  
-	  3 minute read
-	
-</p>
-      
-      <p class="archive__item-excerpt" itemprop="description">In this post, I share the software configuration in Ubuntu to make video-conferences using a green chroma screen and your favorite video-conferencing software.
-</p>
-    </article>
-  </a>
-</div>
-
-
-
-
-
-<nav class="pagination">
-  <ul>
-    
-    
-      <li><a href="#" class="disabled"><span aria-hidden="true">Previous</span></a></li>
-    
-
-    
-    
-      <li><a href="#" class="disabled current">1</a></li>
-    
-
-    
-    
-
-    
-    
-    
-
-    
-      
-        
-        
-        
-        <li><a href="/page2/">2</a></li>
-      
-    
-      
-        
-        
-        
-        <li><a href="/page3/">3</a></li>
-      
-    
-
-    
-    
-      <li><a href="#" class="disabled">&hellip;</a></li>
-    
-
-    
-      <li><a href="/page6/">6</a></li>
-    
-
-    
-    
-      <li><a href="/page2/">Next</a></li>
-    
-  </ul>
-</nav>
-
-
-  </div>
 </div>
 
 

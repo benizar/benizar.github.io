@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2024-03-04T16:20:02+00:00</updated><id>/</id><title type="html">Benito Zaragozí</title><subtitle>This is the hub for my multiple digital profiles</subtitle><author><name>Benito Zaragozí</name><email>benizar@gmail.com</email></author><entry><title type="html">Group zipping GIS Files made easy</title><link href="/programming/data%20management/group-zipping-gis-files-made-easy/" rel="alternate" type="text/html" title="Group zipping GIS Files made easy" /><published>2023-04-03T00:00:00+00:00</published><updated>2023-04-03T00:00:00+00:00</updated><id>/programming/data%20management/group-zipping-gis-files-made-easy</id><content type="html" xml:base="/programming/data%20management/group-zipping-gis-files-made-easy/">&lt;p&gt;If you work with Geographic Information System (GIS) data, you’re likely familiar with multi-file formats such as ESRI Shapefiles or SAGA GIS raster files. These file formats consist of several individual files with different extensions that need to be kept together to maintain their spatial information. If you’re sharing or storing these files, it can be cumbersome to handle each file-group individually, especially if the files need to be compressed. This is where a bash script called &lt;strong&gt;Group Zipping&lt;/strong&gt; comes in handy.&lt;/p&gt;
+
+&lt;p&gt;In this post, I propose a Bash script that helps compress &lt;strong&gt;&lt;em&gt;GIS files that come in multiple files&lt;/em&gt;&lt;/strong&gt;. Here, I explain how the script works and highlight some of its features, such as parallelization, software and folder checks, filters, and a variety of available compression formats.&lt;/p&gt;
+
+&lt;h2 id=&quot;understanding-multi-file-gis-formats&quot;&gt;Understanding multi-file GIS formats&lt;/h2&gt;
+
+&lt;p&gt;There are many well-known multi-file formats outside of the GIS domain. Here are some examples:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Microsoft Office documents (.docx, .xlsx, .pptx) are actually ZIP archives that contain multiple files, including XML files and media assets.&lt;/li&gt;
+  &lt;li&gt;Java JAR files are ZIP archives that contain compiled Java classes and resources.&lt;/li&gt;
+  &lt;li&gt;Adobe PDF files can contain multiple components, such as fonts, images, and metadata.&lt;/li&gt;
+  &lt;li&gt;EPUB files, used for e-books, are also ZIP archives that contain multiple HTML, CSS, and media files.&lt;/li&gt;
+  &lt;li&gt;Git repositories consist of multiple files that represent the codebase, including code files, configuration files, and metadata.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These are just a few examples, but there are many other multi-file formats in various domains, such as multimedia, software development, and scientific research.&lt;/p&gt;
+
+&lt;p&gt;As you can see, multi-file formats are a really common aproach for structuring (text based) data but they are usually combined into single containter, mostly for practical reasons. However, in other ocasions the formats are used without such combination.&lt;/p&gt;
+
+&lt;p&gt;Before we dive into the script, let’s take a moment to review some examples of GIS formats that come in multiple &lt;em&gt;separate&lt;/em&gt; files.&lt;/p&gt;
+
+&lt;h3 id=&quot;esri-shapefiles&quot;&gt;ESRI Shapefiles&lt;/h3&gt;
+
+&lt;p&gt;ESRI Shapefiles (or just &lt;em&gt;Shapefiles&lt;/em&gt; or &lt;em&gt;shapes&lt;/em&gt;) are a popular GIS format that store vector data, such as points, lines, and polygons. As you probably know, a complete shapefile consists of at least three files:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.shp&lt;/code&gt;: the file that contains the geometry of the features (points, lines, polygons) in the shapefile.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.dbf&lt;/code&gt;: the file that contains the attribute data (e.g. names, population, etc.) for the features in the shapefile.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.shx&lt;/code&gt;: the file that contains the index of the features in the &lt;code class=&quot;highlighter-rouge&quot;&gt;.shp&lt;/code&gt; file.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Optionally, a shapefile may also have other files associated:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.prj&lt;/code&gt;: the file that contains the projection information for the shapefile&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.sbn&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;.sbx&lt;/code&gt;: files used for spatial indexing&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Maybe, shapefiles are being replaced by other more modern formats but they are still widely used in many contexts. The structure of a shapefile is stil one of the first explanations in many “Intro to GIS” courses.&lt;/p&gt;
+
+&lt;h3 id=&quot;saga-raster-files&quot;&gt;SAGA Raster Files&lt;/h3&gt;
+
+&lt;p&gt;SAGA raster files are another common GIS format that store raster data, such as elevation, temperature, rainfall, etc… A SAGA raster file consists of at least two files:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.sdat&lt;/code&gt;: the file that contains the actual data&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.sgrd&lt;/code&gt;: the file that contains metadata about the data, such as the extent, resolution, and projection information&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Optionally, a SAGA raster file may also have:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.sdat.aux.xml&lt;/code&gt;: an auxiliary XML file that can store additional metadata or coordinate system information&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.sdat.prj&lt;/code&gt;: a file containing the projection information for the raster dataset&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.sdat.cpg&lt;/code&gt;: a file that specifies the encoding of the raster dataset&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.sdat.vat.dbf&lt;/code&gt;: a dBase file containing a value attribute table (VAT) for the raster dataset&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Other GIS formats, such as GeoTIFF, NetCDF, and or KML/KMZ, also can store data in multiple files, maybe containing an external projection file or multimedia associated files that are referenced in the attribute table. Regardless of the format, it’s important to properly organize and compress the files to avoid losing data or metadata, and to make it easier to share or store the data.&lt;/p&gt;
+
+&lt;h2 id=&quot;introducing-the-bash-script&quot;&gt;Introducing the Bash Script&lt;/h2&gt;
+
+&lt;p&gt;To help manage and compress multi-file GIS formats, I propose a Bash script that compresses files sharing a common prefix before the first dot in their filenames. Sometimes this pattern (&lt;em&gt;before the first dot&lt;/em&gt;) is not the same as a 3-4 characters extension (e.g. in the case of &lt;code class=&quot;highlighter-rouge&quot;&gt;.sdat.aux.xml&lt;/code&gt;, which is a composed extension). The script can work with many other formats but I have tested it with ESRI Shapefiles and SAGA rasters. Of course, it may also be useful in non GIS applications.&lt;/p&gt;
+
+&lt;p&gt;The main features of this script include:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;In terms of compression formats, the script supports several commonly used formats, including gzip, bzip2, xz, zip, lzma, lzip, lrzip, and 7zip. By default, the script uses gzip, but you can choose a different format using the &lt;code class=&quot;highlighter-rouge&quot;&gt;-f&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;--format&lt;/code&gt; option.&lt;/li&gt;
+  &lt;li&gt;The script uses GNU Parallel to compress files in parallel, which can significantly reduce the compression time for large datasets. By default, the script uses only 1 of the CPU cores available in the system as the maximum number of parallel jobs. However, you can specify a lower or higher value using the &lt;code class=&quot;highlighter-rouge&quot;&gt;-j&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;--jobs option&lt;/code&gt;. It’s worth noting that running too many parallel jobs can overload the system and lead to slower processing times, so it’s recommended to use a conservative number of jobs, especially if you’re compressing large files or working on a system with limited resources.&lt;/li&gt;
+  &lt;li&gt;The script also performs a series of checks to ensure that the required software and folders are available before starting the compression process. If any issues are detected, the script will print an error message and exit with a non-zero status code.&lt;/li&gt;
+  &lt;li&gt;Additionally, the script allows you to filter the input files by specifying a pattern using the &lt;code class=&quot;highlighter-rouge&quot;&gt;-p&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;--pattern&lt;/code&gt; option. The pattern can be any string that matches the common prefix of the files you want to compress.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The script provides some flexibility but to further optimize the compression process, here are some additional tips:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Read and write to different disks: If possible, read the files from one disk and write the compressed files to another. This can help reduce disk contention and speed up the overall process.&lt;/li&gt;
+  &lt;li&gt;Limit the number of parallel jobs: Depending on the available resources, it may be more efficient to limit the number of parallel jobs to a smaller number. Experiment with different values to find the optimal number of jobs for your system.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The script could be adapted for different requirements and situations, but now it assumes that compressing is the main task of the computer when it is executed.&lt;/p&gt;
+
+&lt;h2 id=&quot;usage&quot;&gt;Usage&lt;/h2&gt;
+
+&lt;p&gt;The script supports the following parameters:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-h, --help&lt;/code&gt;: Display the help message and exit.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-i, --input-folder&lt;/code&gt;: The folder containing the files to compress (default: current directory).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-o, --output-folder&lt;/code&gt;: The folder where compressed files will be saved (default: input folder).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-f, --format&lt;/code&gt;: The compression format to use (supported: gzip, bzip2, xz; default: gzip).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-p, --pattern&lt;/code&gt;: The pattern to filter file names in the input folder (e.g., ‘&lt;em&gt;pattern&lt;/em&gt;’; default: all files).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-j, --jobs&lt;/code&gt;: The number of parallel jobs to run (default: number of CPU cores).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Maybe a couple of examples will clarify what the script does.&lt;/p&gt;
+
+&lt;h3 id=&quot;example-1-compressing-an-esri-shapefile&quot;&gt;Example 1: Compressing an ESRI Shapefile&lt;/h3&gt;
+
+&lt;p&gt;Let’s say you have the following files in a folder:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;some-streets-file.dbf
+some-streets-file.prj
+some-streets-file.shp
+some-streets-file.shx
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;You can compress them using the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./group-zipping.sh -i /path/to/files -o /path/to/output -f gzip -p &lt;span class=&quot;s1&quot;&gt;'streets'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This will create a file called &lt;code class=&quot;highlighter-rouge&quot;&gt;some-streets-file.tar.gz&lt;/code&gt; in the output folder. The same with other shapefiles stored in the input folder.&lt;/p&gt;
+
+&lt;h3 id=&quot;example-2-compressing-a-saga-raster-file-group&quot;&gt;Example 2: Compressing a SAGA raster file group&lt;/h3&gt;
+
+&lt;p&gt;Let’s say you have the following SAGA raster file in a folder:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;some-elevation-file.sdat
+some-elevation-file.sgrd
+some-elevation-file.sprj
+some-elevation-file.mgrd
+some-elevation-file.sdat.aux.xml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;You can compress the file-group using the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./group-zipping.sh -i /path/to/files -o /path/to/output -f gzip -p &lt;span class=&quot;s1&quot;&gt;'elevation'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This will create a file called &lt;code class=&quot;highlighter-rouge&quot;&gt;some-elevation-file.tar.gz&lt;/code&gt; in the output folder. Again, this will do the same for the other SAGA raster files present in the input folder.&lt;/p&gt;
+
+&lt;h2 id=&quot;some-last-thoughts&quot;&gt;Some last thoughts&lt;/h2&gt;
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;group-zipping.sh&lt;/code&gt; script can be a useful tool for compressing such groups of files. It supports several compression formats and includes several parameters that can be customized to fit your specific needs. With its support for parallelization, software and folder checks, the pattern filter… this script can help you to save time and disk space when working with large groups of GIS files.&lt;/p&gt;
+
+&lt;p&gt;In my case, I had 36 &lt;em&gt;medium sized&lt;/em&gt; (3GB) SAGA raster files to compress. Nowadays, I’m working on Ubuntu 22.04 and I have all the dependencies installed (tar, gzip, GNU Parallel, etc). I achieved reducing the file sizes to 1/3 while keeping all associated files toghether (this means storing 30 GB instead of 100 GB). Using a &lt;code class=&quot;highlighter-rouge&quot;&gt;-j 8&lt;/code&gt; parameter this was done in about 20 minutes in my personal computer.&lt;/p&gt;
+
+&lt;p&gt;It took some time to write the script but I feel it won’t be the last time I will be compressing my results like this.&lt;/p&gt;
+
+&lt;p&gt;I think there is still room for improvements. Maybe I will try to:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Implement other compression formats.&lt;/li&gt;
+  &lt;li&gt;Develop a progress bar and more feedback for the user (but not affecting much the main tasks).&lt;/li&gt;
+  &lt;li&gt;Create unit tests to ensure there are no undesired effects.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;the-script&quot;&gt;The Script&lt;/h2&gt;
+
+&lt;p&gt;Read the code and try the script taking some precautions (e.g. backup copies, etc). I have not tested all the compression formats (zip and gzip work for me) but I think that they work in a similar way, so it should work correctly. Here I share the README file and the Bash script. They are stored as a GitHub gist.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/benizar/e07d68c1b765df46f6911094aad2f921.js&quot;&gt;&lt;/script&gt;</content><author><name>Benito Zaragozí</name><email>benizar@gmail.com</email></author><category term="multi-file formats" /><category term="gnu parallel" /><category term="command-line tools" /><summary type="html">If you work with Geographic Information System (GIS) data, you’re likely familiar with multi-file formats such as ESRI Shapefiles or SAGA GIS raster files. These file formats consist of several individual files with different extensions that need to be kept together to maintain their spatial information. If you’re sharing or storing these files, it can be cumbersome to handle each file-group individually, especially if the files need to be compressed. This is where a bash script called Group Zipping comes in handy.</summary></entry><entry><title type="html">DNI electrónico y autofirma en 2020: cómo NO perder 2 horas para firmar una solicitud</title><link href="/management/ubuntu20-dni-electronico-y-autofirma/" rel="alternate" type="text/html" title="DNI electrónico y autofirma en 2020: cómo NO perder 2 horas para firmar una solicitud" /><published>2021-07-02T00:00:00+00:00</published><updated>2021-07-02T00:00:00+00:00</updated><id>/management/ubuntu20-dni-electronico-y-autofirma</id><content type="html" xml:base="/management/ubuntu20-dni-electronico-y-autofirma/">&lt;p&gt;Estas últimas semanas, junto con otros compañeros y compañeras, hemos empezado a prepararnos para obtener la formación necesaria para pilotar drones para nuestros proyectos. El primer paso es realizar del CURSO DE FORMACIÓN Y EXAMEN DE PILOTO A DISTANCIA EN CATEGORÍA ABIERTA, SUBCATEGORÍAS A1/A3. Para saber más podéis revisar la información sobre la &lt;a href=&quot;https://www.seguridadaerea.gob.es/es/ambitos/drones/formacion-pilotos-a-distancia-uas-drones/formacion-de-pilotos-uas-drones-en-categoria-rabiertar&quot;&gt;Formación de pilotos UAS/drones en categoría ‘abierta’&lt;/a&gt;. Hay mucha gente hablando de estas cosas y no hace falta que me ponga pesado. Recomiendo el canal de YouTube de &lt;a href=&quot;https://www.youtube.com/channel/UCZ-5HNenHNT13aTf7KD0ROg&quot;&gt;Rafa Ocón&lt;/a&gt; para oir hablar a un profesional sobre la actualidad del mundo de los drones.&lt;/p&gt;
+
+&lt;p&gt;Lo primero es registrarse en la página web de la AESA para realizar una &lt;a href=&quot;https://sede.seguridadaerea.gob.es/oficina/tramites/acceso.do?id=106&quot;&gt;Nueva solicitud&lt;/a&gt;. Una vez firmada y enviada la solicitud se tarda un tiempo en recibir acceso al la plataforma Moodle de la AESA en la que se realiza este primer curso (A1/A3) y el examen para obtener el certificado. El trámite resulta sencillo a no ser que no tengas un certificado electrónico actualizado y todo el software necesario para firmar electrónicamente. En fin, esto no será problemático para la mayoría pero desde Linux todo cuesta un poquito más :)&lt;/p&gt;
+
+&lt;p&gt;Bueno, también se dice que se puede enviar por correo postal y esperar la respuesta…&lt;/p&gt;
+
+&lt;h2 id=&quot;firmar-la-solicitud&quot;&gt;Firmar la solicitud&lt;/h2&gt;
+
+&lt;p&gt;El DNIe va cambiando de versiones y resulta que yo tenía uno (de 3 años de antiguedad) con el que ya no se me permitia actualizar los certificados electrónicos. Una vez con el DNIe actualizado y teniendo un &lt;strong&gt;lector de tarjetas inteligentes compatible con Linux&lt;/strong&gt;. El que yo tengo ya no está disponible pero supongo que habrá nuevos modelos (&lt;a href=&quot;https://www.amazon.es/dp/B01JS2HSAA?psc=1&amp;amp;ref=ppx_pop_dt_b_product_details&quot;&gt;Lector de tarjetas descatalogado&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;Lo primero sería leerse las instrucciones e instalar el software que facilitan en el Portal del DNI electrónico del Cuerpo Nacional de Policía (Cómo utilizar el DNI»Qué hace falta para utilizarlo). En Ubuntu 20.04 hice lo siguiente:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt install pcscd pcsc-tools pinentry-gtk2 libccid
+
+&lt;span class=&quot;c&quot;&gt;#https://www.dnielectronico.es/PortalDNIe/PRF1_Cons02.action?pag=REF_3000&lt;/span&gt;
+wget https://www.dnielectronico.es/descargas/distribuciones_linux/Ubuntu_libpkcs11-dnie_1.5.3_amd64.deb
+sudo dpkg -i libpkcs11-dnie_x.x.x_i386.deb
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;autofirma&quot;&gt;Autofirma&lt;/h2&gt;
+
+&lt;p&gt;A continuación hace falta software para firmar PDFs u otros documentos. Nuevamente, esto és más sencillo en Windows con el Adobe Acrobat PDF Pro. En Ubuntu se puede instalar &lt;a href=&quot;https://firmaelectronica.gob.es/Home/Descargas.html&quot;&gt;Autofirma&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Lo primero és que hay que instalar la versión de Java necesaria para que funcione, unas librerias y después ya se puede instalar AutoFirma:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt install openjdk-8-jre
+sudo apt install libnss3-tools
+mkdir temporal_autofirma
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;temporal_autofirma
+&lt;span class=&quot;c&quot;&gt;# Ir a https://firmaelectronica.gob.es/Home/Descargas.html a comprobar si `1.6.5` es la última versión&lt;/span&gt;
+wget https://estaticos.redsara.es/comunes/autofirma/1/6/5/AutoFirma_Linux.zip
+unzip AutoFirma_Linux.zip
+sudo dpkg -i &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.deb
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ..
+rm -rf temporal_autofirma
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Autofirma se puede utilizar desde el escritorio para firmar un PDF normal o también se puede utilizar desde el navegador, lo que “permite la firma en páginas de Administración Electrónica cuando se requiere la firma en un procedimiento administrativo”. No obstante, al intentar firmar la petición a la AESA y cerrar mi solicitud, le daba a utilizar AutoFirma pero después no sucedía nada :-S&lt;/p&gt;
+
+&lt;p&gt;Una hora sin poder avanzar, desinstalar todo y volver a empezar, pero &lt;strong&gt;&lt;em&gt;AutoFirma no puede ser desinstalado porque estaba en uso… :-?&lt;/em&gt;&lt;/strong&gt; Al repasar &lt;a href=&quot;https://www.ubuntuleon.com/2020/12/instala-autofirma-165-para-tramites-en.html&quot;&gt;este post&lt;/a&gt; de UbuntuLeon.com, me di cuenta de que no le había prestado atención a la versión de Java que estaba utilizando. Hacía falta utilizar Java8!!!!&lt;/p&gt;
+
+&lt;p&gt;Así que se puede configurar haciendo&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo update-alternatives --config java
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;y seleccionar la versión 8 de java, si és que se había instalado en los pasos previos.&lt;/p&gt;
+
+&lt;p&gt;Al final todo funciona correctamente y pude realizar mi solicitud. Desde entonces he utilizado más amenudo la firma con el DNIe cuando estoy en casa. No obstante, me sigue sorprendiendo que una aplicación de la que tanto dependemos no esté más actualizada con las últimas dependéncias y/o haya un cierto versionado para las configuraciones habituales.&lt;/p&gt;
+
+&lt;h2 id=&quot;una-reflexión-sobre-todo-esto&quot;&gt;Una reflexión sobre todo esto&lt;/h2&gt;
+&lt;p&gt;Estamos ya metidos en pleno siglo veintiuno pero parece que hay cosas que no cambian tan rápido como esperabamos hace unos años. Los trámites con la administración són cada vez más sencillos pero hace falta una reflexión. ¿Cuanto tiempo falta hasta que la administración apueste de verdad por el software libre y abierto?—y nos liberemos de tener que pagar el doble (primero nuestros impuestos y después el software para poder realizar nuestros trámites). Sí, aunque no lo pensemos habitualmente y muchas veces los tengamos ya instalados, Windows y los programas de Adobe son de pago.&lt;/p&gt;
+
+&lt;p&gt;Desde que me decidí a utilizar principalmente software libre, puedo clasificar mis dias entre:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Aquellos en los que me siento orgulloso y feliz por ser más independiente, cuando todo resulta más fácil (80% del tiempo).&lt;/li&gt;
+  &lt;li&gt;Los dias en que sufro para hacer algo &lt;strong&gt;pero aprendo&lt;/strong&gt; bastante por el camino (18% del tiempo).&lt;/li&gt;
+  &lt;li&gt;Otros en que lamento el exceso de tiempo que &lt;em&gt;pierdo&lt;/em&gt; haciendo cosas que son más sencillas utilizando software propietario (2% del tiempo).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Hoy sería un dia del tercer tipo pero, afortunadamente, mi fe en el software libre es fuerte.&lt;/p&gt;
+
+&lt;h2 id=&quot;referencias&quot;&gt;Referencias&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://atareao.es/como/firma-digital-en-ubuntu/&quot;&gt;Firma digital en Ubuntu&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.dnielectronico.es/PortalDNIe/PRF1_Cons02.action?pag=REF_300&amp;amp;id_menu=15&quot;&gt;Cómo utilizar el DNIe&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://firmaelectronica.gob.es/Home/Descargas.html&quot;&gt;AutoFirma (04/02/2022)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.ubuntuleon.com/2020/12/instala-autofirma-165-para-tramites-en.html&quot;&gt;INSTALA AUTOFIRMA 1.6.5 (PARA TRÁMITES EN ESPAÑA) EN UBUNTU 20.04&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Benito Zaragozí</name><email>benizar@gmail.com</email></author><category term="dnie" /><category term="dni electrónico" /><category term="autofirma" /><category term="ubuntu 20" /><category term="java" /><summary type="html">Cómo usar el DNIe desde Ubuntu para firmar electrónicamente trámites en línea. En este caso se firmaron las solicitudes para optar a las certificaciones de la AESA para ser piloto de drones.</summary></entry><entry><title type="html">How to cite geospatial standards and other GIS things</title><link href="/analysis/how-to-cite-geospatial-standards-and-other-things/" rel="alternate" type="text/html" title="How to cite geospatial standards and other GIS things" /><published>2020-06-10T00:00:00+00:00</published><updated>2020-06-10T00:00:00+00:00</updated><id>/analysis/how-to-cite-geospatial-standards-and-other-things</id><content type="html" xml:base="/analysis/how-to-cite-geospatial-standards-and-other-things/">&lt;p&gt;Nowadays, there are tons of tools for managing and formating your references, some of the most useful options are to use Google Scholar for &lt;strong&gt;reference management&lt;/strong&gt; and Mendeley (desktop+web) for &lt;strong&gt;document management&lt;/strong&gt; (mostly for PDFs). I use the GS for getting Bibtex or APA7 formated references when I don’t need to reread the document or Mendeley when it’s a document I would like to keep.&lt;/p&gt;
+
+&lt;p&gt;These tools were practical enough since this year I started using Zotero and Cablibre for managing my collections of papers and digital books. I will share a few toughts of this in a future post.&lt;/p&gt;
+
+&lt;p&gt;Right now, I’m mostly interested in having a complete Bibtex database for my references and this can be done by using any of the previous solutions (FOSS or not). However, there are certain specific ocasions where you can’t find an already formated reference in GS or there is no DOI code that can be used by Mendeley or Zotero to compile the Bibtex entry. In those ocasions you need to do it the old way…&lt;/p&gt;
+
+&lt;h2 id=&quot;cant-found-a-bibtex-entry-in-the-previous-options&quot;&gt;Can’t found a Bibtex entry in the previous options?&lt;/h2&gt;
+
+&lt;p&gt;This was the case when I was trying to cite ISO and OGC standards for a paper (these don’t have DOI or ISBN). As usual in life, many people share the same problem you have. Ismael Olea shares a solution in &lt;a href=&quot;https://olea.org/diario/2018/10/19/how_to_cite_ISO_standards.html&quot;&gt;this post&lt;/a&gt;. This is how the SQL standard looks like following his suggestions:&lt;/p&gt;
+
+&lt;div class=&quot;language-tex highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;@techreport&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;iso&lt;span class=&quot;p&quot;&gt;_&lt;/span&gt;sql&lt;span class=&quot;p&quot;&gt;_&lt;/span&gt;2016,
+  address = &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;Geneva, CH&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;,
+  type = &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;Standard&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;,
+  title = &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;Information technology -- &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;Database&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; languages -- SQL -- &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;Part&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; 1: &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;Framework&lt;span class=&quot;p&quot;&gt;}}&lt;/span&gt;,
+  shorttitle = ISO/IEC 9075-1:2016,
+  url = &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;https://www.iso.org/standard/63555.html&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;,
+  language = &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;en&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;,
+  number = ISO/IEC TR 9075-1:2016,
+  institution = &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;International Organization for Standardization&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;,
+  author = &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;ISO Central Secretary&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;,
+  year = &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;2016&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I think it would be useful to keep a repository of those documents and items that are not usually cited. I appreciate VERY MUCH the way GS, Mendeley, Calibre and Zotero help us with these arduous tasks.&lt;/p&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;A small tip:&lt;/strong&gt; Did you know that Calibre helps you in finding metadata for PDF books? It even downloads the covers from Amazon!!! You should try it ;)&lt;/p&gt;</content><author><name>Benito Zaragozí</name><email>benizar@gmail.com</email></author><category term="bibliography" /><category term="bibtex" /><category term="standards" /><category term="iso/iec" /><category term="ogc" /><category term="gis" /><category term="geospatial" /><summary type="html">I found a template for manging ISO and OGC standards as Bibtex entries. This may be useful for citing documents that are not indexed by Google Scholar or if Mendeley can't find a DOI for the PDF document.</summary></entry><entry><title type="html">Choosing a desktop marker app for Ubuntu 18.04 LTS</title><link href="/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/" rel="alternate" type="text/html" title="Choosing a desktop marker app for Ubuntu 18.04 LTS" /><published>2020-05-15T00:00:00+00:00</published><updated>2020-05-15T00:00:00+00:00</updated><id>/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts</id><content type="html" xml:base="/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;In the last few months many professionals have stopped leaving home to go to work and, among these, there are a good number of people who, like me, are trying to find the best way to work from home.&lt;/p&gt;
+
+&lt;p&gt;In my office I have to work with different operating systems but at home there is only Ubuntu. This is why in the last few weeks I have had to go back to review a good number of apps that I haven’t used on a daily basis for a long time.&lt;/p&gt;
+
+&lt;p&gt;In this post I am going to talk about those applications that we use when we are making a presentation with the computer and we want to point, write or draw something in a spontaneous way. This is about the desktop annotation tools.&lt;/p&gt;
+
+&lt;h3 id=&quot;my-needs&quot;&gt;My needs&lt;/h3&gt;
+
+&lt;p&gt;First or second thing I made two months ago, when the coronavirus changed our lives, was to setup my working environment. I’m still on it but I feel that I’m very close to solve all the minor problems I experienced in the begining. I had to upgrade my personal computers from Ubuntu 16.04 to Ubuntu 18.04. Many new programs have dependencies that make them very awful to install.&lt;/p&gt;
+
+&lt;p&gt;In a streaming web conference, I saw one presentation where the researcher was using &lt;a href=&quot;https://epic-pen.com/&quot;&gt;epicpen&lt;/a&gt; for pointing out things on his slides and figures. That was much more better than using the mouse pointer. Epicpen is still in development but it’s pretty cool and has many features. The main problem with this app right now is that it’s not designed to be multiplatform and it’s not FOSS. I’m not a designer, I just want to sketch a couple of &lt;em&gt;messy&lt;/em&gt; lines and arrows, so I’m not even considering a comercial software.&lt;/p&gt;
+
+&lt;p&gt;Actually, I have a wish list of the desirable characteristics these programs should have. This apps should be capable of:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Drawing points, lines and polygons of at least 4 or 5 colours.&lt;/li&gt;
+  &lt;li&gt;Writing text using any of both options, using the keyboard or writing with a digitizing tablet.&lt;/li&gt;
+  &lt;li&gt;Draw on top of my documents and figures without being too anoying for the people watching (e.g. too many buttons and controls arround).&lt;/li&gt;
+  &lt;li&gt;Speeding up my presentation (e.g. shortcuts for switching pens, colours, etc)&lt;/li&gt;
+  &lt;li&gt;Working in a two monitor configuration (e.g. when recording video I don’t want the app occuping my space).&lt;/li&gt;
+  &lt;li&gt;When preparing software tutorials, it would be awesome to draw over expanded app menus, but I think I’m asking for too much :)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;ardesia&quot;&gt;Ardesia&lt;/h2&gt;
+&lt;p&gt;A few years ago, I used to use &lt;a href=&quot;https://code.google.com/archive/p/ardesia/&quot;&gt;Ardesia&lt;/a&gt; for sketching over the screen. A GPL licensed software that was able to do almost all I needed. However, this project is no longer maintained by its creator. It was working with difficulties in Ubuntu 16.04 but it was still distributed from official packages. It’s a pitty because it was very useful.&lt;/p&gt;
+
+&lt;p&gt;In case you want to try it (under your own responsibility), Ardesia’s code is available from different repositories and it still works in Ubuntu 18.04. I have installed it following the project README with a few small changes:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Install Ardesia on Ubuntu 18.04&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Use code from non trusted repositories at your on risk!&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# libpng12-dev is no longer available, use libpng-dev&lt;/span&gt;
+sudo apt-get install gcc make automake autoconf intltool libtool libtool-bin libxml2-dev libgsf-1-dev libgtk-3-dev libatk1.0-dev libx11-dev libpng-dev libglib2.0-dev libgconf2-dev libfontconfig1-dev libfreetype6-dev libgsl0-dev libc6-dev xdg-utils librsvg2-dev
+
+&lt;span class=&quot;c&quot;&gt;# Download sources from github. I just made a fork.&lt;/span&gt;
+git clone https://github.com/benizar/ardesia.git
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;ardesia/
+
+&lt;span class=&quot;c&quot;&gt;# Compile as a *.deb package&lt;/span&gt;
+sudo apt-get install devscripts
+./autogen.sh
+make deb
+sudo dpkg -i ardesia_1.2-1_amd64.deb
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now, run it with parameters so you can control its behaviour&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ardesia --help
+ardesia -g south -d -t 50
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;pylote&quot;&gt;Pylote&lt;/h2&gt;
+&lt;p&gt;There is a nice Python based tool called &lt;a href=&quot;http://pascal.peter.free.fr/pylote-en.html#features&quot;&gt;Pylote&lt;/a&gt;, just download and double click on the launcher (or &lt;code class=&quot;highlighter-rouge&quot;&gt;python3 pylote.pyw&lt;/code&gt;). Pylote is actively mantained and has lots of options.&lt;/p&gt;
+
+&lt;p&gt;Pylote is the perfect tool if I wanted to create detailed presentations but I think it lacks the interactivity I want. Once you start Pylote you will no longer be able to modify anything on the desktop. Also, during a videoconference, when you need to explain something, you can’t spend time recreating the screan. I would need a program more independent from what’s happening in the screen and &lt;strong&gt;I was unable to find any keyboard shortcuts&lt;/strong&gt; that could facilitate the work.&lt;/p&gt;
+
+&lt;h2 id=&quot;gromit-mpx&quot;&gt;Gromit-MPX&lt;/h2&gt;
+
+&lt;p&gt;This is a pretty nice app and it’s easy to install from APT. The thing I most liked about Gromit is its simplicity. Once Gromit is started it can be used through keyboard shortcuts:&lt;/p&gt;
+
+&lt;dl&gt;
+  &lt;dt&gt;F9&lt;/dt&gt;
+  &lt;dd&gt;toggle painting&lt;/dd&gt;
+  &lt;dt&gt;SHIFT-F9&lt;/dt&gt;
+  &lt;dd&gt;clear screen&lt;/dd&gt;
+  &lt;dt&gt;CTRL-F9&lt;/dt&gt;
+  &lt;dd&gt;toggle visibility&lt;/dd&gt;
+  &lt;dt&gt;ALT-F9&lt;/dt&gt;
+  &lt;dd&gt;quit Gromit-MPX&lt;/dd&gt;
+&lt;/dl&gt;
+
+&lt;p&gt;An it can be configured to switch colours and shapes using different mouse+keyboard combinations. This is the configuration I prefer:
+&lt;script src=&quot;https://gist.github.com/benizar/5d5e08b9b1f82619a747cea547ba236a.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;As you can see, I only need 4 colours (3 mouse buttons+left click while pressing ALT), [Shift] switches from pen to highlighter, control is for drawing arrows… I think that you got the idea.&lt;/p&gt;
+
+&lt;p&gt;I proved myself that the productivity when creating a slideshow of desktop captures is much higher than using other methods. However, I only liked to use the yellow highlighter for everything :)&lt;/p&gt;
+
+&lt;iframe src=&quot;//www.slideshare.net/slideshow/embed_code/key/EXPwV8UgmoQ14J&quot; width=&quot;595&quot; height=&quot;485&quot; frameborder=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; scrolling=&quot;no&quot; style=&quot;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&quot; allowfullscreen=&quot;&quot;&gt; &lt;/iframe&gt;
+&lt;div style=&quot;margin-bottom:5px&quot;&gt; &lt;strong&gt; &lt;a href=&quot;//www.slideshare.net/BeniZaragoz/introducci-a-git-251170618&quot; title=&quot;Introducció a Git&quot; target=&quot;_blank&quot;&gt;Introducció a Git&lt;/a&gt; &lt;/strong&gt; de &lt;strong&gt;&lt;a href=&quot;//www.slideshare.net/BeniZaragoz&quot; target=&quot;_blank&quot;&gt;Benito Zaragozí&lt;/a&gt;&lt;/strong&gt; &lt;/div&gt;
+
+&lt;h2 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;There are many software programs for highlighting things on the screen. The three I’ve tested had nice options and they are really helpful in my tasks but, for simplicity, I can only use one of them. Let’s see:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Ardesia feels too old and is no longer mantained. It’s a pitty!!&lt;/li&gt;
+  &lt;li&gt;Pylote has a lot of tools and configuration is not easy (for what I need). The tool I need should be used through shortcuts and in combination with screen captures.&lt;/li&gt;
+  &lt;li&gt;Gromit covers all my requirements and it’s very simple. All the configuration can be automated.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I think &lt;strong&gt;I will stay with Gromit for a while&lt;/strong&gt;. Only, if I had to ask for an additional feature, I just would like to be able to draw over unfolded and context menus (e.g. right button). When that’s the case you must draw over the screen capture and do it the old way.&lt;/p&gt;</content><author><name>Benito Zaragozí</name><email>benizar@gmail.com</email></author><category term="desktop marker" /><category term="screen capture" /><category term="ardesia" /><category term="gromit" /><category term="pylote" /><category term="ubuntu" /><category term="epic pen" /><summary type="html">In this post I explain the main features of two desktop bookmarking apps in Ubuntu 18.04: Pylote and Gromit-MPX. Both tools come in handy when making presentations, pointing to something during a video recording, or can even improve the way I've been taking screenshots for my documentation.</summary></entry><entry><title type="html">Using OBS Studio with V4L2 for making my videoconferences more appealing</title><link href="/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing/" rel="alternate" type="text/html" title="Using OBS Studio with V4L2 for making my videoconferences more appealing" /><published>2020-05-08T00:00:00+00:00</published><updated>2020-05-08T00:00:00+00:00</updated><id>/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing</id><content type="html" xml:base="/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing/">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+
+&lt;p&gt;Nowadays, I’m doing more videoconferences, presentations and recording classes for my students using OBS (+ other software). When I find some time, I’m using a chroma background for my videos, so I considered to use the chroma for videoconferences and other online meetings.&lt;/p&gt;
+
+&lt;p&gt;There are many apps for doing this dinamically through the use of virtual webcams. In windows, we even could use Snapcam for adding special effects and in Ubuntu we could use &lt;a href=&quot;https://github.com/webcamoid/webcamoid&quot;&gt;Webcamoid&lt;/a&gt; for this. However, I wanted to do this using OBS because I would like to have more control over the scene, for example, I could show parts of my desktop or some slides without the need of sharing the screen.&lt;/p&gt;
+
+&lt;p&gt;My working environment includes and old laptop with Ubuntu 16.04 LTS, a PC with 18.04 LTS, and I use the following videoconferencing platforms.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;For particular use:&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;Skype&lt;/strong&gt; for Linux (ver. 8.59.0.77).&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Hangout&lt;/strong&gt;, working from firefox and chrome (I can’t share screen from firefox, but it’s my favourite web browser).&lt;/li&gt;
+      &lt;li&gt;I recently met &lt;a href=&quot;https://jitsi.org/jitsi-meet/&quot;&gt;Jitsi Meet&lt;/a&gt; which works quite well too.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;And for a more professional use:&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;Teams&lt;/strong&gt; for Linux, with a paid account from my University. Webcam was not working with the desktop app, so now I’m working from Chrome web browser.&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Zoom&lt;/strong&gt; client for Linux version 3.5 (specifically 3.5.361976.0301), with a paid account from a conference I’m attending.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In this post I’m explaining how I’m working with OBS-studio as a virtual webcam. This way I’m able to use the same configurations, scenes and shortcuts I have created for my videotutorials.&lt;/p&gt;
+
+&lt;h1 id=&quot;setting-up-the-computer&quot;&gt;Setting up the computer&lt;/h1&gt;
+
+&lt;p&gt;Installing all the necessary packages for using this approach is not as straightforward as I would like but there is a lot of information arround to make it done.&lt;/p&gt;
+
+&lt;p&gt;This excelent &lt;a href=&quot;https://srcco.de/posts/using-obs-studio-with-v4l2-for-google-hangouts-meet.html&quot;&gt;post&lt;/a&gt; from &lt;em&gt;srcco.de&lt;/em&gt; explains how to use this approach for using it with Google Meet, while Justin Warren makes a more detailed post explaining &lt;a href=&quot;https://www.eigenmagic.com/2020/04/22/how-to-use-obs-studio-with-zoom/&quot;&gt;How To Use OBS Studio With Zoom&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;After reading this and other references that I attach at the end of this post, I installed everything using the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# APT install basics&lt;/span&gt;
+sudo apt-get install obs-studio
+sudo apt install v4l2loopback-dkms
+sudo apt install qtbase5-dev
+
+sudo apt-get install libobs-dev      &lt;span class=&quot;c&quot;&gt;# In Ubuntu Bionic Beaver (18.04)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#sudo apt-get install liboobs-1-dev   # In Ubuntu Xenial (16.04)&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Build plugin&lt;/span&gt;
+git clone --recursive https://github.com/obsproject/obs-studio.git
+git clone https://github.com/CatxFish/obs-v4l2sink.git
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;obs-v4l2sink
+mkdir build &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;build
+cmake -DLIBOBS_INCLUDE_DIR&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;../../obs-studio/libobs&quot;&lt;/span&gt; -DCMAKE_INSTALL_PREFIX&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr ..
+make -j4
+sudo make install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I’m not sure if we still need the sources for &lt;code class=&quot;highlighter-rouge&quot;&gt;libobs&lt;/code&gt; after installing the repository from APT. Another problem is that the plugins are not installed in the correct directory. Probably, we could provide a parameter to the make install command but I ended up doing as most of people do things:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cp /usr/lib/obs-plugins/v4l2sink.so /usr/lib/x86_64-linux-gnu/obs-plugins/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If you are installing &lt;code class=&quot;highlighter-rouge&quot;&gt;obs-v4l2sink&lt;/code&gt; for the first time, maybe you can answer my doubts and remove unnecessary installation steps.&lt;/p&gt;
+
+&lt;h1 id=&quot;starting-a-session-with-a-virtual-camera&quot;&gt;Starting a session with a virtual camera&lt;/h1&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Removing previous devices&lt;/span&gt;
+sudo modprobe -r v4l2loopback
+
+&lt;span class=&quot;c&quot;&gt;# Creating a new device with #10 id&lt;/span&gt;
+sudo modprobe v4l2loopback &lt;span class=&quot;nv&quot;&gt;video_nr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;10 &lt;span class=&quot;nv&quot;&gt;card_label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;OBS Video Source&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;exclusive_caps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now, I’m ready to start OBS and connect the webcam. Sometimes it will be necessary to check the &lt;code class=&quot;highlighter-rouge&quot;&gt;obs-v4l2sink&lt;/code&gt; plugin. Go to &lt;code class=&quot;highlighter-rouge&quot;&gt;Tools &amp;gt; V42L Video Output&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;I let the autostart off because… This is necessary when changing videoconferencing platform, because each platform may accept different video input formats. For example, I have tested these in my computer:&lt;/p&gt;
+
+&lt;p&gt;YUV420:
+Hangout, Zoom&lt;/p&gt;
+
+&lt;p&gt;YUV2:
+Skype, Yitsi&lt;/p&gt;
+
+&lt;h2 id=&quot;are-there-any-problems&quot;&gt;Are there any problems?&lt;/h2&gt;
+
+&lt;p&gt;I found the answer &lt;a href=&quot;https://unix.stackexchange.com/a/427800&quot;&gt;here&lt;/a&gt; or at least I can start the process from zero.&lt;/p&gt;
+
+&lt;p&gt;It can be done by removing the v4l2loopback module:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo modprobe -r v4l2loopback
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;and then we can check that all the virtual devices are gone&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls -l /dev/video&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;final-thoughts&quot;&gt;Final thoughts&lt;/h1&gt;
+&lt;p&gt;This is an old draft I prepared during the first lockdown of the COVID pandemics  (almost 1,5 years old). Problably there are better solutions for this now, because configuring OBS and virtual cameras before every videoconference was quite painful and I ended up showing my &lt;em&gt;very tidy&lt;/em&gt; office when I work from home.&lt;/p&gt;
+
+&lt;p&gt;If I had an oportunity I would like to show you the usage in a short video. Another problem for using this approach is that you need a chroma screen in every location you need to do a videoconference, and that’s not very practical.&lt;/p&gt;
+
+&lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://srcco.de/posts/using-obs-studio-with-v4l2-for-google-hangouts-meet.html&quot;&gt;How to use OBS as a virtual webcam it with Google Meet&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.eigenmagic.com/2020/04/22/how-to-use-obs-studio-with-zoom/&quot;&gt;How To Use OBS Studio With Zoom&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/CatxFish/obs-v4l2sink&quot;&gt;obs-v4l2sink sources and docs&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/CatxFish/obs-v4l2sink/issues/14&quot;&gt;deb plugin is not installed in the correct directory&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/CatxFish/obs-v4l2sink/issues/30&quot;&gt;Extra step needed for Ubuntu 18.04 64 bit&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.enmimaquinafunciona.com/pregunta/153782/webcam-real-redirigir-a-una-camara-web-virtual-via-terminal&quot;&gt;Parse webcam video format (useful when using older devices)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.timdejong.nl/blog/use-webcam-two-applications-under-linux-simultaneously-using-v4l2loopback?__cf_chl_jschl_tk__=77f36dc55acd078dd8c5f0b5ee442c3e96fffacf-1589389530-0-AfIWKSYj-YSsWxE57lZZ5u26QN9Xwqtupxx6VoP68iUJAiXP1_EI0ClHUEB9dP81tINrflcXY0Bch2lXEmcSkbx8uBKmlWOa-AE4G8uoMCsxmlyVZVDm7TINXC9StrQRjgcP-Q23Dy_o7MnIfmZtWxj5ArEFmaMVOEsOVUOJ23Un7-lFM3WaDoeXZjvxVgTA611X5e1pqmZEmTXYL1QBqHEY9_yVLari5mumf-fTLRl8xR2uWCZiHXp4TtIRMa5t-ujhOJPKCK5GcmsGpe3SZmzh31tcJJToI-A8aY3Pv3rVZFivi-IYMMRq93z9I6wWvwAijCcsNuwY9t4_HOulIs1MXGCjV6lVBamH4NHOSy49LKfRpxF3i_mdKZeNy0sHf3t1cVcghNsjPJL4ZawC8urJ_0v3QBdSyUIEkLFyFl0pKvxWay1GeGXg68fdgxNZYg&quot;&gt;Use webcam simultaneously in two or more applications&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/webcamoid/webcamoid/wiki/Virtual-camera-support&quot;&gt;Using webcamoid as a virtual camera in Ubuntu (using v4l2loopback or akvcam)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Benito Zaragozí</name><email>benizar@gmail.com</email></author><category term="obs" /><category term="virtual webcam" /><category term="chroma key" /><category term="ubuntu" /><category term="skype" /><category term="hangout" /><category term="zoom" /><summary type="html">In this post, I share the software configuration in Ubuntu to make video-conferences using a green chroma screen and your favorite video-conferencing software.</summary></entry><entry><title type="html">Extending Geopackages via SQLite’s Run-Time Loadable extensions</title><link href="/analysis/extending-geopackages-via-sqlite-run-time-loadable-extensions/" rel="alternate" type="text/html" title="Extending Geopackages via SQLite's Run-Time Loadable extensions" /><published>2018-07-27T00:00:00+00:00</published><updated>2018-07-27T00:00:00+00:00</updated><id>/analysis/extending-geopackages-via-sqlite-run-time-loadable-extensions</id><content type="html" xml:base="/analysis/extending-geopackages-via-sqlite-run-time-loadable-extensions/">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;SQLite is expected to be very important for GIS users. It’s non-trivial that two of the most promising GIS formats are based on SQLite: &lt;a href=&quot;https://www.gaia-gis.it/gaia-sins/&quot;&gt;Spatialite&lt;/a&gt; and &lt;a href=&quot;https://www.geopackage.org/&quot;&gt;Geopackage&lt;/a&gt;. This way, understanding the basics of SQLite can be very useful for making the most of these data formats.&lt;/p&gt;
+
+&lt;p&gt;Particularly, geopackages are good for many different reasons and one can expect to find all of our favorite features in this modern GIS data format. In this sense, I’m a huge fan of Postgres &lt;em&gt;extensibility&lt;/em&gt;. When using Postgres, you can create new operators, aggregates, functions, types, etc… and pack everything in a custom extension. PostGIS itself is a Postgres extension. Every-time we need to create a complex parametrized query, we can use Postgres &lt;code class=&quot;highlighter-rouge&quot;&gt;CREATE FUNCTION&lt;/code&gt; and encapsulate it. This makes it easier to read/write complex queries (or Postgis geoprocesses) and improves code (re)usability. I would like to have such useful features in other databases and it would be amazing to have this features when working with Geopackages.&lt;/p&gt;
+
+&lt;p&gt;After my very first searches, I have learnt that &lt;strong&gt;SQLite is not intended to have stored functions, so &lt;code class=&quot;highlighter-rouge&quot;&gt;CREATE FUNCTION&lt;/code&gt; does not work&lt;/strong&gt;. However, in SQLite we can map functions from several programming languages (C, PHP, Python, Perl, .NET, among others) to SQL functions, namely &lt;strong&gt;user-defined functions&lt;/strong&gt; and pack them in &lt;strong&gt;Run-Time Loadable extensions&lt;/strong&gt;. It would be amazing if this approach could work also for Spatialite and Geopackages.&lt;/p&gt;
+
+&lt;p&gt;There are various ways for extending SQLite, but using its &lt;strong&gt;C API&lt;/strong&gt; seems more straightforward and portable. I guess that everything done this way should work in the most used GIS (QGIS, ArcGIS, etc). Let’s do some tests…&lt;/p&gt;
+
+&lt;h1 id=&quot;experimenting&quot;&gt;Experimenting&lt;/h1&gt;
+&lt;p&gt;I’m working with Ubuntu 16.04, SQLite 3.11.0 and QGIS (2.8 and 3.0). First, install &lt;code class=&quot;highlighter-rouge&quot;&gt;sqlite3&lt;/code&gt; and the &lt;code class=&quot;highlighter-rouge&quot;&gt;libsqlite3-dev&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install sqlite3 libsqlite3-dev
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I’m not installing QGIS directly on my Ubuntu. Instead, I’m using dockers for testing on different QGIS versions without complications (check the &lt;a href=&quot;https://github.com/kartoza/docker-qgis-desktop&quot;&gt;kartoza QGIS docker lib&lt;/a&gt; for mor info).&lt;/p&gt;
+
+&lt;h2 id=&quot;sample-extension&quot;&gt;Sample extension&lt;/h2&gt;
+&lt;p&gt;There are some official SQLite extensions and source code to read and get some ideas. After exploring some resources, I’ve created a simple &lt;code class=&quot;highlighter-rouge&quot;&gt;ifelse&lt;/code&gt; function based on &lt;a href=&quot;http://www.digitage.co.uk/digitage/library/linux/creating-a-custom-function-for-sqlite3&quot;&gt;this example&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/* ifelse.c */&lt;/span&gt;
+
+&lt;span class=&quot;cp&quot;&gt;#include &quot;sqlite3ext.h&quot;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SQLITE_EXTENSION_INIT1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;stdlib.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sqlite3_int64&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ifelseFunc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sqlite3_context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sqlite3_value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sqlite3_value_int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sqlite3_value_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sqlite3_value_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;sqlite3_result_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SQLITE_TRANSIENT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;sqlite3_result_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SQLITE_TRANSIENT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ifelse_init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sqlite3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sqlite3_api_routines&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;api&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;SQLITE_EXTENSION_INIT2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;api&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;sqlite3_create_function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;ifelse&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SQLITE_ANY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+            &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ifelseFunc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SQLITE_OK&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Then, compile it to get the binaries.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gcc -shared -fPIC -o ifelse.so ifelse.c -lsqlite3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;sqlite-command-line-testing&quot;&gt;SQLite command-line testing&lt;/h2&gt;
+
+&lt;p&gt;We need to be sure that this will work on a raw SQLite database, from the command-line, so I’m creating a dummy Landuse/Landcover (LULC) database.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sqlite3 lulc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;After inserting some test data, we will use the &lt;code class=&quot;highlighter-rouge&quot;&gt;ifelse&lt;/code&gt; function to print a description for two LULC codes (FOR -&amp;gt; Forest; URB -&amp;gt; Urban).&lt;/p&gt;
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TABLE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lulc&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cover&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lulc&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'FOR'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lulc&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'FOR'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lulc&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'URB'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lulc&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'FOR'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lulc&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'URB'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now, load the extension via the SQL function and the command-line, which should print an empty line.&lt;/p&gt;
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_extension&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/path/to/extension/ifelse.so'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ifelse_init'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;ifelse&lt;/code&gt; function can be tested and it works as expected.&lt;/p&gt;
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ifelse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cover&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'FOR'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Forest'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Urban'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lulc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;--Forest&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;--Forest&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;--Urban&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;--Forest&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;--Urban&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Finally, it can be checked that it is necessary to load this extension every-time we connect to the database. So &lt;code class=&quot;highlighter-rouge&quot;&gt;.quit&lt;/code&gt; from sqlite3 and try to use the function again.&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sqlite3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lulc&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ifelse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cover&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'FOR'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Forest'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Urban'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lulc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;no&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;such&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ifelse&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;As you can see, it is necessary to load the extension every-time we connect to the lulc database.&lt;/p&gt;
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_extension&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'./ifelse.so'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ifelse_init'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ifelse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cover&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'FOR'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Forest'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Urban'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lulc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;--Forest&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;--Forest&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;--Urban&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;--Forest&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;--Urban&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;working-with-geopackages-in-qgis&quot;&gt;Working with geopackages in QGIS&lt;/h2&gt;
+
+&lt;p&gt;Unfortunatelly, I have tested this approach via &lt;code class=&quot;highlighter-rouge&quot;&gt;DBmanager&lt;/code&gt; in QGIS 3.0, but it didn’t work. The extension can’t be loaded using this approach. The &lt;code class=&quot;highlighter-rouge&quot;&gt;load_extension()&lt;/code&gt; call returns a pretty clear message: &lt;code class=&quot;highlighter-rouge&quot;&gt;Not authorized&lt;/code&gt;.&lt;/p&gt;
+
+&lt;figure class=&quot;half&quot;&gt;
+
+    &lt;a href=&quot;/images/qgis28-spatialite-loading-extension.png&quot;&gt;&lt;img src=&quot;/images/qgis28-spatialite-loading-extension.png&quot; /&gt;&lt;/a&gt;
+
+    &lt;a href=&quot;/images/qgis3-gpkg-not-loading-extension.png&quot;&gt;&lt;img src=&quot;/images/qgis3-gpkg-not-loading-extension.png&quot; /&gt;&lt;/a&gt;
+
+&lt;figcaption&gt;SQLite &lt;em&gt;load_extension()&lt;/em&gt; doesn't work since QGIS 3.0.&lt;/figcaption&gt;
+
+&lt;/figure&gt;
+
+&lt;p&gt;We can do this test in QGIS 2.8 and it will work correctly for Spatialite. However, Geopackages were not so well supported before QGIS 3.0. This difference between QGIS versions is due to a change in the Python version used since QGIS 3.x (see this answer on &lt;a href=&quot;https://gis.stackexchange.com/a/280524&quot;&gt;gis.stackexchange&lt;/a&gt;).&lt;/p&gt;
+
+&lt;h1 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h1&gt;
+
+&lt;p&gt;We have revised how to use the SQLite C API and it seems a very powerful approach for distributing data with some useful logic. For example, imagine that you want to distribute some data to GIS users, avoiding to describe complex parametrized queries. This could be achieved through Run-Time Loadable extensions…&lt;/p&gt;
+
+&lt;p&gt;I have discovered that the most recent Python distributions are blocking this mechanism for some security reasons and this is directly incorporated into QGIS. However, this functionality seems very useful and I think that there are other ways for loading extensions without compiling QGIS from sources.&lt;/p&gt;
+
+&lt;h1 id=&quot;resources&quot;&gt;Resources&lt;/h1&gt;
+
+&lt;p&gt;These are some resources I have revised for writing this post.&lt;/p&gt;
+
+&lt;h2 id=&quot;geopackages&quot;&gt;Geopackages&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.justobjects.org/download/geopackage/foss4g2013_geopackage.pdf&quot;&gt;FOSS4G-2013 slides&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://switchfromshapefile.org/&quot;&gt;Switch from Shapefile&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://mappinggis.com/2015/09/geocsv-geopackage-y-geojson-las-nuevas-alternativas-al-shapefile/&quot;&gt;Comparing GEOCSV, Geopackage and Geojson (spanish)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://mappinggis.com/2017/06/geopackage-para-novatos-uso-en-arcgis-qgis-publicacion-en-geoserver/&quot;&gt;Geopackages in ArcGIS, QGIS and Geoserver (spanish)&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;sqlite&quot;&gt;SQLite&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/a/2108921&quot;&gt;SQLite user-defined-functions&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.sqlite.org/loadext.html&quot;&gt;Runtime Loadable Extension&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.digitage.co.uk/digitage/library/linux/creating-a-custom-function-for-sqlite3&quot;&gt;IfElse function&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Benito Zaragozí</name><email>benizar@gmail.com</email></author><category term="sqlite" /><category term="spatialite" /><category term="geopackage" /><category term="extension" /><category term="user-defined-function" /><category term="stored procedure" /><summary type="html">Testing if Geopackages functionality can be extended via SQLite extensions. Can this work in QGIS?</summary></entry><entry><title type="html">Pull multiple git repositories when working with that not-so-usual PC</title><link href="/snippets/pull-multiple-git-repositories-when-working-with-that-not-so-usual-pc/" rel="alternate" type="text/html" title="Pull multiple git repositories when working with that not-so-usual PC" /><published>2018-07-24T00:00:00+00:00</published><updated>2018-07-24T00:00:00+00:00</updated><id>/snippets/pull-multiple-git-repositories-when-working-with-that-not-so-usual-pc</id><content type="html" xml:base="/snippets/pull-multiple-git-repositories-when-working-with-that-not-so-usual-pc/">&lt;p&gt;At least, every few days I change my workplace and I work on a different computer (home-laptop-work). For this reason, I usually need to ensure that I’m using the latest version of each repository.&lt;/p&gt;
+
+&lt;p&gt;After writing a &lt;a href=&quot;/snippets/clone-multiple-git-repositories-when-setting-up-your-ubuntu/&quot;&gt;script to facilitate the task of clonning several Git repositories&lt;/a&gt;, it is logical to consider the same when I need to pull them. In this post I want to share the script I use to automatically pull all my git repositories in one step, &lt;strong&gt;no matter if they are stored in GitHub, GitLab or Bitbucket&lt;/strong&gt;. Practically, its the same script proposed by &lt;a href=&quot;https://gist.github.com/douglas/1287372&quot;&gt;douglas&lt;/a&gt;, but simpler and following my personal naming convention…&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;multiple-git-pull.sh&lt;/code&gt; script is stored in a Gist and allows me to pull several repositories stored in the same working folder (e.g. /home/user/git).&lt;/p&gt;
+
+&lt;p&gt;Avoid some headaches and innecesary pulls just by executing this script in your git working folder (if you have one :)&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bash multiple-git-pull.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I hope you like it ;)&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/benizar/f192ea5a2d1d6f63f56345733788e16b.js&quot;&gt;&lt;/script&gt;</content><author><name>Benito Zaragozí</name><email>benizar@gmail.com</email></author><category term="git" /><category term="pull" /><category term="bash" /><summary type="html">Pull multiple git repositories at once using a simple bash script.</summary></entry><entry><title type="html">Clone multiple git repositories when setting up your Ubuntu</title><link href="/snippets/clone-multiple-git-repositories-when-setting-up-your-ubuntu/" rel="alternate" type="text/html" title="Clone multiple git repositories when setting up your Ubuntu" /><published>2018-04-02T00:00:00+00:00</published><updated>2018-04-02T00:00:00+00:00</updated><id>/snippets/clone-multiple-git-repositories-when-setting-up-your-ubuntu</id><content type="html" xml:base="/snippets/clone-multiple-git-repositories-when-setting-up-your-ubuntu/">&lt;p&gt;This post is to share a bash script I always wanted to write. I have been searching for a while for a simple script for automatically clonning all my git repositories, &lt;strong&gt;no matter if they are stored in GitHub or Bitbucket&lt;/strong&gt;. I have found many interesting approaches but I finally decided to write my own solution.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;multiple-git-clone.sh&lt;/code&gt; script is stored in a Gist and allows me to create several lists of repositories (e.g. grouped by owner, project, platform, etc) and clone all in a single step.&lt;/p&gt;
+
+&lt;p&gt;Of course there are many improvements I could use (e.g. error management, ask for &lt;code class=&quot;highlighter-rouge&quot;&gt;pull&lt;/code&gt; instead of &lt;code class=&quot;highlighter-rouge&quot;&gt;clone&lt;/code&gt; if necessary, etc) but for now it is enough when setting up a new machine.&lt;/p&gt;
+
+&lt;p&gt;I hope you like it ;)&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/benizar/03c5ede574ac7b847413857f74bb04b3.js&quot;&gt;&lt;/script&gt;</content><author><name>Benito Zaragozí</name><email>benizar@gmail.com</email></author><category term="git" /><category term="clone" /><category term="bash" /><summary type="html">Clone multiple git repositories at once using a bash script and lists of your projects.</summary></entry><entry><title type="html">Cómo obtener las alturas de los edificios a partir de la cartografía catastral</title><link href="/analysis/programming/scripts/catastro-obtener-alturas-edificios/" rel="alternate" type="text/html" title="Cómo obtener las alturas de los edificios a partir de la cartografía catastral" /><published>2017-01-14T00:00:00+00:00</published><updated>2017-01-14T00:00:00+00:00</updated><id>/analysis/programming/scripts/catastro-obtener-alturas-edificios</id><content type="html" xml:base="/analysis/programming/scripts/catastro-obtener-alturas-edificios/">&lt;h2 id=&quot;introducción&quot;&gt;Introducción&lt;/h2&gt;
+
+&lt;p&gt;Hace varios meses una compañera me preguntó si existían datos descargables o había algún modo rápido obtener el número de plantas y las alturas de todos los edificios de Benidorm.&lt;/p&gt;
+
+&lt;p&gt;El modelo de urbanización en altura de Benidorm suele ser estudiado por ser una alternativa a la urbanización dispersa que predomina en la región. Este modelo tiene interés en cuanto a la ocupación del suelo o la gestión de los recursos hídricos, entre otros aspectos. En este caso, el número de plantas y las alturas de los edificios, podría utilizarse para calcular el coste energético de bombear el agua potable a lo alto de esas torres… La verdad es que no sé si al final se utilizaron los datos :-?&lt;/p&gt;
+
+&lt;p&gt;Pues sí, hay muchas maneras de obtener esos datos… En primer lugar, en España es posible modelizar una ciudad en 3D utilizando la estupenda cartografía catastral de que disponemos. Esta idea ha sido recurrente en cursos, congresos y también lo he leído en alguna ocasión (&lt;a href=&quot;http://www.idee.es/resources/presentaciones/JIDEE08/ARTICULOS_JIDEE2008/Articulo76.pdf&quot;&gt;JIDEE08&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;Por otro lado, con la llegada de los datos &lt;a href=&quot;https://es.wikipedia.org/wiki/LIDAR&quot;&gt;LIDAR&lt;/a&gt; no se ha hablado tanto de los datos catastrales para este fin. Sin embargo, los análisis con LIDAR, y de otras fuentes, pueden ser relativamente costosos en cuanto a procesado, filtrado, agregación, etc. Por este motivo, yo siempre prefiero consultar primero una base de datos que ya tenga preparados los datos necesarios. Si no fuese suficiente, ya trabajaremos con LIDAR o lo que sea…&lt;/p&gt;
+
+&lt;p&gt;Utilizando un DNI electrónico es posible descargar los ESRI Shapefiles de los con los datos volumétricos de Benidorm o de cualquier otro municipio. Es posible consultar toda la información necesaria sobre la descarga en la &lt;a href=&quot;http://www.catastro.minhap.es/ayuda/lang/castellano/ayuda_descarga_shape.htm&quot;&gt;Sede Electrónica de Catastro&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;números-romanos-y-algo-más&quot;&gt;Números romanos y algo más&lt;/h2&gt;
+
+&lt;p&gt;En &lt;a href=&quot;http://www.catastro.minhap.gob.es/ayuda/manual_descriptivo_shapefile.pdf&quot;&gt;este enlace&lt;/a&gt; se puede consultar la especificación técnica donde se describe el ESRI Shapefile que nos podemos descargar. Merece la pena detenerse en el “4 ANEXO I”.&lt;/p&gt;
+
+&lt;figure class=&quot;half&quot;&gt;
+    &lt;a href=&quot;/images/catastro-pnoa-wms.png&quot;&gt;&lt;img src=&quot;/images/catastro-pnoa-wms.png&quot; /&gt;&lt;/a&gt;
+
+    &lt;a href=&quot;/images/catastro-shp.png&quot;&gt;&lt;img src=&quot;/images/catastro-shp.png&quot; /&gt;&lt;/a&gt;
+
+&lt;figcaption&gt;En estas imágenes vemos la capa WMS de catastro a la izquierda y el shapefile descargado a la derecha.&lt;/figcaption&gt;
+
+&lt;/figure&gt;
+
+&lt;p&gt;En el shapefile, hay una columna denominada &lt;code class=&quot;highlighter-rouge&quot;&gt;CONSTRU&lt;/code&gt; que contiene los volúmenes construidos, pero en números romanos y en combinación con varios códigos y signos. Se trata de un montón de información dentro de cada celda. Por ejemplo, &lt;code class=&quot;highlighter-rouge&quot;&gt;-II+IV+TZA&lt;/code&gt; describe una parte de un edificio que tiene dos plantas subterráneas, cuatro plantas sobre rasante y, en lo más alto, una terraza (&lt;code class=&quot;highlighter-rouge&quot;&gt;TZA&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Esta cartografía también contiene información sobre las piscinas o las pistas deportivas, entre otros datos valiosísimos. El número de plantas se puede obtener, pero también hay que saber interpretar los códigos a partir del conocimiento de la zona de estudio. Por ejemplo, puede haber plantas en las que no haya suministro de agua potable como un vestíbulo muy elevado, una bóveda, etc.&lt;/p&gt;
+
+&lt;p&gt;Finalmente, le dediqué un tiempo a tratar de entender mejor estos códigos. A pesar de que habría que saber interpretar mejor la información, creo que tiene sentido sumar todos los números romános positivos de cada código y considerar aparte algunos códigos que podrían alterar nuestros cálculos. Por ejemplo, terrazas (&lt;code class=&quot;highlighter-rouge&quot;&gt;TZA&lt;/code&gt;) o semisótanos (&lt;code class=&quot;highlighter-rouge&quot;&gt;SS&lt;/code&gt;) podrían alterar un cálculo de alturas, ya que podrían significar alturas de 1,5 o 2 metros, en vez de los 3 metros que hemos visto en las referencias de la introducción (&lt;a href=&quot;http://www.idee.es/resources/presentaciones/JIDEE08/ARTICULOS_JIDEE2008/Articulo76.pdf&quot;&gt;JIDEE08&lt;/a&gt;).&lt;/p&gt;
+
+&lt;h2 id=&quot;función-para-obtener-las-plantasalturas-de-los-edificios&quot;&gt;Función para obtener las plantas/alturas de los edificios&lt;/h2&gt;
+
+&lt;p&gt;Me consta que hay scripts, más o menos &lt;em&gt;de contrabando&lt;/em&gt; que circulan de disquete en disquete :-P&lt;/p&gt;
+
+&lt;p&gt;No lo he buscado a fondo, pero los ejemplos que he visto de momento eran para extraer el número de plantas de la columna &lt;code class=&quot;highlighter-rouge&quot;&gt;CONSTRU&lt;/code&gt; desde la calculadora de campos de Arcmap. Sin embargo, no eran funciones muy elegantes y no servían para edificios de más de 40 alturas (en Benidorm esto se nota mucho) Todo ello sin llegar a hablar de software libre.&lt;/p&gt;
+
+&lt;p&gt;Mis primeros proyectos de programación GIS también fueron VBScript para la calculadora de campos de ArcGIS, después probé con Python, pero desde entonces no había vuelto a trabajar con la calculadora de campos de un SIG de escritorio. Particularmente, me gusta la productividad de este tipo de scripts para tareas sencillas.&lt;/p&gt;
+
+&lt;figure&gt;
+    &lt;a href=&quot;/images/catastro-qgis-field-calculator.png&quot;&gt;&lt;img src=&quot;/images/catastro-qgis-field-calculator.png&quot; /&gt;&lt;/a&gt;
+&lt;figcaption&gt;Una vez insertada la función desde el editor de funciones, queda guardada y ya la podemos utilizar.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;En este caso me pareció apropiado probar con Python y la calculadora de campos de QGIS, ya que tiene una documentación excelente (&lt;a href=&quot;http://www.qgistutorials.com/es/docs/custom_python_functions.html&quot;&gt;qgistutorials&lt;/a&gt;). Quien sabe, quizás más adelante me anime con los plugins con PyQGIS :)&lt;/p&gt;
+
+&lt;p&gt;El script (al final del post) consiste en una función que hace lo siguiente:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Elimina las plantas bajo rasante y los caracteres innecesarios&lt;/li&gt;
+  &lt;li&gt;Trocea el código y extrae los números romanos&lt;/li&gt;
+  &lt;li&gt;Utiliza una función de Mark Pilgrim’s para convertir los números romanos a enteros&lt;/li&gt;
+  &lt;li&gt;Suma todos los valores de cada parte de edificio.&lt;/li&gt;
+  &lt;li&gt;Guarda el resultado en una columna nueva&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;El número de plantas o las alturas se obtendrían ejecutando la función así:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;get_cadastre_building_floors&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;CONSTRU&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;get_cadastre_building_floors&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;CONSTRU&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;resultados-y-discusión&quot;&gt;Resultados y discusión&lt;/h2&gt;
+
+&lt;p&gt;Los resultados no se pueden entender sin recordar el hecho de que los elementos representados en la capa GIS son &lt;em&gt;partes de edificios&lt;/em&gt;, no edificios enteros (ver &lt;a href=&quot;http://www.catastro.minhap.gob.es/ayuda/manual_descriptivo_shapefile.pdf&quot;&gt;documentación&lt;/a&gt;). Entonces, un único edificio puede estar representado por varias partes, cada una con un número distinto de plantas…&lt;/p&gt;
+
+&lt;p&gt;De un modo ágil se pueden repasar los resultados:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Comprobando que la lectura de los números romanos da el resultado apropiado.&lt;/li&gt;
+  &lt;li&gt;Revisando esta &lt;a href=&quot;https://es.wikipedia.org/wiki/Anexo:Rascacielos_de_Benidorm&quot;&gt;página web&lt;/a&gt; sobre los rascacielos de Benidorm se puede valorar cómo de precisos son los cálculos que acabamos de realizar.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;CONSTRU&lt;/th&gt;
+      &lt;th&gt;plantas&lt;/th&gt;
+      &lt;th&gt;altura (3m)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-I+L&lt;/td&gt;
+      &lt;td&gt;50&lt;/td&gt;
+      &lt;td&gt;150&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-I+XLVIII&lt;/td&gt;
+      &lt;td&gt;48&lt;/td&gt;
+      &lt;td&gt;144&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-I+XLV&lt;/td&gt;
+      &lt;td&gt;45&lt;/td&gt;
+      &lt;td&gt;135&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-I+XLV&lt;/td&gt;
+      &lt;td&gt;45&lt;/td&gt;
+      &lt;td&gt;135&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-V+SS+XLIV&lt;/td&gt;
+      &lt;td&gt;44&lt;/td&gt;
+      &lt;td&gt;132&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-V+SS+XLIV&lt;/td&gt;
+      &lt;td&gt;44&lt;/td&gt;
+      &lt;td&gt;132&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-IV+SS+XLIV&lt;/td&gt;
+      &lt;td&gt;44&lt;/td&gt;
+      &lt;td&gt;132&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-IV+SS+XLIV&lt;/td&gt;
+      &lt;td&gt;44&lt;/td&gt;
+      &lt;td&gt;132&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-V+SS+XLIV&lt;/td&gt;
+      &lt;td&gt;44&lt;/td&gt;
+      &lt;td&gt;132&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-V+SS+XLIII&lt;/td&gt;
+      &lt;td&gt;43&lt;/td&gt;
+      &lt;td&gt;129&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;En esta tabla se muestran los resultados para los 10 edificios (partes de edificios) más altos de Benidorm. Al comparar estos datos con los de la web anterior se puede ver que:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;El edificio Intempo (192 metros / 47 plantas) no estaba construido cuando se digitalizó esta capa.&lt;/li&gt;
+  &lt;li&gt;La altura media de las plantas es mayor de 3 metros, quizás por los elementos de diseño que buscan competir por ser los edificios más altos.&lt;/li&gt;
+  &lt;li&gt;Los primeros 4 valores de plantas se corresponden con partes del Gran Hotel Bali (186 metros / 52 plantas).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure&gt;
+    &lt;a href=&quot;/images/catastro-gran-bali.png&quot;&gt;&lt;img src=&quot;/images/catastro-gran-bali.png&quot; /&gt;&lt;/a&gt;
+&lt;figcaption&gt;El Gran Hotel Bali de Benidorm. Ortofoto del WMS del PNOA y, en superposición, la capa SHP de catastro con las alturas calculadas.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Independientemente de que se puedan extraer las alturas utilizando la codificación actual, entiendo que es cuestión de no mucho tiempo en que esta información deba ser publicada mediante otro tipo de formatos más flexibles (GML, GEOJSON, etc).&lt;/p&gt;
+
+&lt;h2 id=&quot;código-a-mejorar&quot;&gt;Código a mejorar…&lt;/h2&gt;
+
+&lt;p&gt;Aquí os dejo el gist con la función. Es un buen punto de partida para lo que queráis hacer ;)&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/benizar/64167bfdff1b0ed146ac.js&quot;&gt;&lt;/script&gt;</content><author><name>Benito Zaragozí</name><email>benizar@gmail.com</email></author><category term="building heights" /><category term="object oriented" /><category term="QGIS" /><category term="Python" /><category term="Benidorm" /><summary type="html">La cartografía catastral a nivel de subparcelas y edificaciones ha representado desde hace décadas la volumetría de las edificaciones mediante números romanos. Ésta es una propuesta de un algoritmo para saber cómo extraer esa información automáticamente.</summary></entry><entry><title type="html">Introducción a la geodatabase del SIOSE</title><link href="/analysis/presentation/programming/introduccion-a-siose-sql/" rel="alternate" type="text/html" title="Introducción a la geodatabase del SIOSE" /><published>2016-12-14T00:00:00+00:00</published><updated>2016-12-14T00:00:00+00:00</updated><id>/analysis/presentation/programming/introduccion-a-siose-sql</id><content type="html" xml:base="/analysis/presentation/programming/introduccion-a-siose-sql/">&lt;p&gt;Hola a todos, en este post quiero compartir dos nuevas presentaciones de un seminario temático que he impartido dentro de la asignatura “SIG aplicado a la Ordenación del Territorio” en el Grado de Geografía de la Universidad de Alicante.&lt;/p&gt;
+
+&lt;p&gt;Recomiendo leer el &lt;a href=&quot;/analysis/presentation/programming/de-siose-a-postgis-en-4-sesiones/&quot;&gt;post anterior&lt;/a&gt; sobre este tema y toda la documentación disponible. En esta ocasión no se profundiza tanto en la modelización de datos y se estudia la base de datos del SIOSE con SQL y la funcionalidad de PostGIS.&lt;/p&gt;
+
+&lt;h2 id=&quot;sql-para-geógrafos&quot;&gt;SQL para geógrafos.&lt;/h2&gt;
+
+&lt;p&gt;En esta presentación se asume que el público conoce el uso de un SIG y ha digitalizado usos del suelo. A continuación, se presenta SQL en un contexto profesional y se describe la base de datos del SIOSE.&lt;/p&gt;
+
+&lt;iframe src=&quot;//www.slideshare.net/slideshow/embed_code/key/AN129irZ88iYjg&quot; width=&quot;595&quot; height=&quot;485&quot; frameborder=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; scrolling=&quot;no&quot; style=&quot;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&quot; allowfullscreen=&quot;&quot;&gt; &lt;/iframe&gt;
+&lt;div style=&quot;margin-bottom:5px&quot;&gt; &lt;strong&gt; &lt;a href=&quot;//www.slideshare.net/BeniZaragoz/introduccin-a-la-geodatabase-del-siose-i&quot; title=&quot;Introducción a la geodatabase del SIOSE (I)&quot; target=&quot;_blank&quot;&gt;Introducción a la geodatabase del SIOSE (I)&lt;/a&gt; &lt;/strong&gt; de &lt;strong&gt;&lt;a target=&quot;_blank&quot; href=&quot;//www.slideshare.net/BeniZaragoz&quot;&gt;Benito M Zaragozí&lt;/a&gt;&lt;/strong&gt; &lt;/div&gt;
+
+&lt;h2 id=&quot;introducción-a-sql&quot;&gt;Introducción a SQL.&lt;/h2&gt;
+
+&lt;p&gt;En esta segunda presentación se trabaja con Postgres/Postgis por primera vez. El objetivo es dar un rápido vistazo a SQL y entender que para consultar el SIOSE con libertad es necesario conocer algún lenguaje de consulta.&lt;/p&gt;
+
+&lt;iframe src=&quot;//www.slideshare.net/slideshow/embed_code/key/75ixuFKfB7qW8g&quot; width=&quot;595&quot; height=&quot;485&quot; frameborder=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; scrolling=&quot;no&quot; style=&quot;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&quot; allowfullscreen=&quot;&quot;&gt; &lt;/iframe&gt;
+&lt;div style=&quot;margin-bottom:5px&quot;&gt; &lt;strong&gt; &lt;a href=&quot;//www.slideshare.net/BeniZaragoz/introduccin-a-la-geodatabase-del-siose-ii&quot; title=&quot;Introducción a la geodatabase del SIOSE (II)&quot; target=&quot;_blank&quot;&gt;Introducción a la geodatabase del SIOSE (II)&lt;/a&gt; &lt;/strong&gt; de &lt;strong&gt;&lt;a target=&quot;_blank&quot; href=&quot;//www.slideshare.net/BeniZaragoz&quot;&gt;Benito M Zaragozí&lt;/a&gt;&lt;/strong&gt; &lt;/div&gt;
+
+&lt;h2 id=&quot;datos-utilizados&quot;&gt;Datos utilizados&lt;/h2&gt;
+
+&lt;p&gt;Los datos del SIOSE utilizados en estas presentaciones están disponibles en varios enlaces. Por ejemplo, en el &lt;a href=&quot;http://www.siose.es/descargar&quot;&gt;Centro de Descargas&lt;/a&gt; del CNIG (España) o en la sección de descargas del &lt;a href=&quot;http://terrasit.gva.es/es/descargas&quot;&gt;Terrasit&lt;/a&gt; (Comunidad Valenciana).&lt;/p&gt;
+
+&lt;p&gt;No obstante, los alumnos que asistieron a dichas sesiones pueden encontrar interesante trabajar directamente con los &lt;code class=&quot;highlighter-rouge&quot;&gt;backups&lt;/code&gt; creados y restaurados varias veces en clase:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/downloads/siose_terrasit.backup&quot;&gt;siose_terrasit.backup&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/downloads/siose_cnig.backup&quot;&gt;siose_cnig.backup&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Las versiones del software son las que vienen con el &lt;a href=&quot;https://live.osgeo.org/es/download.html&quot;&gt;OSGeo Live GIS Disc 9.5&lt;/a&gt;. Salvo alguna modificación, esta version de OSGeo es la instalada en el Aula de Geomática del Instituto Interuniversitario de Geografía,&lt;/p&gt;
+
+&lt;p&gt;Una vez más, os animo a conocer el SIOSE ;)&lt;/p&gt;</content><author><name>Benito Zaragozí</name><email>benizar@gmail.com</email></author><category term="landuse" /><category term="landcover" /><category term="PostGIS" /><category term="PostgreSQL" /><category term="SIOSE" /><category term="SQL" /><summary type="html">Qué es el SIOSE y varios modos para consultarlo. Se trata de una breve introducción para ganar confianza...</summary></entry></feed>

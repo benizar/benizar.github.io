@@ -19,7 +19,7 @@
 
 
 
-<title>Benito Zaragozí</title>
+<title>Introducción a la geodatabase del SIOSE - Benito Zaragozí</title>
 
 
 
@@ -29,16 +29,18 @@
 
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="Benito Zaragozí">
-<meta property="og:title" content="Benito Zaragozí">
+<meta property="og:title" content="Introducción a la geodatabase del SIOSE">
 
 
 
+
+  <meta property="og:description" content="Qué es el SIOSE y varios modos para consultarlo. Se trata de una breve introducción para ganar confianza…">
 
 
 
   <meta name="twitter:site" content="@benizar81">
-  <meta name="twitter:title" content="Benito Zaragozí">
-  <meta name="twitter:description" content="This is the hub for my multiple digital profiles">
+  <meta name="twitter:title" content="Introducción a la geodatabase del SIOSE">
+  <meta name="twitter:description" content="Qué es el SIOSE y varios modos para consultarlo. Se trata de una breve introducción para ganar confianza…">
   <meta name="twitter:url" content="">
 
   
@@ -56,9 +58,16 @@
 
 
 
-  <meta property="og:image" content="/images/header-dragon-kahn.jpg">
 
 
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2016-12-14T00:00:00+00:00">
+  
+    <link rel="next" href="/analysis/programming/scripts/catastro-obtener-alturas-edificios/" title="Cómo obtener las alturas de los edificios a partir de la cartografía catastral">
+  
+  
+    <link rel="prev" href="/analysis/presentation/programming/eurosdr-slides-on-geospatial-reference-data-processing/" title="Geospatial Reference Information processing">
+  
 
 
 
@@ -144,36 +153,7 @@
 </div>
 
     
-  
 
-
-
-
-
-
-
-
-
-<div class="page__hero--overlay"
-  style=" background-image: url('/images/header-dragon-kahn.jpg');"
->
-  
-    <div class="wrapper">
-      <h1 class="page__title" itemprop="headline">
-        
-          Benito Zaragozí
-        
-      </h1>
-      
-      
-      
-    </div>
-  
-  
-    <span class="page__hero-caption">Dragon Khan roller coaster (PortAventura)
-</span>
-  
-</div>
 
 
 
@@ -278,18 +258,199 @@
   </div>
 
 
-  <div class="archive">
-    
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Introducción a la geodatabase del SIOSE">
+    <meta itemprop="description" content="Qué es el SIOSE y varios modos para consultarlo. Se trata de una breve introducción para ganar confianza…">
+    <meta itemprop="datePublished" content="December 14, 2016">
     
 
-<h3 class="archive__subtitle">Recent Posts</h3>
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Introducción a la geodatabase del SIOSE
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  1 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>Hola a todos, en este post quiero compartir dos nuevas presentaciones de un seminario temático que he impartido dentro de la asignatura “SIG aplicado a la Ordenación del Territorio” en el Grado de Geografía de la Universidad de Alicante.</p>
+
+<p>Recomiendo leer el <a href="/analysis/presentation/programming/de-siose-a-postgis-en-4-sesiones/">post anterior</a> sobre este tema y toda la documentación disponible. En esta ocasión no se profundiza tanto en la modelización de datos y se estudia la base de datos del SIOSE con SQL y la funcionalidad de PostGIS.</p>
+
+<h2 id="sql-para-geógrafos">SQL para geógrafos.</h2>
+
+<p>En esta presentación se asume que el público conoce el uso de un SIG y ha digitalizado usos del suelo. A continuación, se presenta SQL en un contexto profesional y se describe la base de datos del SIOSE.</p>
+
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/AN129irZ88iYjg" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen=""> </iframe>
+<div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/BeniZaragoz/introduccin-a-la-geodatabase-del-siose-i" title="Introducción a la geodatabase del SIOSE (I)" target="_blank">Introducción a la geodatabase del SIOSE (I)</a> </strong> de <strong><a target="_blank" href="//www.slideshare.net/BeniZaragoz">Benito M Zaragozí</a></strong> </div>
+
+<h2 id="introducción-a-sql">Introducción a SQL.</h2>
+
+<p>En esta segunda presentación se trabaja con Postgres/Postgis por primera vez. El objetivo es dar un rápido vistazo a SQL y entender que para consultar el SIOSE con libertad es necesario conocer algún lenguaje de consulta.</p>
+
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/75ixuFKfB7qW8g" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen=""> </iframe>
+<div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/BeniZaragoz/introduccin-a-la-geodatabase-del-siose-ii" title="Introducción a la geodatabase del SIOSE (II)" target="_blank">Introducción a la geodatabase del SIOSE (II)</a> </strong> de <strong><a target="_blank" href="//www.slideshare.net/BeniZaragoz">Benito M Zaragozí</a></strong> </div>
+
+<h2 id="datos-utilizados">Datos utilizados</h2>
+
+<p>Los datos del SIOSE utilizados en estas presentaciones están disponibles en varios enlaces. Por ejemplo, en el <a href="http://www.siose.es/descargar">Centro de Descargas</a> del CNIG (España) o en la sección de descargas del <a href="http://terrasit.gva.es/es/descargas">Terrasit</a> (Comunidad Valenciana).</p>
+
+<p>No obstante, los alumnos que asistieron a dichas sesiones pueden encontrar interesante trabajar directamente con los <code class="highlighter-rouge">backups</code> creados y restaurados varias veces en clase:</p>
+
+<ul>
+  <li><a href="/downloads/siose_terrasit.backup">siose_terrasit.backup</a></li>
+  <li><a href="/downloads/siose_cnig.backup">siose_cnig.backup</a></li>
+</ul>
+
+<p>Las versiones del software son las que vienen con el <a href="https://live.osgeo.org/es/download.html">OSGeo Live GIS Disc 9.5</a>. Salvo alguna modificación, esta version de OSGeo es la instalada en el Aula de Geomática del Instituto Interuniversitario de Geografía,</p>
+
+<p>Una vez más, os animo a conocer el SIOSE ;)</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
 
 
   
 
 
 
-<div class="list__item">
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#landcover" class="page__taxonomy-item" rel="tag">landcover</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#landuse" class="page__taxonomy-item" rel="tag">landuse</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#postgis" class="page__taxonomy-item" rel="tag">PostGIS</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#postgresql" class="page__taxonomy-item" rel="tag">PostgreSQL</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#siose" class="page__taxonomy-item" rel="tag">SIOSE</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sql" class="page__taxonomy-item" rel="tag">SQL</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#analysis" class="page__taxonomy-item" rel="tag">Analysis</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#presentation" class="page__taxonomy-item" rel="tag">Presentation</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#programming" class="page__taxonomy-item" rel="tag">Programming</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-12-14T00:00:00+00:00">December 14, 2016</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=/analysis/presentation/programming/introduccion-a-siose-sql/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=/analysis/presentation/programming/introduccion-a-siose-sql/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=/analysis/presentation/programming/introduccion-a-siose-sql/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=/analysis/presentation/programming/introduccion-a-siose-sql/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="/analysis/presentation/programming/eurosdr-slides-on-geospatial-reference-data-processing/" class="pagination--pager" title="Geospatial Reference Information processing
+">Previous</a>
+    
+    
+      <a href="/analysis/programming/scripts/catastro-obtener-alturas-edificios/" class="pagination--pager" title="Cómo obtener las alturas de los edificios a partir de la cartografía catastral
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
   
     <a href="/programming/data%20management/group-zipping-gis-files-made-easy/">
   
@@ -302,7 +463,7 @@
 
 
   
-	  7 minute read
+	  8 minute read
 	
 </p>
       
@@ -310,12 +471,12 @@
     </article>
   </a>
 </div>
+        
+          
 
-  
 
 
-
-<div class="list__item">
+<div class="grid__item">
   
     <a href="/management/ubuntu20-dni-electronico-y-autofirma/">
   
@@ -336,12 +497,12 @@
     </article>
   </a>
 </div>
+        
+          
 
-  
 
 
-
-<div class="list__item">
+<div class="grid__item">
   
     <a href="/analysis/how-to-cite-geospatial-standards-and-other-things/">
   
@@ -362,12 +523,12 @@
     </article>
   </a>
 </div>
+        
+          
 
-  
 
 
-
-<div class="list__item">
+<div class="grid__item">
   
     <a href="/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/">
   
@@ -388,91 +549,10 @@
     </article>
   </a>
 </div>
-
+        
+      </div>
+    </div>
   
-
-
-
-<div class="list__item">
-  
-    <a href="/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing/">
-  
-    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
-      
-      <h2 class="archive__item-title" itemprop="headline">Using OBS Studio with V4L2 for making my videoconferences more appealing
-</h2>
-      
-        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
-
-
-  
-	  3 minute read
-	
-</p>
-      
-      <p class="archive__item-excerpt" itemprop="description">In this post, I share the software configuration in Ubuntu to make video-conferences using a green chroma screen and your favorite video-conferencing software.
-</p>
-    </article>
-  </a>
-</div>
-
-
-
-
-
-<nav class="pagination">
-  <ul>
-    
-    
-      <li><a href="#" class="disabled"><span aria-hidden="true">Previous</span></a></li>
-    
-
-    
-    
-      <li><a href="#" class="disabled current">1</a></li>
-    
-
-    
-    
-
-    
-    
-    
-
-    
-      
-        
-        
-        
-        <li><a href="/page2/">2</a></li>
-      
-    
-      
-        
-        
-        
-        <li><a href="/page3/">3</a></li>
-      
-    
-
-    
-    
-      <li><a href="#" class="disabled">&hellip;</a></li>
-    
-
-    
-      <li><a href="/page6/">6</a></li>
-    
-
-    
-    
-      <li><a href="/page2/">Next</a></li>
-    
-  </ul>
-</nav>
-
-
-  </div>
 </div>
 
 

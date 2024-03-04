@@ -1,0 +1,714 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Extending Geopackages via SQLite’s Run-Time Loadable extensions - Benito Zaragozí</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Benito Zaragozí">
+<meta property="og:title" content="Extending Geopackages via SQLite’s Run-Time Loadable extensions">
+
+
+
+
+  <meta property="og:description" content="Testing if Geopackages functionality can be extended via SQLite extensions. Can this work in QGIS?">
+
+
+
+  <meta name="twitter:site" content="@benizar81">
+  <meta name="twitter:title" content="Extending Geopackages via SQLite’s Run-Time Loadable extensions">
+  <meta name="twitter:description" content="Testing if Geopackages functionality can be extended via SQLite extensions. Can this work in QGIS?">
+  <meta name="twitter:url" content="">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2018-07-27T00:00:00+00:00">
+  
+    <link rel="next" href="/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing/" title="Using OBS Studio with V4L2 for making my videoconferences more appealing">
+  
+  
+    <link rel="prev" href="/snippets/pull-multiple-git-repositories-when-working-with-that-not-so-usual-pc/" title="Pull multiple git repositories when working with that not-so-usual PC">
+  
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Benito Zaragozí",
+      "url" : null,
+      "sameAs" : ["https://twitter.com/benizar81","https://facebook.com/benizar81","https://www.linkedin.com/in/benizar","https://www.researchgate.net/profile/Benito_Zaragozi","http://orcid.org/0000-0003-2501-484X"]
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Benito Zaragozí Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/academicons.min.css"/>
+
+<meta http-equiv="cleartype" content="on">
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="/">Benito Zaragozí</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/year-archive/">Blog</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/cv/">CV</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/contact/">Contact</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/about/">About me</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="/images/benizar-photo.jpg" class="author__avatar" alt="Benito Zaragozí">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Benito Zaragozí</h3>
+    <p class="author__bio">Geographer and GIScientist</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Vila-Seca, Spain</li>
+      
+      
+      
+        <li><a href="mailto:benizar@gmail.com"><i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+      
+
+      
+        <li><a href="https://orcid.org/0000-0003-2501-484X"><i class="ai ai-fw ai-orcid" aria-hidden="true" style="color:#a6ce39ff;"></i>ORCID</a></li>
+      
+      
+        <li><a href="http://www.researcherid.com/rid/B-5270-2019"><i class="ai ai-fw ai-researcherid" aria-hidden="true" style="color:#ffa500;"></i>ResearcherID</a></li>
+      
+      
+        <li><a href="https://scholar.google.es/citations?user=sO9xAc8AAAAJ"><i class="ai ai-fw ai-google-scholar-square" aria-hidden="true"  style="color:#508ef3ff;"></i>Google Scholar</a></li>
+      
+      
+        <li><a href="https://www.researchgate.net/profile/Benito_Zaragozi"><i class="ai ai-fw ai-researchgate-square" aria-hidden="true" style="color:#00e3abff;"></i>ResearchGate</a></li>
+      
+      
+        <li><a href="https://www.mendeley.com/profiles/benito-zaragozi"><i class="ai ai-fw ai-mendeley-square" aria-hidden="true" style="color:#a51925ff;"></i>Mendeley</a></li>
+      
+
+      
+        <li><a href="https://bitbucket.org/benizar"><i class="fa fa-fw fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
+      
+      
+        <li><a href="https://github.com/benizar"><i class="fa fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+
+
+      
+        <li><a href="https://www.linkedin.com/in/benizar"><i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn</a></li>
+      
+
+      
+        <li><a href="https://twitter.com/benizar81"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+        <li><a href="https://www.facebook.com/benizar81"><i class="fa fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+      
+
+
+      
+      
+      
+
+
+      
+      
+      
+      
+
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </ul>
+  </div>
+</div>
+
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Extending Geopackages via SQLite’s Run-Time Loadable extensions">
+    <meta itemprop="description" content="Testing if Geopackages functionality can be extended via SQLite extensions. Can this work in QGIS?">
+    <meta itemprop="datePublished" content="July 27, 2018">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Extending Geopackages via SQLite’s Run-Time Loadable extensions
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <h1 id="introduction">Introduction</h1>
+<p>SQLite is expected to be very important for GIS users. It’s non-trivial that two of the most promising GIS formats are based on SQLite: <a href="https://www.gaia-gis.it/gaia-sins/">Spatialite</a> and <a href="https://www.geopackage.org/">Geopackage</a>. This way, understanding the basics of SQLite can be very useful for making the most of these data formats.</p>
+
+<p>Particularly, geopackages are good for many different reasons and one can expect to find all of our favorite features in this modern GIS data format. In this sense, I’m a huge fan of Postgres <em>extensibility</em>. When using Postgres, you can create new operators, aggregates, functions, types, etc… and pack everything in a custom extension. PostGIS itself is a Postgres extension. Every-time we need to create a complex parametrized query, we can use Postgres <code class="highlighter-rouge">CREATE FUNCTION</code> and encapsulate it. This makes it easier to read/write complex queries (or Postgis geoprocesses) and improves code (re)usability. I would like to have such useful features in other databases and it would be amazing to have this features when working with Geopackages.</p>
+
+<p>After my very first searches, I have learnt that <strong>SQLite is not intended to have stored functions, so <code class="highlighter-rouge">CREATE FUNCTION</code> does not work</strong>. However, in SQLite we can map functions from several programming languages (C, PHP, Python, Perl, .NET, among others) to SQL functions, namely <strong>user-defined functions</strong> and pack them in <strong>Run-Time Loadable extensions</strong>. It would be amazing if this approach could work also for Spatialite and Geopackages.</p>
+
+<p>There are various ways for extending SQLite, but using its <strong>C API</strong> seems more straightforward and portable. I guess that everything done this way should work in the most used GIS (QGIS, ArcGIS, etc). Let’s do some tests…</p>
+
+<h1 id="experimenting">Experimenting</h1>
+<p>I’m working with Ubuntu 16.04, SQLite 3.11.0 and QGIS (2.8 and 3.0). First, install <code class="highlighter-rouge">sqlite3</code> and the <code class="highlighter-rouge">libsqlite3-dev</code>.</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>sudo apt-get install sqlite3 libsqlite3-dev
+</code></pre>
+</div>
+
+<p>I’m not installing QGIS directly on my Ubuntu. Instead, I’m using dockers for testing on different QGIS versions without complications (check the <a href="https://github.com/kartoza/docker-qgis-desktop">kartoza QGIS docker lib</a> for mor info).</p>
+
+<h2 id="sample-extension">Sample extension</h2>
+<p>There are some official SQLite extensions and source code to read and get some ideas. After exploring some resources, I’ve created a simple <code class="highlighter-rouge">ifelse</code> function based on <a href="http://www.digitage.co.uk/digitage/library/linux/creating-a-custom-function-for-sqlite3">this example</a>.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cm">/* ifelse.c */</span>
+
+<span class="cp">#include "sqlite3ext.h"
+</span><span class="n">SQLITE_EXTENSION_INIT1</span><span class="p">;</span>
+
+<span class="cp">#include &lt;stdlib.h&gt;
+</span>
+<span class="k">typedef</span> <span class="n">sqlite3_int64</span> <span class="n">i64</span><span class="p">;</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">ifelseFunc</span><span class="p">(</span><span class="n">sqlite3_context</span> <span class="o">*</span><span class="n">context</span><span class="p">,</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="n">sqlite3_value</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">flag</span> <span class="o">=</span> <span class="n">sqlite3_value_int</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="kt">char</span> <span class="o">*</span><span class="n">v1</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">sqlite3_value_text</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+        <span class="kt">char</span> <span class="o">*</span><span class="n">v2</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">sqlite3_value_text</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">flag</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">sqlite3_result_text</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">SQLITE_TRANSIENT</span><span class="p">);</span>
+        <span class="k">else</span>
+                <span class="n">sqlite3_result_text</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">SQLITE_TRANSIENT</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="nf">ifelse_init</span><span class="p">(</span> <span class="n">sqlite3</span> <span class="o">*</span><span class="n">db</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">error</span><span class="p">,</span> <span class="k">const</span> <span class="n">sqlite3_api_routines</span> <span class="o">*</span><span class="n">api</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">SQLITE_EXTENSION_INIT2</span><span class="p">(</span><span class="n">api</span><span class="p">);</span>
+
+    <span class="n">sqlite3_create_function</span><span class="p">(</span> <span class="n">db</span><span class="p">,</span> <span class="s">"ifelse"</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">SQLITE_ANY</span><span class="p">,</span> 
+            <span class="nb">NULL</span><span class="p">,</span> <span class="n">ifelseFunc</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">SQLITE_OK</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Then, compile it to get the binaries.</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>gcc -shared -fPIC -o ifelse.so ifelse.c -lsqlite3
+</code></pre>
+</div>
+
+<h2 id="sqlite-command-line-testing">SQLite command-line testing</h2>
+
+<p>We need to be sure that this will work on a raw SQLite database, from the command-line, so I’m creating a dummy Landuse/Landcover (LULC) database.</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>sqlite3 lulc
+</code></pre>
+</div>
+
+<p>After inserting some test data, we will use the <code class="highlighter-rouge">ifelse</code> function to print a description for two LULC codes (FOR -&gt; Forest; URB -&gt; Urban).</p>
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">lulc</span> <span class="p">(</span><span class="n">cover</span> <span class="n">text</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">lulc</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'FOR'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">lulc</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'FOR'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">lulc</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'URB'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">lulc</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'FOR'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">lulc</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'URB'</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>Now, load the extension via the SQL function and the command-line, which should print an empty line.</p>
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">load_extension</span><span class="p">(</span><span class="s1">'/path/to/extension/ifelse.so'</span><span class="p">,</span> <span class="s1">'ifelse_init'</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>The <code class="highlighter-rouge">ifelse</code> function can be tested and it works as expected.</p>
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">ifelse</span><span class="p">(</span><span class="n">cover</span><span class="o">=</span><span class="s1">'FOR'</span><span class="p">,</span> <span class="s1">'Forest'</span><span class="p">,</span> <span class="s1">'Urban'</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">lulc</span><span class="p">;</span>
+<span class="c1">--Forest</span>
+<span class="c1">--Forest</span>
+<span class="c1">--Urban</span>
+<span class="c1">--Forest</span>
+<span class="c1">--Urban</span>
+</code></pre>
+</div>
+
+<p>Finally, it can be checked that it is necessary to load this extension every-time we connect to the database. So <code class="highlighter-rouge">.quit</code> from sqlite3 and try to use the function again.</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="n">sqlite3</span> <span class="n">lulc</span>
+<span class="k">SELECT</span> <span class="n">ifelse</span><span class="p">(</span><span class="n">cover</span><span class="o">=</span><span class="s1">'FOR'</span><span class="p">,</span> <span class="s1">'Forest'</span><span class="p">,</span> <span class="s1">'Urban'</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">lulc</span><span class="p">;</span>
+<span class="n">Error</span><span class="p">:</span> <span class="k">no</span> <span class="n">such</span> <span class="k">function</span><span class="p">:</span> <span class="n">ifelse</span>
+</code></pre>
+</div>
+
+<p>As you can see, it is necessary to load the extension every-time we connect to the lulc database.</p>
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">load_extension</span><span class="p">(</span><span class="s1">'./ifelse.so'</span><span class="p">,</span> <span class="s1">'ifelse_init'</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="n">ifelse</span><span class="p">(</span><span class="n">cover</span><span class="o">=</span><span class="s1">'FOR'</span><span class="p">,</span> <span class="s1">'Forest'</span><span class="p">,</span> <span class="s1">'Urban'</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">lulc</span><span class="p">;</span>
+<span class="c1">--Forest</span>
+<span class="c1">--Forest</span>
+<span class="c1">--Urban</span>
+<span class="c1">--Forest</span>
+<span class="c1">--Urban</span>
+</code></pre>
+</div>
+
+<h2 id="working-with-geopackages-in-qgis">Working with geopackages in QGIS</h2>
+
+<p>Unfortunatelly, I have tested this approach via <code class="highlighter-rouge">DBmanager</code> in QGIS 3.0, but it didn’t work. The extension can’t be loaded using this approach. The <code class="highlighter-rouge">load_extension()</code> call returns a pretty clear message: <code class="highlighter-rouge">Not authorized</code>.</p>
+
+<figure class="half">
+
+    <a href="/images/qgis28-spatialite-loading-extension.png"><img src="/images/qgis28-spatialite-loading-extension.png" /></a>
+
+    <a href="/images/qgis3-gpkg-not-loading-extension.png"><img src="/images/qgis3-gpkg-not-loading-extension.png" /></a>
+
+<figcaption>SQLite <em>load_extension()</em> doesn't work since QGIS 3.0.</figcaption>
+
+</figure>
+
+<p>We can do this test in QGIS 2.8 and it will work correctly for Spatialite. However, Geopackages were not so well supported before QGIS 3.0. This difference between QGIS versions is due to a change in the Python version used since QGIS 3.x (see this answer on <a href="https://gis.stackexchange.com/a/280524">gis.stackexchange</a>).</p>
+
+<h1 id="conclusions">Conclusions</h1>
+
+<p>We have revised how to use the SQLite C API and it seems a very powerful approach for distributing data with some useful logic. For example, imagine that you want to distribute some data to GIS users, avoiding to describe complex parametrized queries. This could be achieved through Run-Time Loadable extensions…</p>
+
+<p>I have discovered that the most recent Python distributions are blocking this mechanism for some security reasons and this is directly incorporated into QGIS. However, this functionality seems very useful and I think that there are other ways for loading extensions without compiling QGIS from sources.</p>
+
+<h1 id="resources">Resources</h1>
+
+<p>These are some resources I have revised for writing this post.</p>
+
+<h2 id="geopackages">Geopackages</h2>
+
+<ul>
+  <li><a href="http://www.justobjects.org/download/geopackage/foss4g2013_geopackage.pdf">FOSS4G-2013 slides</a></li>
+  <li><a href="http://switchfromshapefile.org/">Switch from Shapefile</a></li>
+  <li><a href="https://mappinggis.com/2015/09/geocsv-geopackage-y-geojson-las-nuevas-alternativas-al-shapefile/">Comparing GEOCSV, Geopackage and Geojson (spanish)</a></li>
+  <li><a href="https://mappinggis.com/2017/06/geopackage-para-novatos-uso-en-arcgis-qgis-publicacion-en-geoserver/">Geopackages in ArcGIS, QGIS and Geoserver (spanish)</a>.</li>
+</ul>
+
+<h2 id="sqlite">SQLite</h2>
+
+<ul>
+  <li><a href="https://stackoverflow.com/a/2108921">SQLite user-defined-functions</a></li>
+  <li><a href="https://www.sqlite.org/loadext.html">Runtime Loadable Extension</a></li>
+  <li><a href="http://www.digitage.co.uk/digitage/library/linux/creating-a-custom-function-for-sqlite3">IfElse function</a></li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#extension" class="page__taxonomy-item" rel="tag">extension</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#geopackage" class="page__taxonomy-item" rel="tag">geopackage</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#spatialite" class="page__taxonomy-item" rel="tag">spatialite</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sqlite" class="page__taxonomy-item" rel="tag">sqlite</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#stored-procedure" class="page__taxonomy-item" rel="tag">stored procedure</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#user-defined-function" class="page__taxonomy-item" rel="tag">user-defined-function</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#analysis" class="page__taxonomy-item" rel="tag">Analysis</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2018-07-27T00:00:00+00:00">July 27, 2018</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=/analysis/extending-geopackages-via-sqlite-run-time-loadable-extensions/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=/analysis/extending-geopackages-via-sqlite-run-time-loadable-extensions/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=/analysis/extending-geopackages-via-sqlite-run-time-loadable-extensions/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=/analysis/extending-geopackages-via-sqlite-run-time-loadable-extensions/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="/snippets/pull-multiple-git-repositories-when-working-with-that-not-so-usual-pc/" class="pagination--pager" title="Pull multiple git repositories when working with that not-so-usual PC
+">Previous</a>
+    
+    
+      <a href="/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing/" class="pagination--pager" title="Using OBS Studio with V4L2 for making my videoconferences more appealing
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/programming/data%20management/group-zipping-gis-files-made-easy/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">Group zipping GIS Files made easy
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  8 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">If you work with Geographic Information System (GIS) data, you’re likely familiar with multi-file formats such as ESRI Shapefiles or SAGA GIS raster files. T...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/management/ubuntu20-dni-electronico-y-autofirma/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">DNI electrónico y autofirma en 2020: cómo NO perder 2 horas para firmar una solicitud
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">Cómo usar el DNIe desde Ubuntu para firmar electrónicamente trámites en línea. En este caso se firmaron las solicitudes para optar a las certificaciones de l...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/analysis/how-to-cite-geospatial-standards-and-other-things/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">How to cite geospatial standards and other GIS things
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  1 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">I found a template for manging ISO and OGC standards as Bibtex entries. This may be useful for citing documents that are not indexed by Google Scholar or if ...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">Choosing a desktop marker app for Ubuntu 18.04 LTS
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">In this post I explain the main features of two desktop bookmarking apps in Ubuntu 18.04: Pylote and Gromit-MPX. Both tools come in handy when making present...</p>
+    </article>
+  </a>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/benizar81"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+      <li><a href="https://facebook.com/benizar81"><i class="fa fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+    
+    
+      <li><a href="http://github.com/benizar"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+      <li><a href="http://bitbucket.org/benizar"><i class="fa fa-fw fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
+    
+    <li><a href="/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2024 Benito Zaragozí. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

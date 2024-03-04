@@ -1,0 +1,707 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Extracción de características estructurales de una imagen ( II ) (Semi-variograma de una imagen usando R). - Benito Zaragozí</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Benito Zaragozí">
+<meta property="og:title" content="Extracción de características estructurales de una imagen ( II ) (Semi-variograma de una imagen usando R).">
+
+
+
+
+  <meta property="og:description" content="Viejo post sobre cómo estudiar la estructura de unas parcelas agrícolas con R.">
+
+
+
+  <meta name="twitter:site" content="@benizar81">
+  <meta name="twitter:title" content="Extracción de características estructurales de una imagen ( II ) (Semi-variograma de una imagen usando R).">
+  <meta name="twitter:description" content="Viejo post sobre cómo estudiar la estructura de unas parcelas agrícolas con R.">
+  <meta name="twitter:url" content="">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2010-01-28T00:00:00+00:00">
+  
+    <link rel="next" href="/programming/la-ciencia-de-los-suelos-i-creacion-de-triangulos-texturales-directamente-desde-una-geodatabase/" title="La ciencia de los suelos (I). Creación de triángulos texturales directamente desde una Geodatabase.">
+  
+  
+    <link rel="prev" href="/analysis/programming/procesamiento-de-imagenes-digitales-con-c-y-una-aplicacion-para-el-analisis-de-parcelas-agricolas/" title="Procesamiento de imágenes digitales con C# (y una aplicación para el análisis de parcelas agrícolas).">
+  
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Benito Zaragozí",
+      "url" : null,
+      "sameAs" : ["https://twitter.com/benizar81","https://facebook.com/benizar81","https://www.linkedin.com/in/benizar","https://www.researchgate.net/profile/Benito_Zaragozi","http://orcid.org/0000-0003-2501-484X"]
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Benito Zaragozí Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/academicons.min.css"/>
+
+<meta http-equiv="cleartype" content="on">
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="/">Benito Zaragozí</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/year-archive/">Blog</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/cv/">CV</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/contact/">Contact</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="/about/">About me</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="/images/benizar-photo.jpg" class="author__avatar" alt="Benito Zaragozí">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Benito Zaragozí</h3>
+    <p class="author__bio">Geographer and GIScientist</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Vila-Seca, Spain</li>
+      
+      
+      
+        <li><a href="mailto:benizar@gmail.com"><i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+      
+
+      
+        <li><a href="https://orcid.org/0000-0003-2501-484X"><i class="ai ai-fw ai-orcid" aria-hidden="true" style="color:#a6ce39ff;"></i>ORCID</a></li>
+      
+      
+        <li><a href="http://www.researcherid.com/rid/B-5270-2019"><i class="ai ai-fw ai-researcherid" aria-hidden="true" style="color:#ffa500;"></i>ResearcherID</a></li>
+      
+      
+        <li><a href="https://scholar.google.es/citations?user=sO9xAc8AAAAJ"><i class="ai ai-fw ai-google-scholar-square" aria-hidden="true"  style="color:#508ef3ff;"></i>Google Scholar</a></li>
+      
+      
+        <li><a href="https://www.researchgate.net/profile/Benito_Zaragozi"><i class="ai ai-fw ai-researchgate-square" aria-hidden="true" style="color:#00e3abff;"></i>ResearchGate</a></li>
+      
+      
+        <li><a href="https://www.mendeley.com/profiles/benito-zaragozi"><i class="ai ai-fw ai-mendeley-square" aria-hidden="true" style="color:#a51925ff;"></i>Mendeley</a></li>
+      
+
+      
+        <li><a href="https://bitbucket.org/benizar"><i class="fa fa-fw fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
+      
+      
+        <li><a href="https://github.com/benizar"><i class="fa fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+
+
+      
+        <li><a href="https://www.linkedin.com/in/benizar"><i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn</a></li>
+      
+
+      
+        <li><a href="https://twitter.com/benizar81"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+      
+      
+        <li><a href="https://www.facebook.com/benizar81"><i class="fa fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+      
+
+
+      
+      
+      
+
+
+      
+      
+      
+      
+
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </ul>
+  </div>
+</div>
+
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Extracción de características estructurales de una imagen ( II ) (Semi-variograma de una imagen usando R).">
+    <meta itemprop="description" content="Viejo post sobre cómo estudiar la estructura de unas parcelas agrícolas con R.">
+    <meta itemprop="datePublished" content="January 28, 2010">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Extracción de características estructurales de una imagen ( II ) (Semi-variograma de una imagen usando R).
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  6 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p class="notice--info"><strong>Nota:</strong> Este es un viejo post que he recuperado del blog de GIS&amp;Chips. No sé si ya existe, pero probablemente sería interesante disponer de una librería para realizar este tipo de análisis GEOBIA.</p>
+
+<p>En este artículo usaremos una librería de R (“fields”), que contiene métodos para calcular el semi-variograma empírico de una imagen, lo cual quiere decir que calcularemos el semi-variograma de una gran cantidad de puntos. Y a partir de ahí, analizaremos la existencia de patrones espaciales en tres parcelas agrícolas arbóreas.</p>
+
+<figure class="half">
+	<a href="/images/plots.jpg"><img src="/images/plots.jpg" /></a>
+	<figcaption>Figura 1. Parcelas analizadas</figcaption>
+</figure>
+
+<p>Espero que este sea el primero de varios posts donde aprendamos a estudiar las ortoimagenes, extrayendo características de distintos tipos como ya hicimos en un <a href="http://benito-zaragozi.com/programming/procesamiento-de-imagenes-digitales-con-c-y-una-aplicacion-para-el-analisis-de-parcelas-agricolas/">post anterior</a>. En aquel caso, se extrajeron algunas sencillas frecuencias a partir del cálculo de la Transformada de Hough que nos proporcionaba AForge.NET, lo cual nos servía para automatizar la decisión de si una parcela era una plantación arbórea y realizar un conteo automático del número de árboles que contenía. En dicho post, se ofrece una aplicación llamada RAPID, que incorpora una galería de imágenes de parcelas agrícolas. Hemos extraído tres de ellas para realizar los siguientes análisis. Son las siguientes:</p>
+
+<p>Al estudiar las 3 parcelas que aparecen en la primera imágen con el RAPID: La primera es identificada totalmente como agrícola y nos permite contar con bastante certidumbre el número de árboles de un modo automático. En el caso de la segunda, su estructura en hileras no permite el conteo de árboles pues están muy juntos. Y por último, en los olivos de la tercera no se cumplía la regla de una estructura normal, aunque sí que podíamos contar los árboles. Este último caso era el único donde RAPID no podía “acertar” pues identificaba la parcela como no agrícola debido a que la diferencia angular entre las direcciones principales de la Transformada de Hough no se aproximaba a 90º.</p>
+
+<h2 id="qué-es-un-variograma-experimental-una-breve-explicación-para-entender-los-resultados">¿Qué es un variograma experimental? (una breve explicación para entender los resultados).</h2>
+
+<p>Los variogramas se utilizan para caracterizar la posible estructura espacial de un conjunto de datos. Podemos distinguir dos tipos de variogramas, el experimental y el modelizado. De estos nos interesa más el experimental. Este último se usa para describir los datos de una muestra, habitualmente una nube de puntos (xyz)</p>
+
+<p>Matemáticamente el semi-variograma, o variograma/2, se puede definir como la mitad del promedio de las diferencias al cuadrado.</p>
+
+<figure class="third">
+	<a href="/images/variogram-formula.jpg"><img src="/images/variogram-formula.jpg" /></a>
+	<figcaption>Figura 2: Fórmula para calcular el semi-variograma</figcaption>
+</figure>
+
+<p>Donde Np(h) es el número de pares a la distancia h, h es el incremento.</p>
+
+<p>Z(xi) son los valores experimentales.</p>
+
+<p>xi localizaciones donde son medidos los valores z(xi).</p>
+
+<p>Aplicado a imágenes, el semi-variograma (o variograma/2), mide el grado de correlación espacial entre los píxeles de una imagen. Podemos comentar varios conceptos (ver <strong>Figura 3</strong>):</p>
+
+<ul>
+  <li>Sill o meseta: representa la varianza máxima.</li>
+  <li>Range, rango o alcance: muestra la distancia (en nuestro caso en píxeles) a la que el semi-variograma alcanza la meseta.</li>
+  <li>Nugget o “efecto pepita”, es la discontinuidad en el origen. Ésta es debida a que el semivariograma, en la práctica, no es nulo en el origen.</li>
+</ul>
+
+<figure class="half">
+	<a href="/images/variogram.jpg"><img src="/images/variogram.jpg" /></a>
+	<figcaption>Figura 3: Interpretación del semivariograma</figcaption>
+</figure>
+
+<h2 id="ejemplos-de-cálculo-en-r">Ejemplos de cálculo en R</h2>
+
+<p>Os aviso de que las imágenes referidas en el código estan en formato *.ppm aunque R tiene muchas librerías capaces de convertir a este formato. También podéis utilizar OpenOffice.</p>
+
+<p>En este post, aplicamos el siguiente código para calcular el semi-variograma empírico de cada una de estas imágenes:</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="c1"># Instalo los packages necesarios:
+</span><span class="n">install.packages</span><span class="p">(</span><span class="s2">"pixmap"</span><span class="p">,</span><span class="w"> </span><span class="n">dependencies</span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">)</span><span class="w">
+</span><span class="n">install.packages</span><span class="p">(</span><span class="s2">"fields"</span><span class="p">,</span><span class="w"> </span><span class="n">dependencies</span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Cargo las librerias:
+</span><span class="n">library</span><span class="p">(</span><span class="n">pixmap</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Hago una lista con las imagenes de las parcelas y las cargo todas:
+</span><span class="n">imag_dir</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">list.files</span><span class="p">(</span><span class="s2">"C:\\ ... \\Articulos Gisandchips\\ parcelas_ppm\\"</span><span class="p">,</span><span class="w"> </span><span class="n">full.names</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+
+</span><span class="n">parcela1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.pnm</span><span class="p">(</span><span class="n">imag_dir</span><span class="p">[</span><span class="m">1</span><span class="p">])</span><span class="w">
+</span><span class="n">parcela2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.pnm</span><span class="p">(</span><span class="n">imag_dir</span><span class="p">[</span><span class="m">2</span><span class="p">])</span><span class="w">
+</span><span class="n">parcela3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.pnm</span><span class="p">(</span><span class="n">imag_dir</span><span class="p">[</span><span class="m">3</span><span class="p">])</span><span class="w">
+
+</span><span class="c1"># Aislamos una banda...
+</span><span class="n">matriz1</span><span class="o">&lt;-</span><span class="n">parcela1</span><span class="o">@</span><span class="n">green</span><span class="w">
+</span><span class="n">matriz2</span><span class="o">&lt;-</span><span class="n">parcela2</span><span class="o">@</span><span class="n">green</span><span class="w">
+</span><span class="n">matriz3</span><span class="o">&lt;-</span><span class="n">parcela3</span><span class="o">@</span><span class="n">green</span><span class="w">
+
+</span><span class="c1"># Calculamos el semivariograma (si queremos podemos acabar antes cambiando el alcance de 40  a 10, por ejemplo, pero los resultados pueden cambiar y quedará menos bonito
+</span><span class="n">vgram1_40</span><span class="o">&lt;-</span><span class="n">vgram.matrix</span><span class="p">(</span><span class="w"> </span><span class="n">matriz1</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="o">=</span><span class="m">40</span><span class="p">)</span><span class="w"> </span><span class="c1"># esto llevará un poco de tiempo
+</span><span class="n">vgram2_40</span><span class="o">&lt;-</span><span class="n">vgram.matrix</span><span class="p">(</span><span class="w"> </span><span class="n">matriz2</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="o">=</span><span class="m">40</span><span class="p">)</span><span class="w"> </span><span class="c1"># esto llevará un poco de tiempo
+</span><span class="n">vgram3_40</span><span class="o">&lt;-</span><span class="n">vgram.matrix</span><span class="p">(</span><span class="w"> </span><span class="n">matriz3</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="o">=</span><span class="m">40</span><span class="p">)</span><span class="w"> </span><span class="c1"># esto llevará un poco de tiempo
+</span><span class="w">
+</span><span class="c1"># Añadimos al Plot las matrices que acabamos de calcular
+</span><span class="n">plot.vgram.matrix</span><span class="p">(</span><span class="n">vgram1_40</span><span class="p">)</span><span class="w"> </span><span class="c1"># La matriz del variograma
+</span><span class="n">plot.vgram.matrix</span><span class="p">(</span><span class="n">vgram2_40</span><span class="p">)</span><span class="w"> </span><span class="c1"># La matriz del variograma
+</span><span class="n">plot.vgram.matrix</span><span class="p">(</span><span class="n">vgram3_40</span><span class="p">)</span><span class="w"> </span><span class="c1"># La matriz del variograma
+</span><span class="w">
+</span><span class="c1"># Creamos una curva que ajuste bien sobre la muestra y la añadimos al variograma
+</span><span class="n">polyfit1_40_20</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">vgram1_40</span><span class="o">$</span><span class="n">vgram</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">poly</span><span class="p">(</span><span class="n">vgram1_40</span><span class="o">$</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">));</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">vgram1_40</span><span class="o">$</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">vgram1_40</span><span class="o">$</span><span class="n">vgram</span><span class="p">)</span><span class="w">
+</span><span class="n">lines</span><span class="p">(</span><span class="n">sort</span><span class="p">(</span><span class="n">vgram1_40</span><span class="o">$</span><span class="n">d</span><span class="p">),</span><span class="w"> </span><span class="n">polyfit1_40_20</span><span class="o">$</span><span class="n">fit</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">vgram1_40</span><span class="o">$</span><span class="n">d</span><span class="p">)],</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">4</span><span class="p">)</span><span class="w">
+
+</span><span class="n">polyfit2_40_20</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">vgram2_40</span><span class="o">$</span><span class="n">vgram</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">poly</span><span class="p">(</span><span class="n">vgram2_40</span><span class="o">$</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">));</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">vgram2_40</span><span class="o">$</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">vgram2_40</span><span class="o">$</span><span class="n">vgram</span><span class="p">)</span><span class="w">
+</span><span class="n">lines</span><span class="p">(</span><span class="n">sort</span><span class="p">(</span><span class="n">vgram2_40</span><span class="o">$</span><span class="n">d</span><span class="p">),</span><span class="w"> </span><span class="n">polyfit2_40_20</span><span class="o">$</span><span class="n">fit</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">vgram2_40</span><span class="o">$</span><span class="n">d</span><span class="p">)],</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">4</span><span class="p">)</span><span class="w">
+
+</span><span class="n">polyfit3_40_20</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">vgram3_40</span><span class="o">$</span><span class="n">vgram</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">poly</span><span class="p">(</span><span class="n">vgram3_40</span><span class="o">$</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">));</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">vgram3_40</span><span class="o">$</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">vgram3_40</span><span class="o">$</span><span class="n">vgram</span><span class="p">)</span><span class="w">
+</span><span class="n">lines</span><span class="p">(</span><span class="n">sort</span><span class="p">(</span><span class="n">vgram3_40</span><span class="o">$</span><span class="n">d</span><span class="p">),</span><span class="w"> </span><span class="n">polyfit3_40_20</span><span class="o">$</span><span class="n">fit</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">vgram3_40</span><span class="o">$</span><span class="n">d</span><span class="p">)],</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">4</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>El plot que obtenemos es el siguiente, o similar si es que hemos preferido cambiar algún parámetro:</p>
+
+<figure class="half">
+	<a href="/images/variogram-3-plots-polyfit.jpg"><img src="/images/variogram-3-plots-polyfit.jpg" /></a>
+	<figcaption>Figura 4: Panel donde mostramos los resultados</figcaption>
+</figure>
+
+<p>En la imagen vemos las parcelas, la matriz de su variograma y el variograma, con una curva que ajustamos mucho al los datos. Es fácil interpretar que en la estructura de las parcelas se llega a apreciar cierta <em>ciclicidad</em>, ya que encontramos mesetas a distintas distancias. Cada meseta se  corresponde aproximadamente a las hileras de árboles. El alcance es el que hemos definido (40, en este caso 40 píxeles; puede que unos 20 m. en la realidad).</p>
+
+<p>Viendo estas imágenes nos podemos dar cuenta de que es más fácil determinar una regla de clasificación que cuando lo hacíamos en el caso del RAPID. En este caso, nos fijamos en el número de máximos relativos de la función polinómica de ajuste del variograma. A simple vista, la primera parcela tiene unos 4, la segunda apenas 1 y la última 3 o 4. En este caso, podríamos citar una nueva regla para nuestro programa según la que a partir de 2 o 3 máximos relativos una parcela puede ser considerada una plantación arbórea.</p>
+
+<p>Como nos interesa automatizar la tarea creamos una función que nos cuente los máximos relativos. Aquí viene el ejemplo aplicado a la primera parcela:</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="c1"># Encontrar máximos relativos en la función 1
+</span><span class="n">maxRelativos1</span><span class="o">=</span><span class="m">0</span><span class="w">
+</span><span class="n">hMaxRelativos1</span><span class="o">=</span><span class="m">0</span><span class="w">
+
+</span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">polyfit1_40_20</span><span class="o">$</span><span class="n">fitted.values</span><span class="p">)</span><span class="m">-1</span><span class="p">))</span><span class="w">
+</span><span class="p">{</span><span class="w">
+
+</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">polyfit1_40_20</span><span class="o">$</span><span class="n">fitted.values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">polyfit1_40_20</span><span class="o">$</span><span class="n">fitted.values</span><span class="p">[</span><span class="n">i</span><span class="m">+1</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">polyfit1_40_20</span><span class="o">$</span><span class="n">fitted.values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">polyfit1_40_20</span><span class="o">$</span><span class="n">fitted.values</span><span class="p">[</span><span class="n">i</span><span class="m">-1</span><span class="p">])</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+</span><span class="n">maxRelativos1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;-</span><span class="w"> </span><span class="n">polyfit1_40_20</span><span class="o">$</span><span class="n">fitted.values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w">
+</span><span class="n">hMaxRelativos1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;-</span><span class="w"> </span><span class="n">vgram1_40</span><span class="o">$</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="n">MaxRelativos1</span><span class="o">&lt;-</span><span class="n">data.frame</span><span class="p">(</span><span class="n">hMaxRelativos1</span><span class="p">,</span><span class="n">maxRelativos1</span><span class="p">)</span><span class="w">
+</span><span class="n">MaxRelativos1</span><span class="o">&lt;-</span><span class="w"> </span><span class="n">na.omit</span><span class="p">(</span><span class="n">MaxRelativos1</span><span class="p">)</span><span class="w">
+</span><span class="n">NumMaxRelat1_40</span><span class="o">&lt;-</span><span class="nf">length</span><span class="p">(</span><span class="n">rownames</span><span class="p">(</span><span class="n">MaxRelativos1</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Consultamos los vértices de la curva que hemos dibujado mediante un bucle, de modo que si el vértice <code class="highlighter-rouge">i</code> tiene un valor superior al vértice anterior y también al vértice posterior entonces es considerado un máximo relativo y queda almacenado en la lista.</p>
+
+<h2 id="algunos-comentarios-sobre-todo-esto">Algunos comentarios sobre todo esto:</h2>
+
+<ol>
+  <li>
+    <p>El semivariograma implica un gran esfuerzo de cálculo por parte del ordenador. Esto hace que aún habiendo varias librerías en R que obtienen el semivariograma de una nube de puntos, sean significativamente más lentas que <strong>Fields.</strong> Además, <strong>Fields</strong> hace directamente lo que necesitábamos. No obstante, en un futuro no muy lejano, intentaré desarrollar una librería en C# para reproducir un análisis de este tipo y otras cosillas relacionadas.</p>
+  </li>
+  <li>
+    <p>Por cuestiones de tiempo no he tratado de crear funciones para las distintas etapas de la demostración. Puede ser un buen ejercicio tratar de implementar todo esto en funciones que permitan entre sus parámetros especificar la banda con la que trabajar, el alcance del semivariograma…</p>
+  </li>
+  <li>
+    <p>Existen más posibilidades a la hora de establecer reglas, por ejemplo podríamos explorar la distancia que separa los máximos relativos para distinguir los cultivos más intensivos de los más tradicionales. Se me ocurren muchas más posibilidades.</p>
+  </li>
+  <li>
+    <p>Por último, aunque no le doy mucha importancia, deciros que el número de máximos relativos no es del todo correcto pues el cero siempre aparece en el conteo (sale 5, 2, 5 y no 4, 1, 4 como he dicho más arriba), esto es porqué no he trabajado bastante el bucle, pero es fácil restar 1 a la lista final.  Mi idea principal es la de explorar el concepto y dar unos ejemplos de código a modo de ideas.</p>
+  </li>
+</ol>
+
+<h2 id="referencias">Referencias:</h2>
+
+<p>Para entender bien todo esto creo que es interesante ver el artículo anterior.</p>
+
+<p>Solamente os remito al siguiente tutorial de Surfer. Es bastante didáctico. <a href="http://www.goldensoftware.com/variogramTutorial.pdf">http://www.goldensoftware.com/variogramTutorial.pdf</a></p>
+
+<p>De todos modos la red está llena de materiales, apuntes de clase, libros en PDF… No tendréis problemas en encontrar información sobre los variogramas.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#geobia" class="page__taxonomy-item" rel="tag">GEOBIA</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#r" class="page__taxonomy-item" rel="tag">R</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#spatial-data-mining" class="page__taxonomy-item" rel="tag">Spatial Data Mining</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#variograma" class="page__taxonomy-item" rel="tag">Variograma</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#analysis" class="page__taxonomy-item" rel="tag">Analysis</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2010-01-28T00:00:00+00:00">January 28, 2010</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=/analysis/extraccion-de-caracteristicas-estructurales-de-una-imagen-ii-semi-variograma-de-una-imagen-usando-r-2/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=/analysis/extraccion-de-caracteristicas-estructurales-de-una-imagen-ii-semi-variograma-de-una-imagen-usando-r-2/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=/analysis/extraccion-de-caracteristicas-estructurales-de-una-imagen-ii-semi-variograma-de-una-imagen-usando-r-2/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=/analysis/extraccion-de-caracteristicas-estructurales-de-una-imagen-ii-semi-variograma-de-una-imagen-usando-r-2/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="/analysis/programming/procesamiento-de-imagenes-digitales-con-c-y-una-aplicacion-para-el-analisis-de-parcelas-agricolas/" class="pagination--pager" title="Procesamiento de imágenes digitales con C# (y una aplicación para el análisis de parcelas agrícolas).
+">Previous</a>
+    
+    
+      <a href="/programming/la-ciencia-de-los-suelos-i-creacion-de-triangulos-texturales-directamente-desde-una-geodatabase/" class="pagination--pager" title="La ciencia de los suelos (I). Creación de triángulos texturales directamente desde una Geodatabase.
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/programming/data%20management/group-zipping-gis-files-made-easy/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">Group zipping GIS Files made easy
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  8 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">If you work with Geographic Information System (GIS) data, you’re likely familiar with multi-file formats such as ESRI Shapefiles or SAGA GIS raster files. T...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/management/ubuntu20-dni-electronico-y-autofirma/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">DNI electrónico y autofirma en 2020: cómo NO perder 2 horas para firmar una solicitud
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">Cómo usar el DNIe desde Ubuntu para firmar electrónicamente trámites en línea. En este caso se firmaron las solicitudes para optar a las certificaciones de l...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/analysis/how-to-cite-geospatial-standards-and-other-things/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">How to cite geospatial standards and other GIS things
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  1 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">I found a template for manging ISO and OGC standards as Bibtex entries. This may be useful for citing documents that are not indexed by Google Scholar or if ...</p>
+    </article>
+  </a>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  
+    <a href="/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/">
+  
+    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+      
+      <h2 class="archive__item-title" itemprop="headline">Choosing a desktop marker app for Ubuntu 18.04 LTS
+</h2>
+      
+        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+      
+      <p class="archive__item-excerpt" itemprop="description">In this post I explain the main features of two desktop bookmarking apps in Ubuntu 18.04: Pylote and Gromit-MPX. Both tools come in handy when making present...</p>
+    </article>
+  </a>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/benizar81"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+      <li><a href="https://facebook.com/benizar81"><i class="fa fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+    
+    
+      <li><a href="http://github.com/benizar"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+      <li><a href="http://bitbucket.org/benizar"><i class="fa fa-fw fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
+    
+    <li><a href="/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2024 Benito Zaragozí. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

@@ -19,7 +19,7 @@
 
 
 
-<title>Benito Zaragozí</title>
+<title>Pull multiple git repositories when working with that not-so-usual PC - Benito Zaragozí</title>
 
 
 
@@ -29,16 +29,18 @@
 
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="Benito Zaragozí">
-<meta property="og:title" content="Benito Zaragozí">
+<meta property="og:title" content="Pull multiple git repositories when working with that not-so-usual PC">
 
 
 
+
+  <meta property="og:description" content="Pull multiple git repositories at once using a simple bash script.">
 
 
 
   <meta name="twitter:site" content="@benizar81">
-  <meta name="twitter:title" content="Benito Zaragozí">
-  <meta name="twitter:description" content="This is the hub for my multiple digital profiles">
+  <meta name="twitter:title" content="Pull multiple git repositories when working with that not-so-usual PC">
+  <meta name="twitter:description" content="Pull multiple git repositories at once using a simple bash script.">
   <meta name="twitter:url" content="">
 
   
@@ -56,9 +58,16 @@
 
 
 
-  <meta property="og:image" content="/images/header-dragon-kahn.jpg">
 
 
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2018-07-24T00:00:00+00:00">
+  
+    <link rel="next" href="/analysis/extending-geopackages-via-sqlite-run-time-loadable-extensions/" title="Extending Geopackages via SQLite&#39;s Run-Time Loadable extensions">
+  
+  
+    <link rel="prev" href="/snippets/clone-multiple-git-repositories-when-setting-up-your-ubuntu/" title="Clone multiple git repositories when setting up your Ubuntu">
+  
 
 
 
@@ -144,36 +153,7 @@
 </div>
 
     
-  
 
-
-
-
-
-
-
-
-
-<div class="page__hero--overlay"
-  style=" background-image: url('/images/header-dragon-kahn.jpg');"
->
-  
-    <div class="wrapper">
-      <h1 class="page__title" itemprop="headline">
-        
-          Benito Zaragozí
-        
-      </h1>
-      
-      
-      
-    </div>
-  
-  
-    <span class="page__hero-caption">Dragon Khan roller coaster (PortAventura)
-</span>
-  
-</div>
 
 
 
@@ -278,18 +258,162 @@
   </div>
 
 
-  <div class="archive">
-    
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Pull multiple git repositories when working with that not-so-usual PC">
+    <meta itemprop="description" content="Pull multiple git repositories at once using a simple bash script.">
+    <meta itemprop="datePublished" content="July 24, 2018">
     
 
-<h3 class="archive__subtitle">Recent Posts</h3>
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Pull multiple git repositories when working with that not-so-usual PC
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  less than 1 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>At least, every few days I change my workplace and I work on a different computer (home-laptop-work). For this reason, I usually need to ensure that I’m using the latest version of each repository.</p>
+
+<p>After writing a <a href="/snippets/clone-multiple-git-repositories-when-setting-up-your-ubuntu/">script to facilitate the task of clonning several Git repositories</a>, it is logical to consider the same when I need to pull them. In this post I want to share the script I use to automatically pull all my git repositories in one step, <strong>no matter if they are stored in GitHub, GitLab or Bitbucket</strong>. Practically, its the same script proposed by <a href="https://gist.github.com/douglas/1287372">douglas</a>, but simpler and following my personal naming convention…</p>
+
+<p>The <code class="highlighter-rouge">multiple-git-pull.sh</code> script is stored in a Gist and allows me to pull several repositories stored in the same working folder (e.g. /home/user/git).</p>
+
+<p>Avoid some headaches and innecesary pulls just by executing this script in your git working folder (if you have one :)</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>bash multiple-git-pull.sh
+</code></pre>
+</div>
+
+<p>I hope you like it ;)</p>
+
+<script src="https://gist.github.com/benizar/f192ea5a2d1d6f63f56345733788e16b.js"></script>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
 
 
   
 
 
 
-<div class="list__item">
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#bash" class="page__taxonomy-item" rel="tag">bash</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#git" class="page__taxonomy-item" rel="tag">git</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pull" class="page__taxonomy-item" rel="tag">pull</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#snippets" class="page__taxonomy-item" rel="tag">Snippets</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2018-07-24T00:00:00+00:00">July 24, 2018</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=/snippets/pull-multiple-git-repositories-when-working-with-that-not-so-usual-pc/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=/snippets/pull-multiple-git-repositories-when-working-with-that-not-so-usual-pc/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=/snippets/pull-multiple-git-repositories-when-working-with-that-not-so-usual-pc/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=/snippets/pull-multiple-git-repositories-when-working-with-that-not-so-usual-pc/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="/snippets/clone-multiple-git-repositories-when-setting-up-your-ubuntu/" class="pagination--pager" title="Clone multiple git repositories when setting up your Ubuntu
+">Previous</a>
+    
+    
+      <a href="/analysis/extending-geopackages-via-sqlite-run-time-loadable-extensions/" class="pagination--pager" title="Extending Geopackages via SQLite’s Run-Time Loadable extensions
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
   
     <a href="/programming/data%20management/group-zipping-gis-files-made-easy/">
   
@@ -302,7 +426,7 @@
 
 
   
-	  7 minute read
+	  8 minute read
 	
 </p>
       
@@ -310,12 +434,12 @@
     </article>
   </a>
 </div>
+        
+          
 
-  
 
 
-
-<div class="list__item">
+<div class="grid__item">
   
     <a href="/management/ubuntu20-dni-electronico-y-autofirma/">
   
@@ -336,12 +460,12 @@
     </article>
   </a>
 </div>
+        
+          
 
-  
 
 
-
-<div class="list__item">
+<div class="grid__item">
   
     <a href="/analysis/how-to-cite-geospatial-standards-and-other-things/">
   
@@ -362,12 +486,12 @@
     </article>
   </a>
 </div>
+        
+          
 
-  
 
 
-
-<div class="list__item">
+<div class="grid__item">
   
     <a href="/multimedia/choosing-a-desktop-marker-app-for-ubuntu-18.04-lts/">
   
@@ -388,91 +512,10 @@
     </article>
   </a>
 </div>
-
+        
+      </div>
+    </div>
   
-
-
-
-<div class="list__item">
-  
-    <a href="/multimedia/using-obs-studio-with-v4l2-for-making-my-videoconferences-more-appealing/">
-  
-    <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
-      
-      <h2 class="archive__item-title" itemprop="headline">Using OBS Studio with V4L2 for making my videoconferences more appealing
-</h2>
-      
-        <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
-
-
-  
-	  3 minute read
-	
-</p>
-      
-      <p class="archive__item-excerpt" itemprop="description">In this post, I share the software configuration in Ubuntu to make video-conferences using a green chroma screen and your favorite video-conferencing software.
-</p>
-    </article>
-  </a>
-</div>
-
-
-
-
-
-<nav class="pagination">
-  <ul>
-    
-    
-      <li><a href="#" class="disabled"><span aria-hidden="true">Previous</span></a></li>
-    
-
-    
-    
-      <li><a href="#" class="disabled current">1</a></li>
-    
-
-    
-    
-
-    
-    
-    
-
-    
-      
-        
-        
-        
-        <li><a href="/page2/">2</a></li>
-      
-    
-      
-        
-        
-        
-        <li><a href="/page3/">3</a></li>
-      
-    
-
-    
-    
-      <li><a href="#" class="disabled">&hellip;</a></li>
-    
-
-    
-      <li><a href="/page6/">6</a></li>
-    
-
-    
-    
-      <li><a href="/page2/">Next</a></li>
-    
-  </ul>
-</nav>
-
-
-  </div>
 </div>
 
 
