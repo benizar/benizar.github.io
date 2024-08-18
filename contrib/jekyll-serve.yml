@@ -1,7 +1,7 @@
 #
 # Jekyll serve with --drafts for developing
 #
-version: '2'
+version: '3'
 services:
 
   jekyll:

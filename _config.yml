@@ -11,7 +11,7 @@ title                    : "Benito Zaragozí"
 title_separator          : "-"
 name                     : "Benito Zaragozí"
 description              : "This is the hub for my multiple digital profiles"
-url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+url                      : "https://benito-zaragozi.com" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 gh_repo                  :
 teaser                   :
