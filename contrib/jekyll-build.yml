@@ -1,7 +1,7 @@
 #
 # Jekyll build for deploying to gh-pages (called from deploy.sh)
 #
-version: '2'
+version: '3'
 services:
 
   jekyll:
